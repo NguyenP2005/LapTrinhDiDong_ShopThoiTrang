@@ -1,0 +1,141 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "admin@gmail.com",
+            "password": "123456",
+            "name": "Admin"
+        },
+        {
+            "id": 2,
+            "email": "user1@gmail.com",
+            "password": "123456",
+            "name": "Nguyễn Văn A"
+        },
+        {
+            "id": 3,
+            "email": "user2@gmail.com",
+            "password": "123456",
+            "name": "Trần Thị B"
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Áo thun basic",
+            "price": 199000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Áo cotton",
+            "category": "Áo",
+            "rating": 4.5,
+            "stock": 50
+        },
+        {
+            "id": 2,
+            "name": "Quần jean slim",
+            "price": 399000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Jean co giãn",
+            "category": "Quần",
+            "rating": 4.7,
+            "stock": 30
+        },
+        {
+            "id": 3,
+            "name": "Áo hoodie",
+            "price": 299000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Form rộng",
+            "category": "Áo",
+            "rating": 4.6,
+            "stock": 40
+        },
+        {
+            "id": 4,
+            "name": "Áo sơ mi",
+            "price": 249000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Thanh lịch",
+            "category": "Áo",
+            "rating": 4.3,
+            "stock": 25
+        },
+        {
+            "id": 5,
+            "name": "Quần short",
+            "price": 179000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Thể thao",
+            "category": "Quần",
+            "rating": 4.2,
+            "stock": 60
+        },
+        {
+            "id": 6,
+            "name": "Áo khoác denim",
+            "price": 499000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Phong cách",
+            "category": "Áo",
+            "rating": 4.8,
+            "stock": 20
+        },
+        {
+            "id": 7,
+            "name": "Váy nữ",
+            "price": 350000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Nữ tính",
+            "category": "Váy",
+            "rating": 4.6,
+            "stock": 35
+        },
+        {
+            "id": 8,
+            "name": "Áo polo",
+            "price": 220000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Lịch sự",
+            "category": "Áo",
+            "rating": 4.4,
+            "stock": 45
+        },
+        {
+            "id": 9,
+            "name": "Quần jogger",
+            "price": 270000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Thoải mái",
+            "category": "Quần",
+            "rating": 4.5,
+            "stock": 50
+        },
+        {
+            "id": 10,
+            "name": "Áo len",
+            "price": 320000,
+            "image": "https://via.placeholder.com/300",
+            "description": "Giữ ấm",
+            "category": "Áo",
+            "rating": 4.3,
+            "stock": 30
+        }
+    ],
+    "orders": [
+        {
+            "id": 1,
+            "userId": 1,
+            "items": [
+                {
+                    "productId": 1,
+                    "name": "Áo thun basic",
+                    "price": 199000,
+                    "quantity": 2
+                }
+            ],
+            "total": 398000,
+            "status": "completed",
+            "createdAt": "2026-04-15"
+        }
+    ]
+}
