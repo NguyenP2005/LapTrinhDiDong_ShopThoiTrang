@@ -1,5 +1,7 @@
+import 'package:clothing_app/views/main.screen.dart';
 import 'package:flutter/material.dart';
 import 'views/home_screen.dart ';
+import 'views/main.screen.dart';
 
 void main() {
   runApp(MainApp());
@@ -10,6 +12,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
+    return MaterialApp(home: MainScreen());
   }
 }
