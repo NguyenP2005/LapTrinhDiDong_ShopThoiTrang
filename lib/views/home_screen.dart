@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Fashion Shop"),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: const Color(0xffEE4D2D),
+        backgroundColor: const Color.fromARGB(255, 213, 107, 229),
 
         actions: [
           Stack(
