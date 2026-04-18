@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,26 +8,72 @@ class AuthViewModel extends ChangeNotifier {
   String? errorMessage;
 
   Future<bool> login(String email, String password) async {
-    isLoading = true; notifyListeners();
-    final res = await http.get(Uri.parse('$baseUrl/users?email=$email&password=$password'));
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      // Cắt sạch khoảng trắng dư thừa (Fix lỗi đăng nhập không được)
+      final cleanEmail = email.trim();
+      final cleanPassword = password.trim();
+
+      final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail&password=$cleanPassword'));
+      final data = jsonDecode(res.body) as List;
+
+      if (data.isNotEmpty) {
+        isLoading = false; notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Sai email hoặc mật khẩu!";
+      }
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
+    }
+
     isLoading = false; notifyListeners();
-    final data = jsonDecode(res.body);
-    if (data.length > 0) return true;
-    errorMessage = "Sai email hoặc mật khẩu!"; notifyListeners();
     return false;
   }
 
   Future<bool> register(String name, String email, String password) async {
-    isLoading = true; notifyListeners();
-    final check = await http.get(Uri.parse('$baseUrl/users?email=$email'));
-    final existing = jsonDecode(check.body);
-    if (existing.length > 0) {
-      errorMessage = "Email đã tồn tại!"; isLoading = false; notifyListeners(); return false;
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      // Cắt sạch khoảng trắng lúc đăng ký
+      final cleanEmail = email.trim();
+      final check = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final existing = jsonDecode(check.body) as List;
+
+      if (existing.isNotEmpty) {
+        errorMessage = "Email đã tồn tại!";
+        isLoading = false; notifyListeners();
+        return false;
+      }
+
+      final res = await http.post(
+        Uri.parse('$baseUrl/users'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name.trim(),
+          'email': cleanEmail,
+          'password': password.trim(),
+          'avatar': 'https://i.pravatar.cc/150', // Tự động thêm avatar
+          'role': 'user' // Tự động cấp quyền user
+        })
+      );
+
+      if (res.statusCode == 201) {
+        isLoading = false; notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Lỗi khi đăng ký!";
+      }
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
     }
-    final res = await http.post(Uri.parse('$baseUrl/users'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'name': name, 'email': email, 'password': password}));
+
     isLoading = false; notifyListeners();
-    return res.statusCode == 201;
+    return false;
   }
 }
