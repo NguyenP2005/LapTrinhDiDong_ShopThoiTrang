@@ -8,31 +8,38 @@ class AuthViewModel extends ChangeNotifier {
   String? errorMessage;
 
   Future<bool> login(String email, String password) async {
-    isLoading = true;
-    errorMessage = null;
-    notifyListeners();
+      isLoading = true;
+      errorMessage = null;
+      notifyListeners();
 
-    try {
-      // Cắt sạch khoảng trắng dư thừa (Fix lỗi đăng nhập không được)
-      final cleanEmail = email.trim();
-      final cleanPassword = password.trim();
+      try {
+        final cleanEmail = email.trim();
+        final cleanPassword = password.trim();
 
-      final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail&password=$cleanPassword'));
-      final data = jsonDecode(res.body) as List;
+        // Đổi chiến thuật: Chỉ nhờ json-server lọc cái Email thôi
+        final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+        final data = jsonDecode(res.body) as List;
 
-      if (data.isNotEmpty) {
-        isLoading = false; notifyListeners();
-        return true;
-      } else {
+        // Nếu server tìm thấy tài khoản có email này
+        if (data.isNotEmpty) {
+          final user = data[0]; // Rút data của ông user đó ra
+
+          // Tự check password bằng code Dart (dùng toString để né lỗi kiểu dữ liệu)
+          if (user['password'].toString() == cleanPassword) {
+            isLoading = false; notifyListeners();
+            return true; // PASS TRÙNG KHỚP -> ĐĂNG NHẬP THÀNH CÔNG!
+          }
+        }
+
+        // Nếu sai email hoặc pass không khớp
         errorMessage = "Sai email hoặc mật khẩu!";
+      } catch (e) {
+        errorMessage = "Lỗi kết nối server!";
       }
-    } catch (e) {
-      errorMessage = "Lỗi kết nối server!";
-    }
 
-    isLoading = false; notifyListeners();
-    return false;
-  }
+      isLoading = false; notifyListeners();
+      return false;
+    }
 
   Future<bool> register(String name, String email, String password) async {
     isLoading = true;
