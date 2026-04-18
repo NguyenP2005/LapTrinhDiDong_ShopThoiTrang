@@ -48,7 +48,7 @@
             "id": 1,
             "name": "Áo thun basic trắng",
             "price": 199000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image01.webp",
+            "image": "assets/images/image01.webp",
             "description": "Cotton mềm",
             "category_id": 1,
             "stock": 50
@@ -57,7 +57,7 @@
             "id": 2,
             "name": "Áo thun đen form rộng",
             "price": 219000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image02.webp",
+            "image": "assets/images/image02.webp",
             "description": "Street style",
             "category_id": 1,
             "stock": 40
@@ -66,7 +66,7 @@
             "id": 3,
             "name": "Áo hoodie xám",
             "price": 299000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image03.webp",
+            "image": "assets/images/image03.webp",
             "description": "Form rộng",
             "category_id": 1,
             "stock": 35
@@ -75,7 +75,7 @@
             "id": 4,
             "name": "Áo sơ mi trắng",
             "price": 259000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image04.jpg",
+            "image": "assets/images/image04.jpg",
             "description": "Thanh lịch",
             "category_id": 1,
             "stock": 30
@@ -84,7 +84,7 @@
             "id": 5,
             "name": "Áo polo xanh",
             "price": 229000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image05.jpg",
+            "image": "assets/images/image05.jpg",
             "description": "Lịch sự",
             "category_id": 1,
             "stock": 45
@@ -93,7 +93,7 @@
             "id": 6,
             "name": "Quần jean slim fit",
             "price": 399000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image06.avif",
+            "image": "assets/images/image06.avif",
             "description": "Co giãn",
             "category_id": 2,
             "stock": 30
@@ -102,7 +102,7 @@
             "id": 7,
             "name": "Quần jean rách",
             "price": 420000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image07.avif",
+            "image": "assets/images/image07.avif",
             "description": "Cá tính",
             "category_id": 2,
             "stock": 25
@@ -111,7 +111,7 @@
             "id": 8,
             "name": "Quần jogger đen",
             "price": 270000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image08.png",
+            "image": "assets/images/image08.png",
             "description": "Thoải mái",
             "category_id": 2,
             "stock": 60
@@ -120,7 +120,7 @@
             "id": 9,
             "name": "Quần short thể thao",
             "price": 180000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image09.png",
+            "image": "assets/images/image09.png",
             "description": "Mát mẻ",
             "category_id": 2,
             "stock": 55
@@ -129,7 +129,7 @@
             "id": 10,
             "name": "Quần tây công sở",
             "price": 350000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image10.jpg",
+            "image": "assets/images/image10.jpg",
             "description": "Lịch lãm",
             "category_id": 2,
             "stock": 20
@@ -138,7 +138,7 @@
             "id": 11,
             "name": "Váy hoa nữ",
             "price": 320000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image11.webp",
+            "image": "assets/images/image11.webp",
             "description": "Nữ tính",
             "category_id": 3,
             "stock": 25
@@ -147,7 +147,7 @@
             "id": 12,
             "name": "Váy công sở",
             "price": 380000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image12.avif",
+            "image": "assets/images/image12.avif",
             "description": "Thanh lịch",
             "category_id": 3,
             "stock": 20
@@ -156,7 +156,7 @@
             "id": 13,
             "name": "Váy maxi",
             "price": 420000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image13.webp",
+            "image": "assets/images/image13.webp",
             "description": "Dịu dàng",
             "category_id": 3,
             "stock": 15
@@ -165,7 +165,7 @@
             "id": 14,
             "name": "Chân váy jean",
             "price": 290000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image14.webp",
+            "image": "assets/images/image14.webp",
             "description": "Trẻ trung",
             "category_id": 3,
             "stock": 35
@@ -174,7 +174,7 @@
             "id": 15,
             "name": "Nón lưỡi trai",
             "price": 120000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image15.jpg",
+            "image": "assets/images/image15.jpg",
             "description": "Thời trang",
             "category_id": 4,
             "stock": 100
@@ -183,7 +183,7 @@
             "id": 16,
             "name": "Balo mini",
             "price": 250000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image16.webp",
+            "image": "assets/images/image16.webp",
             "description": "Tiện lợi",
             "category_id": 4,
             "stock": 40
@@ -192,7 +192,7 @@
             "id": 17,
             "name": "Túi xách nữ",
             "price": 450000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image17.jpg",
+            "image": "assets/images/image17.jpg",
             "description": "Sang trọng",
             "category_id": 4,
             "stock": 30
@@ -201,7 +201,7 @@
             "id": 18,
             "name": "Thắt lưng da",
             "price": 200000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image18.avif",
+            "image": "assets/images/image18.avif",
             "description": "Cao cấp",
             "category_id": 4,
             "stock": 60
@@ -210,7 +210,7 @@
             "id": 19,
             "name": "Kính mát",
             "price": 150000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image19.avif",
+            "image": "assets/images/image19.avif",
             "description": "Chống UV",
             "category_id": 4,
             "stock": 80
@@ -219,7 +219,7 @@
             "id": 20,
             "name": "Đồng hồ thời trang",
             "price": 600000,
-            "image": "https://vbwiuqwoitymmglfcadl.supabase.co/storage/v1/object/public/image/image20.webp",
+            "image": "assets/images/image20.webp",
             "description": "Phong cách",
             "category_id": 4,
             "stock": 20
