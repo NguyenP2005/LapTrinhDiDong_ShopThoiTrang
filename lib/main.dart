@@ -4,14 +4,21 @@ import 'views/home_screen.dart ';
 import 'views/main.screen.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MainScreen());
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
+      child: MaterialApp(
+        title: 'Flutter Clothing App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+        home: const LoginScreen(),
+      ),
+    );
   }
 }
