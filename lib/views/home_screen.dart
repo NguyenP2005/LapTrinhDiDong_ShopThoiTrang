@@ -13,6 +13,12 @@ class HomeScreen extends StatelessWidget {
 
       appBar: AppBar(
         title: const Text("Fashion Shop"),
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.3,
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 213, 107, 229),
@@ -57,7 +63,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔥 BANNER
             Container(
               margin: const EdgeInsets.all(16),
               height: 150,

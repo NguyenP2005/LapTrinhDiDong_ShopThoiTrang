@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/product_viewmodel.dart';
+import '../models/product.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -12,9 +13,21 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   String searchText = "";
   String selectedCategory = "All";
+  final TextEditingController _searchController = TextEditingController();
 
-  String getImagePath(String id) {
-    return "assets/images/$id.jpg";
+  String getCategoryName(int id) {
+    switch (id) {
+      case 1:
+        return "Áo";
+      case 2:
+        return "Quần";
+      case 3:
+        return "Váy";
+      case 4:
+        return "Phụ kiện";
+      default:
+        return "Khác";
+    }
   }
 
   @override
@@ -22,45 +35,67 @@ class _ProductListScreenState extends State<ProductListScreen> {
     return ChangeNotifierProvider(
       create: (_) => ProductViewModel()..fetchProducts(),
       child: Scaffold(
-        backgroundColor: const Color(0xfff5f5f5),
+        backgroundColor: const Color(0xffF5F5F5),
 
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
           title: const Text(
-            "Product List",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            "Danh sách sản phẩm",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: const Color(0xff8E2DE2),
         ),
 
         body: Column(
           children: [
-            //SEARCH
             Padding(
-              padding: const EdgeInsets.all(12),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search fashion...",
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (value) {
+                    setState(() {
+                      searchText = value.trim().toLowerCase();
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Tìm kiếm sản phẩm...",
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+
+                    suffixIcon: searchText.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() {
+                                searchText = "";
+                              });
+                            },
+                          )
+                        : null,
+
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    searchText = value.toLowerCase();
-                  });
-                },
               ),
             ),
 
-            //FILTER CHIP
             SizedBox(
               height: 40,
               child: ListView(
@@ -71,13 +106,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   buildFilter("Áo"),
                   buildFilter("Quần"),
                   buildFilter("Váy"),
+                  buildFilter("Phụ kiện"),
                 ],
               ),
             ),
 
             const SizedBox(height: 10),
 
-            // PRODUCT LIST
             Expanded(
               child: Consumer<ProductViewModel>(
                 builder: (context, vm, child) {
@@ -86,19 +121,25 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   }
 
                   final filtered = vm.products.where((p) {
-                    final matchSearch = p.name.toLowerCase().contains(
-                      searchText,
-                    );
+                    final name = p.name.toLowerCase().trim();
+                    final search = searchText.toLowerCase().trim();
 
-                    final matchCategory = selectedCategory == "All"
-                        ? true
-                        : p.category == selectedCategory;
+                    final matchSearch =
+                        name.contains(search) ||
+                        getCategoryName(
+                          p.catergoryID,
+                        ).toLowerCase().contains(search);
+
+                    final matchCategory =
+                        selectedCategory == "All" ||
+                        getCategoryName(p.catergoryID).toLowerCase().trim() ==
+                            selectedCategory.toLowerCase().trim();
 
                     return matchSearch && matchCategory;
                   }).toList();
 
                   if (filtered.isEmpty) {
-                    return const Center(child: Text("No products found"));
+                    return const Center(child: Text("Không tìm thấy sản phẩm"));
                   }
 
                   return GridView.builder(
@@ -109,88 +150,40 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
-                          childAspectRatio: 0.62,
+                          childAspectRatio: 0.65,
                         ),
                     itemBuilder: (context, index) {
                       final product = filtered[index];
 
                       return Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: BorderRadius.circular(16),
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.05),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
+                              blurRadius: 10,
                             ),
                           ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // IMAGE + RATING
-                            Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(18),
-                                  ),
-                                  child: Image.asset(
-                                    getImagePath(product.id),
-                                    height: 140,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                                //  RATING
-                                Positioned(
-                                  top: 8,
-                                  right: 8,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 3,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.7,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 14,
-                                        ),
-                                        const SizedBox(width: 2),
-                                        Text(
-                                          product.rating.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(16),
+                              ),
+                              child: _buildImage(product.image),
                             ),
 
-                            // 📦 INFO
                             Padding(
                               padding: const EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // NAME
                                   Text(
                                     product.name,
-                                    maxLines: 1,
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -198,9 +191,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     ),
                                   ),
 
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: 5),
 
-                                  // CATEGORY CHIP
                                   Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8,
@@ -211,14 +203,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
-                                      product.category,
+                                      getCategoryName(product.catergoryID),
                                       style: const TextStyle(fontSize: 11),
                                     ),
                                   ),
 
                                   const SizedBox(height: 6),
 
-                                  // PRICE
                                   Text(
                                     "${product.price.toStringAsFixed(0)} VND",
                                     style: const TextStyle(
@@ -241,6 +232,34 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildImage(String path) {
+    if (path.startsWith("http")) {
+      return Image.network(
+        path,
+        height: 140,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _errorImage(),
+      );
+    } else {
+      return Image.asset(
+        path,
+        height: 140,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _errorImage(),
+      );
+    }
+  }
+
+  Widget _errorImage() {
+    return Container(
+      height: 140,
+      color: Colors.grey[300],
+      child: const Icon(Icons.image),
     );
   }
 

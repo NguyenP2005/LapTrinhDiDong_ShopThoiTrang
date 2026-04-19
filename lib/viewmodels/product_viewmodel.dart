@@ -10,7 +10,14 @@ class ProductViewModel extends ChangeNotifier {
   Future<void> fetchProducts() async {
     isLoading = true;
     notifyListeners();
-    products = await _api.getProducts();
+
+    try {
+      products = await _api.getProducts();
+    } catch (e) {
+      print(" ERROR FETCH PRODUCTS: $e");
+      products = [];
+    }
+
     isLoading = false;
     notifyListeners();
   }
