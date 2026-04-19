@@ -1,20 +1,31 @@
+import 'package:clothing_app/views/main.screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'views/home_screen.dart ';
+import 'views/main.screen.dart';
 import 'views/login_screen.dart';
-import 'views/register_screen.dart';
+import 'package:provider/provider.dart';
+import 'viewmodels/auth_viewmodel.dart';
+import 'viewmodels/cart_viewmodel.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginScreen(),
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => CartViewModel()..loadCart()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Clothing App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+        home: const LoginScreen(),
+      ),
     );
   }
 }

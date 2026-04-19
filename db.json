@@ -1,290 +1,347 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "email": "admin@gmail.com",
-            "password": "123456",
-            "name": "Admin",
-            "avatar": "https://i.pravatar.cc/150",
-            "role": "admin"
-        },
-        {
-            "id": 2,
-            "email": "user1@gmail.com",
-            "password": "123456",
-            "name": "Nguyễn Văn A",
-            "avatar": "https://i.pravatar.cc/150",
-            "role": "user"
-        },
-        {
-            "id": 3,
-            "email": "user2@gmail.com",
-            "password": "123456",
-            "name": "Trần Thị B",
-            "avatar": "https://i.pravatar.cc/150",
-            "role": "user"
-        }
-    ],
-    "categories": [
-        {
-            "id": 1,
-            "name": "Áo"
-        },
-        {
-            "id": 2,
-            "name": "Quần"
-        },
-        {
-            "id": 3,
-            "name": "Váy"
-        },
-        {
-            "id": 4,
-            "name": "Phụ kiện"
-        }
-    ],
-    "products": [
-        {
-            "id": 1,
-            "name": "Áo thun basic trắng",
-            "price": 199000,
-            "image": "assets/images/image01.webp",
-            "description": "Cotton mềm",
-            "category_id": 1,
-            "stock": 50
-        },
-        {
-            "id": 2,
-            "name": "Áo thun đen form rộng",
-            "price": 219000,
-            "image": "assets/images/image02.webp",
-            "description": "Street style",
-            "category_id": 1,
-            "stock": 40
-        },
-        {
-            "id": 3,
-            "name": "Áo hoodie xám",
-            "price": 299000,
-            "image": "assets/images/image03.webp",
-            "description": "Form rộng",
-            "category_id": 1,
-            "stock": 35
-        },
-        {
-            "id": 4,
-            "name": "Áo sơ mi trắng",
-            "price": 259000,
-            "image": "assets/images/image04.jpg",
-            "description": "Thanh lịch",
-            "category_id": 1,
-            "stock": 30
-        },
-        {
-            "id": 5,
-            "name": "Áo polo xanh",
-            "price": 229000,
-            "image": "assets/images/image05.jpg",
-            "description": "Lịch sự",
-            "category_id": 1,
-            "stock": 45
-        },
-        {
-            "id": 6,
-            "name": "Quần jean slim fit",
-            "price": 399000,
-            "image": "assets/images/image06.avif",
-            "description": "Co giãn",
-            "category_id": 2,
-            "stock": 30
-        },
-        {
-            "id": 7,
-            "name": "Quần jean rách",
-            "price": 420000,
-            "image": "assets/images/image07.avif",
-            "description": "Cá tính",
-            "category_id": 2,
-            "stock": 25
-        },
-        {
-            "id": 8,
-            "name": "Quần jogger đen",
-            "price": 270000,
-            "image": "assets/images/image08.png",
-            "description": "Thoải mái",
-            "category_id": 2,
-            "stock": 60
-        },
-        {
-            "id": 9,
-            "name": "Quần short thể thao",
-            "price": 180000,
-            "image": "assets/images/image09.png",
-            "description": "Mát mẻ",
-            "category_id": 2,
-            "stock": 55
-        },
-        {
-            "id": 10,
-            "name": "Quần tây công sở",
-            "price": 350000,
-            "image": "assets/images/image10.jpg",
-            "description": "Lịch lãm",
-            "category_id": 2,
-            "stock": 20
-        },
-        {
-            "id": 11,
-            "name": "Váy hoa nữ",
-            "price": 320000,
-            "image": "assets/images/image11.webp",
-            "description": "Nữ tính",
-            "category_id": 3,
-            "stock": 25
-        },
-        {
-            "id": 12,
-            "name": "Váy công sở",
-            "price": 380000,
-            "image": "assets/images/image12.avif",
-            "description": "Thanh lịch",
-            "category_id": 3,
-            "stock": 20
-        },
-        {
-            "id": 13,
-            "name": "Váy maxi",
-            "price": 420000,
-            "image": "assets/images/image13.webp",
-            "description": "Dịu dàng",
-            "category_id": 3,
-            "stock": 15
-        },
-        {
-            "id": 14,
-            "name": "Chân váy jean",
-            "price": 290000,
-            "image": "assets/images/image14.webp",
-            "description": "Trẻ trung",
-            "category_id": 3,
-            "stock": 35
-        },
-        {
-            "id": 15,
-            "name": "Nón lưỡi trai",
-            "price": 120000,
-            "image": "assets/images/image15.jpg",
-            "description": "Thời trang",
-            "category_id": 4,
-            "stock": 100
-        },
-        {
-            "id": 16,
-            "name": "Balo mini",
-            "price": 250000,
-            "image": "assets/images/image16.webp",
-            "description": "Tiện lợi",
-            "category_id": 4,
-            "stock": 40
-        },
-        {
-            "id": 17,
-            "name": "Túi xách nữ",
-            "price": 450000,
-            "image": "assets/images/image17.jpg",
-            "description": "Sang trọng",
-            "category_id": 4,
-            "stock": 30
-        },
-        {
-            "id": 18,
-            "name": "Thắt lưng da",
-            "price": 200000,
-            "image": "assets/images/image18.avif",
-            "description": "Cao cấp",
-            "category_id": 4,
-            "stock": 60
-        },
-        {
-            "id": 19,
-            "name": "Kính mát",
-            "price": 150000,
-            "image": "assets/images/image19.avif",
-            "description": "Chống UV",
-            "category_id": 4,
-            "stock": 80
-        },
-        {
-            "id": 20,
-            "name": "Đồng hồ thời trang",
-            "price": 600000,
-            "image": "assets/images/image20.webp",
-            "description": "Phong cách",
-            "category_id": 4,
-            "stock": 20
-        }
-    ],
-    "orders": [
-        {
-            "id": 1,
-            "user_id": 1,
-            "total": 398000,
-            "status": "paid",
-            "created_at": "2026-01-01T10:00:00"
-        },
-        {
-            "id": 2,
-            "user_id": 2,
-            "total": 599000,
-            "status": "pending",
-            "created_at": "2026-01-02T10:00:00"
-        },
-        {
-            "id": 3,
-            "user_id": 3,
-            "total": 250000,
-            "status": "pending",
-            "created_at": "2026-01-03T10:00:00"
-        }
-    ],
-    "order_items": [
-        {
-            "id": 1,
-            "order_id": 1,
-            "product_id": 1,
-            "quantity": 2,
-            "price": 199000
-        },
-        {
-            "id": 2,
-            "order_id": 1,
-            "product_id": 2,
-            "quantity": 1,
-            "price": 219000
-        },
-        {
-            "id": 3,
-            "order_id": 2,
-            "product_id": 5,
-            "quantity": 2,
-            "price": 229000
-        },
-        {
-            "id": 4,
-            "order_id": 3,
-            "product_id": 15,
-            "quantity": 1,
-            "price": 120000
-        }
-    ],
-    "payments": [
-        {
-            "id": 1,
-            "order_id": 1,
-            "method": "COD",
-            "status": "success",
-            "paid_at": "2026-01-01T10:05:00"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "name": "Admin",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "email": "user1@gmail.com",
+      "password": "123456",
+      "name": "Nguyễn Văn A",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user"
+    },
+    {
+      "id": "3",
+      "email": "user2@gmail.com",
+      "password": "123456",
+      "name": "Trần Thị B",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user"
+    },
+    {
+      "name": "Nguyen",
+      "email": "nguyen@gmail.com",
+      "password": "123456",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "3s_dB7HlSHc"
+    },
+    {
+      "name": "Nguyen Pham Minh Quan",
+      "email": "0347222146",
+      "password": "quannguyen2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "v5VcrIT-qEI"
+    },
+    {
+      "name": "Nguyen Pham Minh Quan",
+      "email": "0347222146",
+      "password": "quannguyen2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "kgk7VcZbMyE"
+    },
+    {
+      "name": "Minh Quan",
+      "email": "0347222146",
+      "password": "quan2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "YwDhhI8Dw00"
+    },
+    {
+      "name": "Nguyen Pham Minh Quan",
+      "email": "0347222146",
+      "password": "quan2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "cdeZQUfuu5g"
+    },
+    {
+      "name": "Nguyen Pham Minh Quan",
+      "email": "quannguyenphamnguyen51@gmail.com",
+      "password": "quan2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "JhJNFG78Jmk"
+    },
+    {
+      "name": "Minh Quan",
+      "email": "quan@gmail.com",
+      "password": "quan2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "wy_s1wpLbE8"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Áo"
+    },
+    {
+      "id": "2",
+      "name": "Quần"
+    },
+    {
+      "id": "3",
+      "name": "Váy"
+    },
+    {
+      "id": "4",
+      "name": "Phụ kiện"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Áo thun basic trắng",
+      "price": 199000,
+      "image": "assets/images/image01.webp",
+      "description": "Cotton mềm",
+      "category_id": 1,
+      "stock": 50
+    },
+    {
+      "id": "2",
+      "name": "Áo thun đen form rộng",
+      "price": 219000,
+      "image": "assets/images/image02.webp",
+      "description": "Street style",
+      "category_id": 1,
+      "stock": 40
+    },
+    {
+      "id": "3",
+      "name": "Áo hoodie xám",
+      "price": 299000,
+      "image": "assets/images/image03.webp",
+      "description": "Form rộng",
+      "category_id": 1,
+      "stock": 35
+    },
+    {
+      "id": "4",
+      "name": "Áo sơ mi trắng",
+      "price": 259000,
+      "image": "assets/images/image04.jpg",
+      "description": "Thanh lịch",
+      "category_id": 1,
+      "stock": 30
+    },
+    {
+      "id": "5",
+      "name": "Áo polo xanh",
+      "price": 229000,
+      "image": "assets/images/image05.jpg",
+      "description": "Lịch sự",
+      "category_id": 1,
+      "stock": 45
+    },
+    {
+      "id": "6",
+      "name": "Quần jean slim fit",
+      "price": 399000,
+      "image": "assets/images/image06.avif",
+      "description": "Co giãn",
+      "category_id": 2,
+      "stock": 30
+    },
+    {
+      "id": "7",
+      "name": "Quần jean rách",
+      "price": 420000,
+      "image": "assets/images/image07.avif",
+      "description": "Cá tính",
+      "category_id": 2,
+      "stock": 25
+    },
+    {
+      "id": "8",
+      "name": "Quần jogger đen",
+      "price": 270000,
+      "image": "assets/images/image08.png",
+      "description": "Thoải mái",
+      "category_id": 2,
+      "stock": 60
+    },
+    {
+      "id": "9",
+      "name": "Quần short thể thao",
+      "price": 180000,
+      "image": "assets/images/image09.png",
+      "description": "Mát mẻ",
+      "category_id": 2,
+      "stock": 55
+    },
+    {
+      "id": "10",
+      "name": "Quần tây công sở",
+      "price": 350000,
+      "image": "assets/images/image10.jpg",
+      "description": "Lịch lãm",
+      "category_id": 2,
+      "stock": 20
+    },
+    {
+      "id": "11",
+      "name": "Váy hoa nữ",
+      "price": 320000,
+      "image": "assets/images/image11.webp",
+      "description": "Nữ tính",
+      "category_id": 3,
+      "stock": 25
+    },
+    {
+      "id": "12",
+      "name": "Váy công sở",
+      "price": 380000,
+      "image": "assets/images/image12.avif",
+      "description": "Thanh lịch",
+      "category_id": 3,
+      "stock": 20
+    },
+    {
+      "id": "13",
+      "name": "Váy maxi",
+      "price": 420000,
+      "image": "assets/images/image13.webp",
+      "description": "Dịu dàng",
+      "category_id": 3,
+      "stock": 15
+    },
+    {
+      "id": "14",
+      "name": "Chân váy jean",
+      "price": 290000,
+      "image": "assets/images/image14.webp",
+      "description": "Trẻ trung",
+      "category_id": 3,
+      "stock": 35
+    },
+    {
+      "id": "15",
+      "name": "Nón lưỡi trai",
+      "price": 120000,
+      "image": "assets/images/image15.jpg",
+      "description": "Thời trang",
+      "category_id": 4,
+      "stock": 100
+    },
+    {
+      "id": "16",
+      "name": "Balo mini",
+      "price": 250000,
+      "image": "assets/images/image16.webp",
+      "description": "Tiện lợi",
+      "category_id": 4,
+      "stock": 40
+    },
+    {
+      "id": "17",
+      "name": "Túi xách nữ",
+      "price": 450000,
+      "image": "assets/images/image17.jpg",
+      "description": "Sang trọng",
+      "category_id": 4,
+      "stock": 30
+    },
+    {
+      "id": "18",
+      "name": "Thắt lưng da",
+      "price": 200000,
+      "image": "assets/images/image18.avif",
+      "description": "Cao cấp",
+      "category_id": 4,
+      "stock": 60
+    },
+    {
+      "id": "19",
+      "name": "Kính mát",
+      "price": 150000,
+      "image": "assets/images/image19.avif",
+      "description": "Chống UV",
+      "category_id": 4,
+      "stock": 80
+    },
+    {
+      "id": "20",
+      "name": "Đồng hồ thời trang",
+      "price": 600000,
+      "image": "assets/images/image20.webp",
+      "description": "Phong cách",
+      "category_id": 4,
+      "stock": 20
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "user_id": 1,
+      "total": 398000,
+      "status": "paid",
+      "created_at": "2026-01-01T10:00:00"
+    },
+    {
+      "id": "2",
+      "user_id": 2,
+      "total": 599000,
+      "status": "pending",
+      "created_at": "2026-01-02T10:00:00"
+    },
+    {
+      "id": "3",
+      "user_id": 3,
+      "total": 250000,
+      "status": "pending",
+      "created_at": "2026-01-03T10:00:00"
+    }
+  ],
+  "order_items": [
+    {
+      "id": "1",
+      "order_id": 1,
+      "product_id": 1,
+      "quantity": 2,
+      "price": 199000
+    },
+    {
+      "id": "2",
+      "order_id": 1,
+      "product_id": 2,
+      "quantity": 1,
+      "price": 219000
+    },
+    {
+      "id": "3",
+      "order_id": 2,
+      "product_id": 5,
+      "quantity": 2,
+      "price": 229000
+    },
+    {
+      "id": "4",
+      "order_id": 3,
+      "product_id": 15,
+      "quantity": 1,
+      "price": 120000
+    }
+  ],
+  "payments": [
+    {
+      "id": "1",
+      "order_id": 1,
+      "method": "COD",
+      "status": "success",
+      "paid_at": "2026-01-01T10:05:00"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
