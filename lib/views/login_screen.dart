@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'package:clothing_app/views/main.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import 'register_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,7 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           // Lớp nền mờ Glassmorphism (phần trên màu xanh)
           Positioned(
-            top: 0, left: 0, right: 0, height: MediaQuery.of(context).size.height * 0.4,
+            top: 0,
+            left: 0,
+            right: 0,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Container(color: primaryBlue),
           ),
           Positioned.fill(
@@ -43,9 +48,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 60),
-                  const Text('Log In', textAlign: TextAlign.center, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                  const Text(
+                    'Log In',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 8),
-                  const Text('LOG IN', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w500)),
+                  const Text(
+                    'LOG IN',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 60),
 
                   // Hộp thoại Glassmorphism
@@ -56,7 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: Colors.black.withOpacity(0.05)),
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, spreadRadius: 2)
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
                       ],
                     ),
                     child: Column(
@@ -84,37 +105,74 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {},
-                            child: const Text('Forgot Password?', style: TextStyle(color: primaryBlue, fontSize: 13)),
+                            child: const Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color: primaryBlue,
+                                fontSize: 13,
+                              ),
+                            ),
                           ),
                         ),
 
                         if (vm.errorMessage != null)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
-                            child: Text(vm.errorMessage!, style: const TextStyle(color: Colors.red), textAlign: TextAlign.center),
+                            child: Text(
+                              vm.errorMessage!,
+                              style: const TextStyle(color: Colors.red),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
 
                         const SizedBox(height: 20),
 
                         // Nút Log In
                         vm.isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryBlue,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                elevation: 0,
+                            ? const Center(child: CircularProgressIndicator())
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryBlue,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                onPressed: () async {
+                                  final ok = await vm.login(
+                                    emailCtrl.text,
+                                    passCtrl.text,
+                                  );
+
+                                  if (!mounted) return;
+
+                                  if (ok) {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const MainScreen(),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Sai tài khoản"),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: const Text(
+                                  'LOG IN',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                              onPressed: () async {
-                                final ok = await vm.login(emailCtrl.text, passCtrl.text);
-                                if (ok) {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Đăng nhập thành công!')));
-                                }
-                              },
-                              child: const Text('LOG IN', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                            ),
                       ],
                     ),
                   ),
@@ -125,7 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     children: [
                       const Expanded(child: Divider(color: Colors.grey)),
-                      const Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: Text("or", style: TextStyle(color: Colors.grey))),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("or", style: TextStyle(color: Colors.grey)),
+                      ),
                       const Expanded(child: Divider(color: Colors.grey)),
                     ],
                   ),
@@ -135,11 +196,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialButton(icon: Icons.facebook, color: Colors.blue),
+                      _buildSocialButton(
+                        icon: Icons.facebook,
+                        color: Colors.blue,
+                      ),
                       const SizedBox(width: 20),
-                      _buildSocialButton(icon: Icons.apple, color: Colors.black),
+                      _buildSocialButton(
+                        icon: Icons.apple,
+                        color: Colors.black,
+                      ),
                       const SizedBox(width: 20),
-                      _buildSocialButton(icon: Icons.g_mobiledata, color: Colors.red),
+                      _buildSocialButton(
+                        icon: Icons.g_mobiledata,
+                        color: Colors.red,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 30),
@@ -148,13 +218,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't have an account? ", style: TextStyle(color: Colors.grey)),
+                      const Text(
+                        "Don't have an account? ",
+                        style: TextStyle(color: Colors.grey),
+                      ),
                       GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())),
-                        child: const Text('Sign Up', style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const RegisterScreen(),
+                          ),
+                        ),
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: primaryBlue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -175,7 +259,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Color(0xFF616161), fontSize: 13)), // Nhãn NẰM TRÊN
+        Text(
+          label,
+          style: const TextStyle(color: Color(0xFF616161), fontSize: 13),
+        ), // Nhãn NẰM TRÊN
         const SizedBox(height: 6),
         TextField(
           controller: controller,
@@ -185,9 +272,18 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: hint, // Placeholder NẰM TRONG
             hintStyle: TextStyle(color: Colors.grey[400]),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[300]!), borderRadius: BorderRadius.circular(8)),
-            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Color(0xFF2344D1)), borderRadius: BorderRadius.circular(8)),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[300]!),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Color(0xFF2344D1)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -198,13 +294,17 @@ class _LoginScreenState extends State<LoginScreen> {
   // Widget hỗ trợ xây dựng nút mạng xã hội
   Widget _buildSocialButton({required IconData icon, required Color color}) {
     return Container(
-      width: 50, height: 50,
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey[300]!),
       ),
-      child: IconButton(icon: Icon(icon, color: color), onPressed: () {}),
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: () {},
+      ),
     );
   }
 }
