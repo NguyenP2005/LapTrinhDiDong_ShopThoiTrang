@@ -5,6 +5,7 @@ import 'views/main.screen.dart';
 import 'views/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'viewmodels/auth_viewmodel.dart';
+import 'viewmodels/cart_viewmodel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => CartViewModel()..loadCart()),
+      ],
       child: MaterialApp(
         title: 'Flutter Clothing App',
         debugShowCheckedModeBanner: false,
