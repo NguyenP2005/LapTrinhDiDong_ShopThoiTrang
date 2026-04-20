@@ -27,7 +27,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         children: [
           // Lớp nền mờ Glassmorphism (phần dưới màu xanh)
           Positioned(
-            bottom: 0, left: 0, right: 0, height: MediaQuery.of(context).size.height * 0.4,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Container(color: primaryBlue),
           ),
           Positioned.fill(
@@ -45,9 +48,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 30),
-                  const Text('Sign Up', textAlign: TextAlign.center, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                  const Text(
+                    'Sign Up',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 8),
-                  const Text('SIGN UP', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w500)),
+                  const Text(
+                    'SIGN UP',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 40),
 
                   // Hộp thoại Glassmorphism
@@ -58,16 +73,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: Colors.black.withOpacity(0.05)),
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, spreadRadius: 2)
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
                       ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _buildInputField(label: 'Name', hint: 'Full Name', icon: Icons.person_outline, controller: nameCtrl),
-                        _buildInputField(label: 'Email Address', hint: 'Email or Phone', icon: Icons.email_outlined, controller: emailCtrl),
-                        _buildInputField(label: 'Password', hint: 'Password', icon: Icons.lock_outline, controller: passCtrl, obscure: true),
-                        _buildInputField(label: 'Confirm Password', hint: 'Confirm Password', icon: Icons.lock_outline, controller: confirmPassCtrl, obscure: true),
+                        _buildInputField(
+                          label: 'Name',
+                          hint: 'Full Name',
+                          icon: Icons.person_outline,
+                          controller: nameCtrl,
+                        ),
+                        _buildInputField(
+                          label: 'Email Address',
+                          hint: 'Email or Phone',
+                          icon: Icons.email_outlined,
+                          controller: emailCtrl,
+                        ),
+                        _buildInputField(
+                          label: 'Password',
+                          hint: 'Password',
+                          icon: Icons.lock_outline,
+                          controller: passCtrl,
+                          obscure: true,
+                        ),
+                        _buildInputField(
+                          label: 'Confirm Password',
+                          hint: 'Confirm Password',
+                          icon: Icons.lock_outline,
+                          controller: confirmPassCtrl,
+                          obscure: true,
+                        ),
 
                         // Checkbox điều khoản
                         Row(
@@ -75,44 +116,90 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Checkbox(
                               value: isAgreed,
                               activeColor: primaryBlue,
-                              onChanged: (val) => setState(() => isAgreed = val ?? false),
+                              onChanged: (val) =>
+                                  setState(() => isAgreed = val ?? false),
                             ),
-                            const Expanded(child: Text('I agree with terms and privacy policy.', style: TextStyle(color: Colors.grey, fontSize: 13))),
+                            const Expanded(
+                              child: Text(
+                                'I agree with terms and privacy policy.',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
 
                         if (vm.errorMessage != null)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
-                            child: Text(vm.errorMessage!, style: const TextStyle(color: Colors.red), textAlign: TextAlign.center),
+                            child: Text(
+                              vm.errorMessage!,
+                              style: const TextStyle(color: Colors.red),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
 
                         const SizedBox(height: 20),
 
                         // Nút Sign Up
                         vm.isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryBlue,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 16),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                elevation: 0,
+                            ? const Center(child: CircularProgressIndicator())
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryBlue,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  elevation: 0,
+                                ),
+                                onPressed: isAgreed
+                                    ? () async {
+                                        if (passCtrl.text !=
+                                            confirmPassCtrl.text) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Mật khẩu không khớp!',
+                                              ),
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                        final ok = await vm.register(
+                                          nameCtrl.text,
+                                          emailCtrl.text,
+                                          passCtrl.text,
+                                        );
+                                        if (ok) {
+                                          Navigator.pop(context);
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Đăng ký thành công!',
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    : null, // Vô hiệu hóa nếu chưa check agreement
+                                child: const Text(
+                                  'SIGN UP',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                              onPressed: isAgreed ? () async {
-                                if (passCtrl.text != confirmPassCtrl.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Mật khẩu không khớp!')));
-                                  return;
-                                }
-                                final ok = await vm.register(nameCtrl.text, emailCtrl.text, passCtrl.text);
-                                if (ok) {
-                                  Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Đăng ký thành công!')));
-                                }
-                              } : null, // Vô hiệu hóa nếu chưa check agreement
-                              child: const Text('SIGN UP', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                            ),
                       ],
                     ),
                   ),
@@ -123,7 +210,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     children: [
                       const Expanded(child: Divider(color: Colors.grey)),
-                      const Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: Text("or", style: TextStyle(color: Colors.grey))),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("or", style: TextStyle(color: Colors.grey)),
+                      ),
                       const Expanded(child: Divider(color: Colors.grey)),
                     ],
                   ),
@@ -132,11 +222,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialButton(icon: Icons.facebook, color: Colors.blue),
+                      _buildSocialButton(
+                        icon: Icons.facebook,
+                        color: Colors.blue,
+                      ),
                       const SizedBox(width: 20),
-                      _buildSocialButton(icon: Icons.apple, color: Colors.black),
+                      _buildSocialButton(
+                        icon: Icons.apple,
+                        color: Colors.black,
+                      ),
                       const SizedBox(width: 20),
-                      _buildSocialButton(icon: Icons.g_mobiledata, color: Colors.red),
+                      _buildSocialButton(
+                        icon: Icons.g_mobiledata,
+                        color: Colors.red,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 30),
@@ -145,10 +244,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account? ", style: TextStyle(color: Colors.grey)),
+                      const Text(
+                        "Already have an account? ",
+                        style: TextStyle(color: Colors.grey),
+                      ),
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: const Text('Login', style: TextStyle(color: primaryBlue, fontWeight: FontWeight.bold)),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                            color: primaryBlue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -173,7 +281,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Color(0xFF616161), fontSize: 13)), // Nhãn NẰM TRÊN
+        Text(
+          label,
+          style: const TextStyle(color: Color(0xFF616161), fontSize: 13),
+        ), // Nhãn NẰM TRÊN
         const SizedBox(height: 6),
         TextField(
           controller: controller,
@@ -183,9 +294,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hintText: hint, // Placeholder NẰM TRONG
             hintStyle: TextStyle(color: Colors.grey[400]),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[300]!), borderRadius: BorderRadius.circular(8)),
-            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Color(0xFF2344D1)), borderRadius: BorderRadius.circular(8)),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey[300]!),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Color(0xFF2344D1)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -196,13 +316,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // Widget hỗ trợ xây dựng nút mạng xã hội
   Widget _buildSocialButton({required IconData icon, required Color color}) {
     return Container(
-      width: 50, height: 50,
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey[300]!),
       ),
-      child: IconButton(icon: Icon(icon, color: color), onPressed: () {}),
+      child: IconButton(
+        icon: Icon(icon, color: color),
+        onPressed: () {},
+      ),
     );
   }
 }
