@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Thêm thư viện Provider
+import '../viewmodels/cart_viewmodel.dart'; // Thêm CartViewModel để lấy số lượng
 import 'products_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.onTabChange});
 
-  final Function(int) onTabChange;
+  final Function(int)? onTabChange;
 
   @override
   Widget build(BuildContext context) {
@@ -21,38 +23,63 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: const Color.fromARGB(255, 213, 107, 229),
+        backgroundColor: const Color(0xff8E2DE2),
 
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_cart_outlined),
-                onPressed: () {},
-              ),
-              Positioned(
-                right: 6,
-                top: 6,
-                child: Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Text(
-                    "3",
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
+          // SỬA Ở ĐÂY: Dùng GestureDetector để bấm mượt hơn và bao trọn cái icon
+          GestureDetector(
+            onTap: () {
+              // Gọi hàm chuyển sang Tab số 2 (Tab Giỏ hàng)
+              onTabChange?.call(2);
+            },
+            child: Container(
+              color: Colors.transparent, // Giúp vùng bấm rộng ra
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.white,
+                      size: 26,
                     ),
                   ),
-                ),
+                  // SỬA Ở ĐÂY: Hiển thị số lượng thật từ CartViewModel
+                  Positioned(
+                    right: 2,
+                    top: 6,
+                    child: Consumer<CartViewModel>(
+                      builder: (context, cartVM, child) {
+                        // Nếu giỏ hàng trống thì ẩn chấm đỏ
+                        if (cartVM.totalCount == 0) return const SizedBox();
+
+                        return Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            "${cartVM.totalCount}",
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
+
           IconButton(
-            icon: const Icon(Icons.chat_bubble_outline),
+            icon: const Icon(Icons.chat_bubble_outline, color: Colors.white),
             onPressed: () {},
           ),
 
@@ -123,7 +150,7 @@ class HomeScreen extends StatelessWidget {
 
                   GestureDetector(
                     onTap: () {
-                      onTabChange?.call(1);
+                      onTabChange?.call(1); // Chuyển sang Tab Sản phẩm
                     },
                     child: const Row(
                       children: [
@@ -190,6 +217,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -203,7 +231,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xff6A5AE0), Color(0xff8E7CFF)],
+              colors: [Color(0xff8E2DE2), Color(0xff4A00E0)],
             ),
             shape: BoxShape.circle,
           ),
@@ -233,7 +261,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             const Positioned(
               bottom: 10,
               left: 10,

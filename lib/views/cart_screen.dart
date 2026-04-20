@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/cart_viewmodel.dart';
 import '../models/cart_item.dart';
+import '../viewmodels/auth_viewmodel.dart';
+import 'checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  // SỬA: Đã thêm biến nhận hàm chuyển tab
+  final Function(int)? onTabChange;
+
+  const CartScreen({super.key, this.onTabChange});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -35,21 +40,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xff8E2DE2),
-        leading: GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-        ),
+        // Đã xóa nút leading (Back) để không bị lỗi màn hình đen
       ),
 
       body: Consumer<CartViewModel>(
@@ -277,13 +268,29 @@ class _CartScreenState extends State<CartScreen> {
             height: 54,
             child: ElevatedButton(
               onPressed: () {
-                // TODO: điều hướng đến màn hình thanh toán
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Chức năng thanh toán đang phát triển..."),
-                    backgroundColor: Color(0xff8E2DE2),
-                  ),
+                final authVM = Provider.of<AuthViewModel>(
+                  context,
+                  listen: false,
                 );
+
+                // Lấy ID từ Map currentUser. Dùng toString() để đảm bảo không lỗi
+                final userId = authVM.currentUser?['id']?.toString();
+
+                if (userId != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CheckoutScreen(userId: userId),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Vui lòng đăng nhập để tiếp tục!"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff8E2DE2),
@@ -326,7 +333,10 @@ class _CartScreenState extends State<CartScreen> {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context),
+            // SỬA: Chuyển tab sang trang Sản phẩm thay vì dùng lệnh Navigator.pop
+            onPressed: () {
+              widget.onTabChange?.call(1);
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xff8E2DE2),
               foregroundColor: Colors.white,

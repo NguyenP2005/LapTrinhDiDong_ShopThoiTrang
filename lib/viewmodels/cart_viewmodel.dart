@@ -26,7 +26,7 @@ class CartViewModel extends ChangeNotifier {
     await loadCart();
   }
 
-  // ← THÊM HÀM NÀY: cập nhật số lượng trực tiếp
+  // cập nhật số lượng trực tiếp
   Future<void> updateQuantity(String productId, int newQuantity) async {
     await _cartService.updateQuantity(productId, newQuantity);
     await loadCart();
