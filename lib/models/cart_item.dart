@@ -28,9 +28,9 @@ class CartItem {
     return CartItem(
       productId: map['productId'],
       name: map['name'],
-      price: map['price'],
+      price: (map['price'] as num).toDouble(),
       image: map['image'],
-      quantity: map['quantity'],
+      quantity: map['quantity'] as int,
     );
   }
 }
