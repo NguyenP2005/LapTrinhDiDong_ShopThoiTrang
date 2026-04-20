@@ -11,6 +11,7 @@ import 'home_screen.dart';
 import 'products_list_screen.dart';
 import 'cart_screen.dart';
 import 'my_orders_screen.dart';
+import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -59,9 +60,7 @@ class _MainScreenState extends State<MainScreen> {
       const ProductListScreen(), // Index 1
       CartScreen(onTabChange: changeTab), // Index 2
       MyOrdersScreen(userId: userId), // Index 3
-      const Scaffold(
-        body: Center(child: Text('Màn hình Tài khoản đang phát triển')),
-      ),
+      const ProfileScreen(),
     ];
 
     // WillPopScope dùng để điều khiển nút Back vật lý của điện thoại
