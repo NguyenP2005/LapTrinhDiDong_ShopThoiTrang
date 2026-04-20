@@ -7,39 +7,42 @@ class AuthViewModel extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
 
+  Map<String, dynamic>? currentUser;
+
   Future<bool> login(String email, String password) async {
-      isLoading = true;
-      errorMessage = null;
-      notifyListeners();
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
 
-      try {
-        final cleanEmail = email.trim();
-        final cleanPassword = password.trim();
+    try {
+      final cleanEmail = email.trim();
+      final cleanPassword = password.trim();
 
-        // Đổi chiến thuật: Chỉ nhờ json-server lọc cái Email thôi
-        final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
-        final data = jsonDecode(res.body) as List;
+      final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final data = jsonDecode(res.body) as List;
 
-        // Nếu server tìm thấy tài khoản có email này
-        if (data.isNotEmpty) {
-          final user = data[0]; // Rút data của ông user đó ra
+      if (data.isNotEmpty) {
+        final user = data[0];
 
-          // Tự check password bằng code Dart (dùng toString để né lỗi kiểu dữ liệu)
-          if (user['password'].toString() == cleanPassword) {
-            isLoading = false; notifyListeners();
-            return true; // PASS TRÙNG KHỚP -> ĐĂNG NHẬP THÀNH CÔNG!
-          }
+        if (user['password'].toString() == cleanPassword) {
+          // LƯU Ý 2: LƯU LẠI THÔNG TIN VÀO BIẾN SAU KHI CHECK PASS ĐÚNG
+          currentUser = user;
+
+          isLoading = false;
+          notifyListeners();
+          return true; // ĐĂNG NHẬP THÀNH CÔNG!
         }
-
-        // Nếu sai email hoặc pass không khớp
-        errorMessage = "Sai email hoặc mật khẩu!";
-      } catch (e) {
-        errorMessage = "Lỗi kết nối server!";
       }
 
-      isLoading = false; notifyListeners();
-      return false;
+      errorMessage = "Sai email hoặc mật khẩu!";
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
     }
+
+    isLoading = false;
+    notifyListeners();
+    return false;
+  }
 
   Future<bool> register(String name, String email, String password) async {
     isLoading = true;
@@ -49,12 +52,15 @@ class AuthViewModel extends ChangeNotifier {
     try {
       // Cắt sạch khoảng trắng lúc đăng ký
       final cleanEmail = email.trim();
-      final check = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final check = await http.get(
+        Uri.parse('$baseUrl/users?email=$cleanEmail'),
+      );
       final existing = jsonDecode(check.body) as List;
 
       if (existing.isNotEmpty) {
         errorMessage = "Email đã tồn tại!";
-        isLoading = false; notifyListeners();
+        isLoading = false;
+        notifyListeners();
         return false;
       }
 
@@ -66,12 +72,13 @@ class AuthViewModel extends ChangeNotifier {
           'email': cleanEmail,
           'password': password.trim(),
           'avatar': 'https://i.pravatar.cc/150', // Tự động thêm avatar
-          'role': 'user' // Tự động cấp quyền user
-        })
+          'role': 'user', // Tự động cấp quyền user
+        }),
       );
 
       if (res.statusCode == 201) {
-        isLoading = false; notifyListeners();
+        isLoading = false;
+        notifyListeners();
         return true;
       } else {
         errorMessage = "Lỗi khi đăng ký!";
@@ -80,7 +87,8 @@ class AuthViewModel extends ChangeNotifier {
       errorMessage = "Lỗi kết nối server!";
     }
 
-    isLoading = false; notifyListeners();
+    isLoading = false;
+    notifyListeners();
     return false;
   }
 }
