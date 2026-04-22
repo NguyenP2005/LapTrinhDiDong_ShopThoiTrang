@@ -553,6 +553,14 @@
       "address": "asdsadasd",
       "is_default": false,
       "id": "KlfJR37e15Y"
+    },
+    {
+      "user_id": "1",
+      "receiver_name": "admin",
+      "phone": "0900000000",
+      "address": "asdasdasd",
+      "is_default": true,
+      "id": "GEMn0wqxUWQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

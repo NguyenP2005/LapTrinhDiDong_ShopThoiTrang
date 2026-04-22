@@ -1,4 +1,4 @@
-import 'dart:io'; // Để dùng File load ảnh local
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,20 +8,26 @@ import 'login_screen.dart';
 import 'my_orders_screen.dart';
 import 'settings_screen.dart';
 import 'shipping_address_screen.dart';
+import 'user_management_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  // Hàm chọn ảnh từ thư viện điện thoại
+  // Hàm xử lý chọn ảnh từ thư viện
   Future<void> _pickImage(BuildContext context, AuthViewModel authVM) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      await authVM.updateAvatar(pickedFile.path); // Lưu đường dẫn ảnh local vào db
+      bool success = await authVM.updateAvatar(pickedFile.path);
+      if (context.mounted && success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cập nhật ảnh đại diện thành công!')),
+        );
+      }
     }
   }
 
-  // Hàm hiển thị Avatar (Hỗ trợ cả link web lẫn file local)
+  // Hàm xử lý hiển thị ảnh (từ URL hoặc từ file máy)
   ImageProvider _getAvatarProvider(String? avatarPath) {
     if (avatarPath == null || avatarPath.isEmpty) {
       return const NetworkImage('https://i.pravatar.cc/150');
@@ -56,30 +62,49 @@ class ProfileScreen extends StatelessWidget {
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
-          child: Container(color: Colors.grey[200], height: 1.0),
+          child: Container(color: isDark ? Colors.grey[850] : Colors.grey[200], height: 1.0),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- THÔNG TIN CÁ NHÂN ---
+            // --- THÔNG TIN TÀI KHOẢN ---
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(
                 children: [
-                  Container(
-                    width: 80, height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey[300]!, width: 1),
-                      image: DecorationImage(
-                        image: _getAvatarProvider(user?['avatar']),
-                        fit: BoxFit.cover,
-                      ),
+                  // Khu vực Avatar
+                  GestureDetector(
+                    onTap: () => _pickImage(context, authVM),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey[300]!, width: 1),
+                            image: DecorationImage(
+                              image: _getAvatarProvider(user?['avatar']),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
+                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 14),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 20),
+                  // Thông tin Text
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,24 +114,27 @@ class ProfileScreen extends StatelessWidget {
                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                         ),
                         const SizedBox(height: 4),
-                        Text(user?['email'] ?? '', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-                        const SizedBox(height: 2),
-                        if (user?['phone'] != null) Text(user!['phone'], style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                        Text(
+                          user?['email'] ?? '',
+                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                        ),
+                        if (user?['phone'] != null) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            user!['phone'],
+                            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          ),
+                        ],
                       ],
                     ),
                   ),
-                  // Nút Đổi Avatar
-                  IconButton(
-                    icon: const Icon(Icons.edit_outlined, color: Colors.grey),
-                    onPressed: () => _pickImage(context, authVM),
-                  )
                 ],
               ),
             ),
 
             Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
 
-            // --- MENU ---
+            // --- NGHIỆP VỤ MUA SẮM ---
             _buildSectionTitle('SHOPPING'),
             _buildMenuItem(context, Icons.shopping_bag_outlined, 'My Orders', onTap: () {
               final userId = user?['id']?.toString() ?? "";
@@ -124,11 +152,21 @@ class ProfileScreen extends StatelessWidget {
 
             Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
 
+            // --- CÀI ĐẶT ỨNG DỤNG ---
             _buildSectionTitle('SETTINGS'),
             _buildMenuItem(context, Icons.settings_outlined, 'App Settings', onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
             }),
             _buildMenuItem(context, Icons.help_outline, 'Help & Support', onTap: () {}),
+
+            // --- QUẢN TRỊ VIÊN (Chỉ hiện nếu role là admin) ---
+            if (user?['role'] == 'admin') ...[
+              Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
+              _buildSectionTitle('ADMINISTRATION'),
+              _buildMenuItem(context, Icons.manage_accounts_outlined, 'User Management', onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const UserManagementScreen()));
+              }),
+            ],
 
             Divider(thickness: 1, color: isDark ? Colors.grey[800] : Colors.grey[200]),
 
@@ -137,7 +175,11 @@ class ProfileScreen extends StatelessWidget {
               onTap: () async {
                 await authVM.logout();
                 if (!context.mounted) return;
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+                );
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -145,7 +187,10 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Icon(Icons.logout, color: Color(0xFFD32F2F)),
                     SizedBox(width: 16),
-                    Text('Log Out', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFFD32F2F))),
+                    Text(
+                      'Log Out',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFFD32F2F)),
+                    ),
                   ],
                 ),
               ),
@@ -157,19 +202,25 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  // Widget phụ trợ tạo tiêu đề mục
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 24, top: 24, bottom: 8),
-      child: Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.2)),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.2),
+      ),
     );
   }
 
+  // Widget phụ trợ tạo các dòng menu
   Widget _buildMenuItem(BuildContext context, IconData icon, String title, {required VoidCallback onTap}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-      leading: Icon(icon, color: Theme.of(context).iconTheme.color),
+      leading: Icon(icon, color: isDark ? Colors.white70 : Colors.black87),
       title: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+      trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
       onTap: onTap,
     );
   }

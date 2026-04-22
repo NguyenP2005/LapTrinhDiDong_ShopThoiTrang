@@ -45,6 +45,14 @@ class AuthViewModel extends ChangeNotifier {
       if (data.isNotEmpty) {
         final user = data[0];
         if (user['password'].toString() == cleanPassword) {
+
+          if (user['isLocked'] == true) {
+            errorMessage = "Tài khoản của bạn đã bị khóa bởi Admin!";
+            isLoading = false;
+            notifyListeners();
+            return false;
+          }
+
           currentUser = user;
           failedAttempts = 0; // Reset số lần sai
 

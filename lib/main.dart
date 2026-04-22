@@ -10,7 +10,8 @@ import 'viewmodels/cart_viewmodel.dart';
 import 'viewmodels/address_viewmodel.dart';
 import 'viewmodels/order_viewmodel.dart';
 import 'viewmodels/payment_viewmodel.dart';
-import 'viewmodels/settings_viewmodel.dart'; // THÊM DÒNG NÀY
+import 'viewmodels/settings_viewmodel.dart';
+import 'viewmodels/user_management_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AddressViewModel()),
         ChangeNotifierProvider(create: (_) => OrderViewModel()),
         ChangeNotifierProvider(create: (_) => PaymentViewModel()),
+        ChangeNotifierProvider(create: (_) => UserManagementViewModel()),
       ],
       // Dùng Consumer để lắng nghe thay đổi Dark Mode
       child: Consumer<SettingsViewModel>(
