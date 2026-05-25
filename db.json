@@ -6,7 +6,8 @@
       "password": "123456",
       "name": "Admin",
       "avatar": "https://i.pravatar.cc/150",
-      "role": "admin"
+      "role": "admin",
+      "isLocked": false
     },
     {
       "id": "2",
@@ -14,7 +15,8 @@
       "password": "123456",
       "name": "Nguyễn Văn A",
       "avatar": "https://i.pravatar.cc/150",
-      "role": "user"
+      "role": "admin",
+      "isLocked": false
     },
     {
       "id": "3",
@@ -87,6 +89,15 @@
       "avatar": "https://i.pravatar.cc/150",
       "role": "user",
       "id": "-XfdykulJ4Q"
+    },
+    {
+      "name": "nguyen",
+      "phone": "0900000000",
+      "email": "nguyen123@gmail.com",
+      "password": "Nguyen123",
+      "avatar": "https://i.pravatar.cc/150?img=11",
+      "role": "customer",
+      "id": "pa8nr0ep5r4"
     }
   ],
   "categories": [

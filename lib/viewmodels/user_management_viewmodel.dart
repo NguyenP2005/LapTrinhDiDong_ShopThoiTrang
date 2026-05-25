@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/user_model.dart'; // Đừng quên import Model
 
 class UserManagementViewModel extends ChangeNotifier {
   static const String baseUrl = "http://10.0.2.2:3000";
-  List<dynamic> users = [];
+
+  List<UserModel> users = []; // Đổi từ dynamic sang UserModel
   bool isLoading = false;
 
-  // 1. Lấy danh sách tài khoản
   Future<void> loadUsers() async {
     isLoading = true;
-    notifyListeners();
+    // Dùng Future.microtask để tránh lỗi "setState or markNeedsBuild called during build"
+    Future.microtask(() => notifyListeners());
+
     try {
       final res = await http.get(Uri.parse('$baseUrl/users'));
       if (res.statusCode == 200) {
-        users = jsonDecode(res.body);
+        final List<dynamic> data = jsonDecode(res.body);
+        users = data.map((json) => UserModel.fromJson(json)).toList();
       }
     } catch (e) {
-      print("Lỗi load users: $e");
+      debugPrint("Lỗi load users: $e");
     }
+
     isLoading = false;
     notifyListeners();
   }
 
-  // 2. Khóa / Mở khóa tài khoản
   Future<void> toggleUserLock(String userId, bool isCurrentlyLocked) async {
     try {
       final res = await http.patch(
@@ -32,16 +36,15 @@ class UserManagementViewModel extends ChangeNotifier {
         body: jsonEncode({'isLocked': !isCurrentlyLocked}),
       );
       if (res.statusCode == 200) {
-        await loadUsers(); // Load lại danh sách sau khi sửa
+        await loadUsers(); // Gọi lại danh sách để update UI
       }
     } catch (e) {
-      print("Lỗi khóa tài khoản: $e");
+      debugPrint("Lỗi khóa tài khoản: $e");
     }
   }
 
-  // 3. Phân quyền Quản trị / Khách hàng
   Future<void> toggleUserRole(String userId, String currentRole) async {
-    String newRole = currentRole == 'admin' ? 'user' : 'admin';
+    String newRole = currentRole == 'admin' ? 'customer' : 'admin';
     try {
       final res = await http.patch(
         Uri.parse('$baseUrl/users/$userId'),
@@ -52,7 +55,7 @@ class UserManagementViewModel extends ChangeNotifier {
         await loadUsers();
       }
     } catch (e) {
-      print("Lỗi phân quyền: $e");
+      debugPrint("Lỗi phân quyền: $e");
     }
   }
 }

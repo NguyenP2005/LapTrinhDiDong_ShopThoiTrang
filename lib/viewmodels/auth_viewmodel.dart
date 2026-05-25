@@ -10,11 +10,17 @@ class AuthViewModel extends ChangeNotifier {
   String? errorMessage;
   Map<String, dynamic>? currentUser;
 
-  // Chống Spam
+  // Hỗ trợ lấy nhanh role của user hiện tại
+  String? get userRole => currentUser?['role'];
+
+  // Biến phục vụ tính năng chống Spam đăng nhập
   int failedAttempts = 0;
   bool isLocked = false;
 
-  // Kiểm tra xem user đã đăng nhập từ trước chưa (Auto Login)
+  // Biến phục vụ luồng Quên mật khẩu (Lưu tạm ID user cần reset)
+  String? resetUserId;
+
+  // 1. Kiểm tra xem user đã đăng nhập từ trước chưa (Auto Login)
   Future<void> checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final userStr = prefs.getString('current_user');
@@ -24,6 +30,7 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
+  // 2. Logic Đăng nhập (Có kèm bộ đếm chống Spam & Check khóa tài khoản)
   Future<bool> login(String email, String password) async {
     if (isLocked) {
       errorMessage = "Nhập sai quá nhiều. Vui lòng đợi 30 giây!";
@@ -45,7 +52,7 @@ class AuthViewModel extends ChangeNotifier {
       if (data.isNotEmpty) {
         final user = data[0];
         if (user['password'].toString() == cleanPassword) {
-
+          // Kiểm tra xem tài khoản có bị Admin khóa không
           if (user['isLocked'] == true) {
             errorMessage = "Tài khoản của bạn đã bị khóa bởi Admin!";
             isLoading = false;
@@ -54,7 +61,7 @@ class AuthViewModel extends ChangeNotifier {
           }
 
           currentUser = user;
-          failedAttempts = 0; // Reset số lần sai
+          failedAttempts = 0; // Reset số lần sai nếu đăng nhập đúng
 
           // Lưu thông tin vào bộ nhớ thiết bị để lần sau Auto Login
           final prefs = await SharedPreferences.getInstance();
@@ -63,11 +70,11 @@ class AuthViewModel extends ChangeNotifier {
 
           isLoading = false;
           notifyListeners();
-          return true; // THÀNH CÔNG
+          return true; // Đăng nhập thành công
         }
       }
 
-      // Xử lý sai mật khẩu/email (Spam counter)
+      // Xử lý khi sai mật khẩu hoặc sai email
       failedAttempts++;
       if (failedAttempts >= 3) {
         _lockLogin();
@@ -83,7 +90,7 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // Khóa 30 giây
+  // Hàm khóa đăng nhập tạm thời 30 giây khi spam sai 3 lần
   void _lockLogin() {
     isLocked = true;
     errorMessage = "Khóa đăng nhập 30 giây do sai quá nhiều lần.";
@@ -96,54 +103,55 @@ class AuthViewModel extends ChangeNotifier {
     });
   }
 
-  // 2. HÀM ĐĂNG KÝ (Đã thêm Phone)
-    Future<bool> register(String name, String phone, String email, String password) async {
-      isLoading = true;
-      errorMessage = null;
-      notifyListeners();
+  // 3. Logic Đăng ký tài khoản mới (Mặc định quyền là customer)
+  Future<bool> register(String name, String phone, String email, String password) async {
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
 
-      try {
-        final cleanEmail = email.trim();
-        final check = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
-        final existing = jsonDecode(check.body) as List;
+    try {
+      final cleanEmail = email.trim();
+      final check = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final existing = jsonDecode(check.body) as List;
 
-        if (existing.isNotEmpty) {
-          errorMessage = "Email đã tồn tại!";
-          isLoading = false;
-          notifyListeners();
-          return false;
-        }
-
-        final res = await http.post(
-          Uri.parse('$baseUrl/users'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'name': name.trim(),
-            'phone': phone.trim(), // LƯU THÊM SỐ ĐIỆN THOẠI
-            'email': cleanEmail,
-            'password': password.trim(),
-            'avatar': 'https://i.pravatar.cc/150?img=11', // Lấy avatar ngẫu nhiên cho đẹp
-            'role': 'user',
-          }),
-        );
-
-        if (res.statusCode == 201) {
-          isLoading = false;
-          notifyListeners();
-          return true;
-        } else {
-          errorMessage = "Lỗi khi đăng ký!";
-        }
-      } catch (e) {
-        errorMessage = "Lỗi kết nối server!";
+      if (existing.isNotEmpty) {
+        errorMessage = "Email đã tồn tại!";
+        isLoading = false;
+        notifyListeners();
+        return false;
       }
 
-      isLoading = false;
-      notifyListeners();
-      return false;
+      final res = await http.post(
+        Uri.parse('$baseUrl/users'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name.trim(),
+          'phone': phone.trim(),
+          'email': cleanEmail,
+          'password': password.trim(),
+          'avatar': 'https://i.pravatar.cc/150?img=11',
+          'role': 'customer', // Mặc định người mới là khách hàng
+          'isLocked': false,  // Mặc định không bị khóa
+        }),
+      );
+
+      if (res.statusCode == 201) {
+        isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Lỗi khi đăng ký!";
+      }
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
     }
 
-// Cập nhật Avatar
+    isLoading = false;
+    notifyListeners();
+    return false;
+  }
+
+  // 4. Cập nhật ảnh đại diện (Avatar) cho User
   Future<bool> updateAvatar(String newAvatarPath) async {
     if (currentUser == null) return false;
     final userId = currentUser!['id'];
@@ -156,23 +164,99 @@ class AuthViewModel extends ChangeNotifier {
       );
 
       if (res.statusCode == 200) {
-        currentUser!['avatar'] = newAvatarPath; // Cập nhật local
+        currentUser!['avatar'] = newAvatarPath; // Cập nhật trạng thái local hiện tại
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('current_user', jsonEncode(currentUser));
         notifyListeners();
         return true;
       }
     } catch (e) {
-      print("Lỗi update avatar: $e");
+      debugPrint("Lỗi update avatar: $e");
     }
     return false;
   }
 
-  // Đăng xuất
+  // 5. Đăng xuất tài khoản
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.clear(); // Xóa sạch dữ liệu phiên đăng nhập
+    await prefs.clear(); // Xóa sạch dữ liệu phiên làm việc trên thiết bị
     currentUser = null;
     notifyListeners();
+  }
+
+  // ==========================================================================
+  // LOGIC FORGOT PASSWORD (QUÊN MẬT KHẨU)
+  // ==========================================================================
+
+  // Bước A: Kiểm tra Email có tồn tại trong db.json để cấp quyền reset không
+  Future<bool> checkEmailForReset(String email) async {
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      final cleanEmail = email.trim();
+      final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final data = jsonDecode(res.body) as List;
+
+      if (data.isNotEmpty) {
+        resetUserId = data[0]['id'].toString(); // Ghi nhớ ID user phục vụ cho Bước C
+        isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Email không tồn tại trên hệ thống!";
+      }
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
+    }
+
+    isLoading = false;
+    notifyListeners();
+    return false;
+  }
+
+  // Bước B: Xác thực mã OTP (Giả lập kiểm tra mã code cố định là 1234)
+  bool verifyOTP(String otp) {
+    if (otp == '1234') {
+      errorMessage = null;
+      notifyListeners();
+      return true;
+    }
+    errorMessage = "Mã OTP không chính xác (Mã giả lập thử nghiệm: 1234)";
+    notifyListeners();
+    return false;
+  }
+
+  // Bước C: Gọi API PATCH cập nhật mật khẩu mới đè lên tài khoản dựa trên resetUserId
+  Future<bool> resetPassword(String newPassword) async {
+    if (resetUserId == null) return false;
+
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
+
+    try {
+      final res = await http.patch(
+        Uri.parse('$baseUrl/users/$resetUserId'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'password': newPassword.trim()}),
+      );
+
+      if (res.statusCode == 200) {
+        resetUserId = null; // Đổi thành công thì xóa ID lưu tạm
+        isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        errorMessage = "Lỗi khi cập nhật mật khẩu mới!";
+      }
+    } catch (e) {
+      errorMessage = "Lỗi kết nối server!";
+    }
+
+    isLoading = false;
+    notifyListeners();
+    return false;
   }
 }

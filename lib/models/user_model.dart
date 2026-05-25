@@ -5,6 +5,7 @@ class UserModel {
   final String password;
   final String avatar;
   final String role;
+  final bool isLocked; // Bổ sung trường này
 
   UserModel({
     required this.id,
@@ -13,6 +14,7 @@ class UserModel {
     required this.password,
     required this.avatar,
     required this.role,
+    this.isLocked = false, // Mặc định là false
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class UserModel {
       password: json['password'] ?? '',
       avatar: json['avatar'] ?? 'https://i.pravatar.cc/150',
       role: json['role'] ?? 'user',
+      isLocked: json['isLocked'] ?? false, // Parse từ JSON
     );
   }
 
@@ -33,5 +36,6 @@ class UserModel {
     'password': password,
     'avatar': avatar,
     'role': role,
+    'isLocked': isLocked,
   };
 }

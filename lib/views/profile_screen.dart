@@ -8,7 +8,7 @@ import 'login_screen.dart';
 import 'my_orders_screen.dart';
 import 'settings_screen.dart';
 import 'shipping_address_screen.dart';
-import 'user_management_screen.dart';
+import 'admin_users_screen.dart'; // Import đúng file màn hình mới
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -55,8 +55,8 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             color: isDark ? Colors.white : Colors.black,
             fontWeight: FontWeight.w800,
-            letterSpacing: 1.5,
-            fontSize: 18,
+            letterSpacing: 2.0, // Tăng nhẹ khoảng cách chữ cho sang trọng
+            fontSize: 16,
           ),
         ),
         centerTitle: true,
@@ -104,6 +104,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 20),
+
                   // Thông tin Text
                   Expanded(
                     child: Column(
@@ -111,18 +112,18 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Text(
                           user?['name']?.toUpperCase() ?? 'GUEST',
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           user?['email'] ?? '',
-                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 13, color: Colors.grey[600]),
                         ),
                         if (user?['phone'] != null) ...[
                           const SizedBox(height: 2),
                           Text(
                             user!['phone'],
-                            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                            style: TextStyle(fontSize: 13, color: Colors.grey[600]),
                           ),
                         ],
                       ],
@@ -132,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
 
-            Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
+            Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[50]),
 
             // --- NGHIỆP VỤ MUA SẮM ---
             _buildSectionTitle('SHOPPING'),
@@ -150,7 +151,7 @@ class ProfileScreen extends StatelessWidget {
               }
             }),
 
-            Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
+            Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[50]),
 
             // --- CÀI ĐẶT ỨNG DỤNG ---
             _buildSectionTitle('SETTINGS'),
@@ -159,16 +160,24 @@ class ProfileScreen extends StatelessWidget {
             }),
             _buildMenuItem(context, Icons.help_outline, 'Help & Support', onTap: () {}),
 
-            // --- QUẢN TRỊ VIÊN (Chỉ hiện nếu role là admin) ---
+            // --- QUẢN TRỊ VIÊN (Chỉ hiện khi tài khoản là Admin) ---
             if (user?['role'] == 'admin') ...[
-              Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[100]),
+              Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[50]),
               _buildSectionTitle('ADMINISTRATION'),
-              _buildMenuItem(context, Icons.manage_accounts_outlined, 'User Management', onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const UserManagementScreen()));
-              }),
+              _buildMenuItem(
+                context,
+                Icons.people_outline,
+                'User Management',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AdminUsersScreen())
+                  );
+                }
+              ),
             ],
 
-            Divider(thickness: 1, color: isDark ? Colors.grey[800] : Colors.grey[200]),
+            Divider(thickness: 8, color: isDark ? Colors.grey[900] : Colors.grey[50]),
 
             // --- ĐĂNG XUẤT ---
             InkWell(
@@ -181,15 +190,15 @@ class ProfileScreen extends StatelessWidget {
                   (route) => false,
                 );
               },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                 child: Row(
                   children: [
-                    Icon(Icons.logout, color: Color(0xFFD32F2F)),
-                    SizedBox(width: 16),
+                    const Icon(Icons.logout, color: Colors.black87), // Chuyển nút đỏ sang đen cho đúng concept Minimalist
+                    const SizedBox(width: 16),
                     Text(
                       'Log Out',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xFFD32F2F)),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: isDark ? Colors.white : Colors.black87),
                     ),
                   ],
                 ),
@@ -208,7 +217,7 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.only(left: 24, top: 24, bottom: 8),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.2),
+        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey, letterSpacing: 1.5),
       ),
     );
   }
@@ -217,9 +226,9 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildMenuItem(BuildContext context, IconData icon, String title, {required VoidCallback onTap}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-      leading: Icon(icon, color: isDark ? Colors.white70 : Colors.black87),
-      title: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 2),
+      leading: Icon(icon, color: isDark ? Colors.white70 : Colors.black87, size: 22),
+      title: Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
       onTap: onTap,
     );
