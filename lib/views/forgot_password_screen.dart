@@ -101,7 +101,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               onPressed: () async {
                 if (_formKeyEmail.currentState!.validate()) {
                   final ok = await vm.checkEmailForReset(_emailCtrl.text);
-                  if (ok) _nextPage();
+                  if (ok && mounted) {
+                    // Hiển thị mô phỏng tin nhắn SMS với mã OTP ngẫu nhiên
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            const Icon(Icons.sms, color: Colors.white, size: 20),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                '📱 TIN NHẮN SMS: Mã OTP đặt lại mật khẩu của bạn là: ${vm.generatedOtp}. Có hiệu lực trong 5 phút.',
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.green[700],
+                        duration: const Duration(seconds: 10),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                    _nextPage();
+                  }
                 }
               },
             ),
@@ -128,12 +150,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const SizedBox(height: 40),
             _buildMinimalInput(
               label: 'OTP CODE',
-              hint: 'Enter 1234 to verify',
+              hint: 'Nhập mã 6 chữ số từ tin nhắn SMS',
               controller: _otpCtrl,
               icon: Icons.lock_open_outlined,
               isNumber: true,
               validator: (val) {
                 if (val == null || val.isEmpty) return 'Vui lòng nhập mã OTP';
+                if (val.trim().length != 6) return 'Mã OTP phải có đúng 6 chữ số';
                 return null;
               }
             ),

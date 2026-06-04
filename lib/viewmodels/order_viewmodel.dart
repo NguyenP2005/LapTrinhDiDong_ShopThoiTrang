@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/order_model.dart';
 import '../models/order_item_model.dart';
 import '../services/order_service.dart';
+import '../services/api_service.dart';
 
 class OrderViewModel extends ChangeNotifier {
   final OrderService _orderService = OrderService();
@@ -31,6 +32,22 @@ class OrderViewModel extends ChangeNotifier {
 
     try {
       _orders = await _orderService.getOrdersByUserId(userId);
+    } catch (e) {
+      _errorMessage = e.toString().replaceAll('Exception: ', '');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // Lấy TẤT CẢ đơn hàng (Dùng cho Admin)
+  Future<void> loadAllOrders() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _orders = await _orderService.getAllOrders();
     } catch (e) {
       _errorMessage = e.toString().replaceAll('Exception: ', '');
     } finally {
@@ -76,13 +93,15 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
+      final apiService = ApiService();
+
       // 1. Tạo order trên server
       final createdOrder = await _orderService.createOrder(order);
 
       // 2. Map lại OrderId cho từng item
       final itemsWithOrderId = items.map((item) {
         return OrderItemModel(
-          id: '', // Để rỗng cho json-server tự tạo ID
+          id: '',
           orderId: createdOrder.id,
           productId: item.productId,
           productName: item.productName,
@@ -94,6 +113,19 @@ class OrderViewModel extends ChangeNotifier {
 
       // 3. Đẩy items lên server
       await _orderService.addOrderItems(itemsWithOrderId);
+
+      // 4. Trừ tồn kho từng sản phẩm
+      for (final item in items) {
+        try {
+          final product = await apiService.getProductById(item.productId);
+          if (product != null) {
+            final newStock = (product.stock - item.quantity).clamp(0, product.stock);
+            await apiService.updateProductStock(item.productId, newStock);
+          }
+        } catch (_) {
+          // Bỏ qua lỗi trừ kho đơn lẻ, không block luồng đặt hàng
+        }
+      }
 
       _isLoading = false;
       notifyListeners();
@@ -107,7 +139,7 @@ class OrderViewModel extends ChangeNotifier {
   }
 
   // Cập nhật trạng thái đơn hàng
-  Future<bool> updateOrderStatus(String orderId, String newStatus) async {
+  Future<bool> updateOrderStatus(String orderId, String newStatus, {bool isAdmin = false}) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -115,10 +147,31 @@ class OrderViewModel extends ChangeNotifier {
     try {
       await _orderService.updateOrderStatus(orderId, newStatus);
 
-      // Reload lại data nếu đang có sẵn trong list
-      final index = _orders.indexWhere((order) => order.id == orderId);
-      if (index != -1) {
-        await loadUserOrders(_orders[index].userId);
+      // Nếu trạng thái là đã hủy, hoàn trả lại số lượng tồn kho
+      if (newStatus == 'cancelled') {
+        final apiService = ApiService();
+        final itemsToRestore = await _orderService.getOrderItems(orderId);
+        for (final item in itemsToRestore) {
+          try {
+            final product = await apiService.getProductById(item.productId);
+            if (product != null) {
+              final newStock = product.stock + item.quantity;
+              await apiService.updateProductStock(item.productId, newStock);
+            }
+          } catch (_) {
+            // Bỏ qua lỗi cập nhật tồn kho đơn lẻ
+          }
+        }
+      }
+
+      // Reload lại data
+      if (isAdmin) {
+        await loadAllOrders();
+      } else {
+        final index = _orders.indexWhere((order) => order.id == orderId);
+        if (index != -1) {
+          await loadUserOrders(_orders[index].userId);
+        }
       }
 
       _isLoading = false;

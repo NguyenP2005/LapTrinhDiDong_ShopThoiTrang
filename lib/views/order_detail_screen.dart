@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../models/order_model.dart';
 import '../models/order_item_model.dart';
 import '../viewmodels/order_viewmodel.dart';
+import '../viewmodels/auth_viewmodel.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   final OrderModel order;
@@ -16,10 +17,12 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
   List<OrderItemModel> items = [];
   bool isLoading = true;
+  late String currentStatus;
 
   @override
   void initState() {
     super.initState();
+    currentStatus = widget.order.status;
     _loadOrderItems();
   }
 
@@ -50,7 +53,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xff8E2DE2),
+        backgroundColor: const Color(0xFF4361EE),
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: Container(
@@ -69,7 +72,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       ),
       body: isLoading
           ? const Center(
-              child: CircularProgressIndicator(color: Color(0xff8E2DE2)),
+              child: CircularProgressIndicator(color: Color(0xFF4361EE)),
             )
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -82,7 +85,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       children: [
                         const Icon(
                           Icons.local_shipping_outlined,
-                          color: Color(0xff8E2DE2),
+                          color: Color(0xFF4361EE),
                           size: 28,
                         ),
                         const SizedBox(width: 12),
@@ -91,11 +94,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          _getStatusText(widget.order.status),
+                          _getStatusText(currentStatus),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff8E2DE2),
+                            color: Color(0xFF4361EE),
                           ),
                         ),
                       ],
@@ -170,7 +173,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff8E2DE2),
+                                color: Color(0xFF4361EE),
                               ),
                             ),
                           ],
@@ -182,6 +185,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ],
               ),
             ),
+      bottomNavigationBar: context.watch<AuthViewModel>().userRole == 'admin'
+          ? Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, -4)),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: _showStatusUpdateDialog,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4361EE),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('CẬP NHẬT TRẠNG THÁI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+              ),
+            )
+          : null,
     );
   }
 
@@ -265,7 +288,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           Text(
             '${item.price.toStringAsFixed(0)} đ',
             style: const TextStyle(
-              color: Color(0xff8E2DE2),
+              color: Color(0xFF4361EE),
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),
@@ -325,5 +348,83 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     if (method == 'COD') return 'Thanh toán khi nhận hàng';
     if (method == 'BANK_TRANSFER') return 'Chuyển khoản ngân hàng';
     return method;
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'pending': return Colors.orange;
+      case 'shipping': return Colors.blue;
+      case 'delivered': return Colors.green;
+      case 'cancelled': return Colors.red;
+      default: return Colors.black;
+    }
+  }
+
+  void _showStatusUpdateDialog() {
+    final List<String> statuses = ['pending', 'shipping', 'delivered', 'cancelled'];
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (BuildContext bottomSheetContext) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('CẬP NHẬT TRẠNG THÁI', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+              const SizedBox(height: 20),
+              ...statuses.map((status) {
+                return ListTile(
+                  title: Text(
+                    _getStatusText(status),
+                    style: TextStyle(fontWeight: currentStatus == status ? FontWeight.bold : FontWeight.normal, color: _getStatusColor(status)),
+                  ),
+                  trailing: currentStatus == status ? const Icon(Icons.check, color: Colors.black) : null,
+                  onTap: () {
+                    Navigator.pop(bottomSheetContext);
+                    if (currentStatus != status) {
+                      showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            title: const Text('Xác nhận', style: TextStyle(fontWeight: FontWeight.bold)),
+                            content: Text('Bạn có chắc chắn muốn chuyển trạng thái đơn hàng thành ${_getStatusText(status)} không?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(dialogContext),
+                                child: const Text('Hủy', style: TextStyle(color: Colors.grey)),
+                              ),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  Navigator.pop(dialogContext);
+                                  final success = await context.read<OrderViewModel>().updateOrderStatus(widget.order.id, status, isAdmin: true);
+                                  if (mounted) {
+                                    if (success) {
+                                      setState(() => currentStatus = status);
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Cập nhật trạng thái thành công!'), backgroundColor: Colors.green));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Có lỗi xảy ra!'), backgroundColor: Colors.red));
+                                    }
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                                child: const Text('Đồng ý', style: TextStyle(color: Colors.white)),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

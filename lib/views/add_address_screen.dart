@@ -69,11 +69,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             _buildTextField(
               controller: _nameController,
               label: 'Tên người nhận',
-              hint: 'Nhập họ và tên',
+              hint: 'Nhập họ và tên đầy đủ',
               icon: Icons.person_outline,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Vui lòng nhập tên người nhận';
+                }
+                if (value.trim().length < 3) {
+                  return 'Tên phải có ít nhất 3 ký tự';
+                }
+                // Kiểm tra tên chỉ chứa chữ cái và khoảng trắng
+                if (!RegExp(r"^[\p{L}\s]+$", unicode: true).hasMatch(value.trim())) {
+                  return 'Tên không được chứa số hoặc ký tự đặc biệt';
                 }
                 return null;
               },
@@ -85,15 +92,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             _buildTextField(
               controller: _phoneController,
               label: 'Số điện thoại',
-              hint: 'Nhập số điện thoại',
+              hint: 'VD: 0901234567',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Vui lòng nhập số điện thoại';
                 }
-                if (value.length < 10) {
-                  return 'Số điện thoại không hợp lệ';
+                // Chuẩn Việt Nam: 10 số, bắt đầu bằng 03/05/07/08/09
+                final phoneRegex = RegExp(r'^(03|05|07|08|09)[0-9]{8}$');
+                if (!phoneRegex.hasMatch(value.trim())) {
+                  return 'Số điện thoại không hợp lệ (VD: 0901234567)';
                 }
                 return null;
               },
@@ -111,6 +120,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Vui lòng nhập địa chỉ';
+                }
+                if (value.trim().length < 10) {
+                  return 'Địa chỉ quá ngắn, vui lòng nhập đầy đủ';
                 }
                 return null;
               },
@@ -201,6 +213,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         maxLines: maxLines,
         keyboardType: keyboardType,
         validator: validator,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
