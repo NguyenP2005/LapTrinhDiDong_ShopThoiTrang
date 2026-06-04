@@ -154,10 +154,23 @@ class _CartScreenState extends State<CartScreen> {
                     _qtyButton(
                       icon: Icons.add,
                       onTap: () async {
-                        await cartVM.updateQuantity(
-                          item.productId,
-                          item.quantity + 1,
-                        );
+                        try {
+                          await cartVM.updateQuantity(
+                            item.productId,
+                            item.quantity + 1,
+                          );
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Không thể tăng thêm! ${e.toString().replaceAll('Exception: ', '')}',
+                              ),
+                              backgroundColor: Colors.orange[800],
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        }
                       },
                     ),
 

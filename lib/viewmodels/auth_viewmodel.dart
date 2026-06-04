@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -19,6 +20,12 @@ class AuthViewModel extends ChangeNotifier {
 
   // Biến phục vụ luồng Quên mật khẩu (Lưu tạm ID user cần reset)
   String? resetUserId;
+
+  // OTP ngẫu nhiên được tạo mỗi lần gửi yêu cầu reset
+  String? _generatedOtp;
+
+  /// Trả về mã OTP đã tạo (dùng cho UI hiển thị mô phỏng SMS)
+  String? get generatedOtp => _generatedOtp;
 
   // 1. Kiểm tra xem user đã đăng nhập từ trước chưa (Auto Login)
   Future<void> checkLoginStatus() async {
@@ -201,6 +208,10 @@ class AuthViewModel extends ChangeNotifier {
 
       if (data.isNotEmpty) {
         resetUserId = data[0]['id'].toString(); // Ghi nhớ ID user phục vụ cho Bước C
+
+        // Tạo mã OTP ngẫu nhiên 6 số
+        _generatedOtp = (100000 + Random().nextInt(900000)).toString();
+
         isLoading = false;
         notifyListeners();
         return true;
@@ -216,14 +227,14 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // Bước B: Xác thực mã OTP (Giả lập kiểm tra mã code cố định là 1234)
+  // Bước B: Xác thực mã OTP (So sánh với mã ngẫu nhiên đã tạo, không hardcode)
   bool verifyOTP(String otp) {
-    if (otp == '1234') {
+    if (_generatedOtp != null && otp.trim() == _generatedOtp) {
       errorMessage = null;
       notifyListeners();
       return true;
     }
-    errorMessage = "Mã OTP không chính xác (Mã giả lập thử nghiệm: 1234)";
+    errorMessage = "Mã OTP không chính xác! Vui lòng kiểm tra tin nhắn SMS.";
     notifyListeners();
     return false;
   }
