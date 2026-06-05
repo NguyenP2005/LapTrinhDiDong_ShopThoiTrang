@@ -1,14 +1,13 @@
-import 'package:clothing_app/views/main.screen.dart';
 import 'package:flutter/material.dart';
-import 'views/home_screen.dart';
-import 'views/main.screen.dart';
-import 'views/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'views/login_screen.dart';
 import 'viewmodels/auth_viewmodel.dart';
 import 'viewmodels/cart_viewmodel.dart';
 import 'viewmodels/address_viewmodel.dart';
 import 'viewmodels/order_viewmodel.dart';
 import 'viewmodels/payment_viewmodel.dart';
+import 'viewmodels/coupon_viewmodel.dart';
+import 'viewmodels/store_viewmodel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +24,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AddressViewModel()),
         ChangeNotifierProvider(create: (_) => OrderViewModel()),
         ChangeNotifierProvider(create: (_) => PaymentViewModel()),
+        ChangeNotifierProvider(create: (_) => CouponViewModel()),
+        ChangeNotifierProvider(create: (_) => StoreViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Clothing App',

@@ -79,6 +79,22 @@
       "avatar": "https://i.pravatar.cc/150",
       "role": "user",
       "id": "wy_s1wpLbE8"
+    },
+    {
+      "name": "Minh Quan",
+      "email": "quannguyen@gmail.com",
+      "password": "quan2005",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "3dSzBfcq8iY"
+    },
+    {
+      "name": "quan",
+      "email": "quann@gmail.com",
+      "password": "quan205",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "25CtJP76uhs"
     }
   ],
   "categories": [

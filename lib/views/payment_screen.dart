@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../viewmodels/payment_viewmodel.dart';
 import '../viewmodels/cart_viewmodel.dart';
 import '../viewmodels/order_viewmodel.dart';
+import '../viewmodels/coupon_viewmodel.dart';
 import '../models/order_model.dart';
 import '../models/order_item_model.dart';
 import '../models/payment_model.dart';
@@ -14,6 +15,7 @@ class PaymentScreen extends StatefulWidget {
   final String addressId;
   final double totalAmount;
   final double shippingFee;
+  final double discount; // Số tiền giảm từ mã khuyến mãi
 
   const PaymentScreen({
     super.key,
@@ -21,6 +23,7 @@ class PaymentScreen extends StatefulWidget {
     required this.addressId,
     required this.totalAmount,
     required this.shippingFee,
+    this.discount = 0,
   });
 
   @override
@@ -39,7 +42,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     final paymentVM = Provider.of<PaymentViewModel>(context);
-    final finalAmount = widget.totalAmount + widget.shippingFee;
+    final finalAmount =
+        widget.totalAmount + widget.shippingFee - widget.discount;
 
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
@@ -282,7 +286,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  '${(widget.totalAmount + widget.shippingFee).toStringAsFixed(0)} đ',
+                  '${(widget.totalAmount + widget.shippingFee - widget.discount).toStringAsFixed(0)} đ',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -320,6 +324,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
           _buildSummaryRow('Tổng tiền hàng', widget.totalAmount),
           const SizedBox(height: 8),
           _buildSummaryRow('Phí vận chuyển', widget.shippingFee),
+          if (widget.discount > 0) ...[
+            const SizedBox(height: 8),
+            _buildSummaryRow('Giảm giá', widget.discount, isDiscount: true),
+          ],
           const Divider(height: 24),
           _buildSummaryRow('Tổng thanh toán', finalAmount, isTotal: true),
         ],
@@ -327,7 +335,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  Widget _buildSummaryRow(String label, double amount, {bool isTotal = false}) {
+  Widget _buildSummaryRow(
+    String label,
+    double amount, {
+    bool isTotal = false,
+    bool isDiscount = false,
+  }) {
+    final prefix = isDiscount ? '-' : '';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -340,11 +354,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
         Text(
-          '${amount.toStringAsFixed(0)} đ',
+          '$prefix${amount.toStringAsFixed(0)} đ',
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: FontWeight.bold,
-            color: isTotal ? const Color(0xff8E2DE2) : Colors.black,
+            color: isTotal
+                ? const Color(0xff8E2DE2)
+                : isDiscount
+                ? Colors.green
+                : Colors.black,
           ),
         ),
       ],
@@ -581,6 +599,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
     // Xóa giỏ hàng
     for (var item in cartVM.items) {
       await cartVM.removeFromCart(item.productId);
+    }
+
+    // Gỡ mã khuyến mãi đã dùng (tránh áp nhầm cho đơn sau)
+    if (mounted) {
+      Provider.of<CouponViewModel>(context, listen: false).removeCoupon();
     }
 
     if (!mounted) return;

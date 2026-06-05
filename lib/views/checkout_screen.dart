@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/cart_viewmodel.dart';
 import '../viewmodels/address_viewmodel.dart';
+import '../viewmodels/coupon_viewmodel.dart';
 import '../models/address_model.dart';
+import '../models/coupon_model.dart';
 import 'add_address_screen.dart';
 import 'payment_screen.dart';
 
@@ -17,6 +19,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final double shippingFee = 30000; // Phí ship cố định
+  final TextEditingController _couponController = TextEditingController();
 
   @override
   void initState() {
@@ -26,7 +29,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         context,
         listen: false,
       ).loadAddresses(widget.userId);
+      // Tải danh sách mã khuyến mãi
+      Provider.of<CouponViewModel>(context, listen: false).loadCoupons();
     });
+  }
+
+  @override
+  void dispose() {
+    _couponController.dispose();
+    super.dispose();
   }
 
   @override
@@ -88,6 +99,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                   // Danh sách sản phẩm
                   _buildProductList(cartVM),
+
+                  const SizedBox(height: 12),
+
+                  // Mã khuyến mãi
+                  _buildCouponSection(cartVM),
 
                   const SizedBox(height: 12),
 
@@ -298,10 +314,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // Phần tổng tiền
-  Widget _buildPriceSummary(CartViewModel cartVM) {
-    final totalAmount = cartVM.totalPrice;
-    final finalAmount = totalAmount + shippingFee;
+  // ─────────── Mã khuyến mãi ───────────
+  Widget _buildCouponSection(CartViewModel cartVM) {
+    final couponVM = Provider.of<CouponViewModel>(context);
+    final orderAmount = cartVM.totalPrice;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -310,7 +326,250 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.local_offer, color: Color(0xff8E2DE2), size: 22),
+              const SizedBox(width: 8),
+              const Text(
+                'Mã khuyến mãi',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // Nếu đã áp mã -> hiện thẻ mã đang dùng + nút gỡ
+          if (couponVM.appliedCoupon != null)
+            _buildAppliedCoupon(couponVM.appliedCoupon!, couponVM)
+          else ...[
+            // Ô nhập mã + nút áp dụng
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _couponController,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                      hintText: 'Nhập mã giảm giá',
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: couponVM.isLoading
+                      ? null
+                      : () => _applyCouponCode(couponVM, orderAmount),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff8E2DE2),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('Áp dụng'),
+                ),
+              ],
+            ),
+
+            // Báo lỗi mã (nếu có)
+            if (couponVM.errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  couponVM.errorMessage!,
+                  style: const TextStyle(color: Colors.red, fontSize: 13),
+                ),
+              ),
+
+            // Danh sách mã gợi ý
+            if (couponVM.availableCoupons.isNotEmpty) ...[
+              const SizedBox(height: 14),
+              Text(
+                'Mã có thể dùng:',
+                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 8),
+              ...couponVM.availableCoupons.map(
+                (c) => _buildCouponSuggestion(c, couponVM, orderAmount),
+              ),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAppliedCoupon(CouponModel coupon, CouponViewModel couponVM) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.green.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.green, width: 1.2),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.check_circle, color: Colors.green, size: 22),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  coupon.code,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                Text(
+                  coupon.description,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                ),
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              couponVM.removeCoupon();
+              _couponController.clear();
+            },
+            child: const Text('Gỡ', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCouponSuggestion(
+    CouponModel coupon,
+    CouponViewModel couponVM,
+    double orderAmount,
+  ) {
+    final eligible = orderAmount >= coupon.minOrder;
+    return GestureDetector(
+      onTap: eligible
+          ? () {
+              final ok = couponVM.applyCoupon(coupon, orderAmount);
+              if (ok && mounted) {
+                _couponController.text = coupon.code;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Đã áp mã ${coupon.code}'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            }
+          : null,
+      child: Opacity(
+        opacity: eligible ? 1 : 0.45,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.grey[300]!),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xff8E2DE2),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  coupon.code,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  coupon.description,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+              if (eligible)
+                const Icon(
+                  Icons.add_circle_outline,
+                  color: Color(0xff8E2DE2),
+                  size: 20,
+                )
+              else
+                const Icon(Icons.lock_outline, color: Colors.grey, size: 18),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _applyCouponCode(
+    CouponViewModel couponVM,
+    double orderAmount,
+  ) async {
+    final code = _couponController.text.trim();
+    if (code.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Vui lòng nhập mã khuyến mãi')),
+      );
+      return;
+    }
+    final ok = await couponVM.applyCode(code, orderAmount);
+    if (ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Áp mã thành công!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  // Phần tổng tiền
+  Widget _buildPriceSummary(CartViewModel cartVM) {
+    final totalAmount = cartVM.totalPrice;
+    final couponVM = Provider.of<CouponViewModel>(context);
+    final discount = couponVM.discount;
+    final finalAmount = totalAmount + shippingFee - discount;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
         ],
       ),
       child: Column(
@@ -318,6 +577,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           _buildPriceRow('Tổng tiền hàng', totalAmount),
           const SizedBox(height: 8),
           _buildPriceRow('Phí vận chuyển', shippingFee),
+          // Hiển thị dòng giảm giá nếu có áp mã
+          if (discount > 0) ...[
+            const SizedBox(height: 8),
+            _buildPriceRow('Giảm giá', -discount, isDiscount: true),
+          ],
           const Divider(height: 24),
           _buildPriceRow('Tổng thanh toán', finalAmount, isTotal: true),
         ],
@@ -325,7 +589,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildPriceRow(String label, double amount, {bool isTotal = false}) {
+  Widget _buildPriceRow(
+    String label,
+    double amount, {
+    bool isTotal = false,
+    bool isDiscount = false,
+  }) {
+    final prefix = isDiscount ? '-' : '';
+    final displayAmount = amount.abs();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -338,11 +609,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         ),
         Text(
-          '${amount.toStringAsFixed(0)} đ',
+          '$prefix${displayAmount.toStringAsFixed(0)} đ',
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: FontWeight.bold,
-            color: isTotal ? const Color(0xff8E2DE2) : Colors.black,
+            color: isTotal
+                ? const Color(0xff8E2DE2)
+                : isDiscount
+                ? Colors.green
+                : Colors.black,
           ),
         ),
       ],
@@ -371,6 +646,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           onPressed: addressVM.selectedAddress == null
               ? null
               : () {
+                  // Lấy số tiền giảm từ coupon đang áp
+                  final discount = Provider.of<CouponViewModel>(
+                    context,
+                    listen: false,
+                  ).discount;
                   // Chuyển sang màn hình thanh toán
                   Navigator.push(
                     context,
@@ -380,6 +660,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         addressId: addressVM.selectedAddress!.id,
                         totalAmount: cartVM.totalPrice,
                         shippingFee: shippingFee,
+                        discount: discount,
                       ),
                     ),
                   );
