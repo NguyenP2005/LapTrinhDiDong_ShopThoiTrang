@@ -415,14 +415,14 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   user?['email'] ?? 'Chưa cập nhật email',
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  style: TextStyle(fontSize: 14, color: Color(0xFF4B5563)),
                 ),
                 if (user?['phone'] != null &&
                     user!['phone'].toString().isNotEmpty) ...[
                   const SizedBox(height: 2),
                   Text(
                     user['phone'],
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    style: TextStyle(fontSize: 14, color: Color(0xFF4B5563)),
                   ),
                 ],
               ],
@@ -482,7 +482,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
-        color: Colors.black54,
+        color: Color(0xFF6B7280),
         size: 14,
       ),
       onTap: onTap,

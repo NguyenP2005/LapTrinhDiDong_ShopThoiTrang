@@ -69,7 +69,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Text(address.phone, style: const TextStyle(color: Colors.black54)),
+                      Text(address.phone, style: const TextStyle(color: Color(0xFF4B5563))),
                       const SizedBox(height: 4),
                       Text(address.address),
                     ],

@@ -45,7 +45,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          'Chi tiếtdon h�ng',
+          'Chi tiết đơn hàng',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         ),
                         const SizedBox(width: 12),
                         const Text(
-                          'Tr?ng th�i: ',
+                          'Trạng thái: ',
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
@@ -110,15 +110,15 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   _buildSectionCard(
                     child: Column(
                       children: [
-                        _buildRowInfo('M�don h�ng', '#${widget.order.id}'),
+                        _buildRowInfo('Mã đơn hàng', '#${widget.order.id}'),
                         const SizedBox(height: 12),
                         _buildRowInfo(
-                          'Ng�yd?t',
+                          'Ngày đặt',
                           widget.order.createdAt.substring(0, 10),
                         ),
                         const SizedBox(height: 12),
                         _buildRowInfo(
-                          'Thanh to�n',
+                          'Thanh toán',
                           _getPaymentMethod(widget.order.paymentMethod),
                         ),
                       ],
@@ -130,7 +130,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   const Padding(
                     padding: EdgeInsets.only(left: 4, bottom: 12),
                     child: Text(
-                      'Sản phẩmd� mua',
+                      'Sản phẩm đã mua',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -146,12 +146,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     child: Column(
                       children: [
                         _buildRowInfo(
-                          'Tổng tiền h�ng',
+                          'Tổng tiền hàng',
                           '${widget.order.totalAmount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
                         ),
                         const SizedBox(height: 12),
                         _buildRowInfo(
-                          'Ph� vận chuyển',
+                          'Phí vận chuyển',
                           '${widget.order.shippingFee.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
                         ),
                         const Padding(
@@ -162,7 +162,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Th�nh ti?n',
+                              'Thành tiền',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -208,7 +208,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   ),
                 ),
                 child: const Text(
-                  'C?P NH?T TR?NG TH�I',
+                  'CẬP NHẬT TRẠNG THÁI',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -245,7 +245,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: TextStyle(color: Colors.black54, fontSize: 14)),
+        Text(label, style: TextStyle(color: Color(0xFF4B5563), fontSize: 14)),
         Text(
           value,
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
@@ -290,10 +290,42 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (item.color != null || item.size != null) ...[
+                  const SizedBox(height: 4),
+                  Wrap(
+                    spacing: 6,
+                    children: [
+                      if (item.color != null && item.color!.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF4361EE).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            'Màu: ${item.color}',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFF4361EE)),
+                          ),
+                        ),
+                      if (item.size != null && item.size!.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            'Size: ${item.size}',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFF4B5563)),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: 6),
                 Text(
                   'Số lượng: ${item.quantity}',
-                  style: TextStyle(color: Colors.black54, fontSize: 13),
+                  style: const TextStyle(color: Color(0xFF4B5563), fontSize: 13),
                 ),
               ],
             ),
@@ -336,7 +368,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       width: size,
       height: size,
       color: Colors.grey[200],
-      child: const Icon(Icons.image, color: Colors.black54),
+      child: const Icon(Icons.image, color: Color(0xFF9CA3AF)),
     );
   }
 
@@ -344,22 +376,22 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   String _getStatusText(String status) {
     switch (status) {
       case 'pending':
-        return 'Ch? x�c nh?n';
+        return 'Chờ xác nhận';
       case 'shipping':
-        return '�ang giao h�ng';
+        return 'Đang giao hàng';
       case 'delivered':
-        return 'Giao th�nh c�ng';
+        return 'Giao thành công';
       case 'cancelled':
-        return '�� h?y';
+        return 'Đã hủy';
       default:
-        return '�ang xử lý�';
+        return 'Đang xử lý';
     }
   }
 
   // D?ch PT thanh to�n sang ti?ng Vi?t
   String _getPaymentMethod(String method) {
-    if (method == 'COD') return 'Thanh to�n khi nh?n h�ng';
-    if (method == 'BANK_TRANSFER') return 'Chuyển khoản ng�n h�ng';
+    if (method == 'COD') return 'Thanh toán khi nhận hàng';
+    if (method == 'BANK_TRANSFER') return 'Chuyển khoản ngân hàng';
     return method;
   }
 
@@ -399,7 +431,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'C?P NH?T TR?NG TH�I',
+                'CẬP NHẬT TRẠNG THÁI',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -430,18 +462,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           return AlertDialog(
                             backgroundColor: Colors.white,
                             title: const Text(
-                              'X�c nh?n',
+                              'Xác nhận',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             content: Text(
-                              'B?n c� ch?c ch?n mu?n chuy?n tr?ng th�idon h�ng th�nh ${_getStatusText(status)} kh�ng?',
+                              'Bạn có chắc chắn muốn chuyển trạng thái đơn hàng thành ${_getStatusText(status)} không?',
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(dialogContext),
                                 child: const Text(
                                   'Hủy',
-                                  style: TextStyle(color: Colors.black54),
+                                  style: TextStyle(color: Color(0xFF4B5563)),
                                 ),
                               ),
                               ElevatedButton(
@@ -462,7 +494,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                       ).showSnackBar(
                                         const SnackBar(
                                           content: Text(
-                                            'C?p nh?t tr?ng th�i th�nh c�ng!',
+                                            'Cập nhật trạng thái thành công!',
                                           ),
                                           backgroundColor: Colors.green,
                                         ),
@@ -472,7 +504,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                         context,
                                       ).showSnackBar(
                                         const SnackBar(
-                                          content: Text('C� l?i x?y ra!'),
+                                          content: Text('Có lỗi xảy ra!'),
                                           backgroundColor: Colors.red,
                                         ),
                                       );
@@ -483,7 +515,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   backgroundColor: Colors.black,
                                 ),
                                 child: const Text(
-                                  '�?ng �',
+                                  'Đồng ý',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),

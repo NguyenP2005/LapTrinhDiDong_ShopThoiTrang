@@ -5,7 +5,7 @@ import '../models/address_model.dart';
 class AddressService {
   static const String baseUrl = "http://10.0.2.2:3000";
 
-  // Lấy tất cảđịa chỉ của user
+  // Lấy tất cả địa chỉ của user
   Future<List<AddressModel>> getAddressesByUserId(String userId) async {
     try {
       final response = await http.get(
@@ -32,7 +32,7 @@ class AddressService {
         (addr) => addr.isDefault,
         orElse: () => addresses.isNotEmpty
             ? addresses.first
-            : throw Exception('Không tìm thấyđịa chỉ'),
+            : throw Exception('Không tìm thấy địa chỉ'),
       );
     } catch (e) {
       return null;
@@ -53,9 +53,11 @@ class AddressService {
       );
 
       if (response.statusCode == 201) {
-        return AddressModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+        return AddressModel.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)),
+        );
       } else {
-        throw Exception('Lỗi khi thêmđịa chỉ: ${response.statusCode}');
+        throw Exception('Lỗi khi thêm địa chỉ: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
@@ -76,7 +78,9 @@ class AddressService {
       );
 
       if (response.statusCode == 200) {
-        return AddressModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+        return AddressModel.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)),
+        );
       } else {
         throw Exception('Lỗi khi cập nhậtđịa chỉ: ${response.statusCode}');
       }

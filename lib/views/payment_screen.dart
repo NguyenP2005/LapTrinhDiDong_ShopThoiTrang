@@ -50,7 +50,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          'Thanh to�n',
+          'Thanh toán',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -114,21 +114,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Phương thức thanh to�n',
+            'Phương thức thanh toán',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           _buildPaymentOption(
             paymentVM: paymentVM,
             method: 'COD',
-            title: 'Thanh to�n khi nh?n h�ng (COD)',
+            title: 'Thanh toán khi nhận hàng (COD)',
             icon: Icons.money,
           ),
           const SizedBox(height: 12),
           _buildPaymentOption(
             paymentVM: paymentVM,
             method: 'BANK_TRANSFER',
-            title: 'Chuyển khoản ng�n h�ng',
+            title: 'Chuyển khoản ngân hàng',
             icon: Icons.account_balance,
           ),
         ],
@@ -161,7 +161,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xFF4361EE) : Colors.black54,
+              color: isSelected ? const Color(0xFF4361EE) : Color(0xFF4B5563),
               size: 28,
             ),
             const SizedBox(width: 12),
@@ -198,13 +198,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Th�ng tin chuy?n kho?n',
+            'Thông tin chuyển khoản',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             decoration: InputDecoration(
-              labelText: 'Ch?n ng�n h�ng',
+              labelText: 'Chọn ngân hàng',
               prefixIcon: const Icon(
                 Icons.account_balance,
                 color: Color(0xFF4361EE),
@@ -231,8 +231,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
             controller: _accountController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: 'S? t�i kho?n',
-              hintText: 'Nh?p s? t�i kho?n',
+              labelText: 'Số tài khoản',
+              hintText: 'Nhập số tài khoản',
               prefixIcon: const Icon(
                 Icons.credit_card,
                 color: Color(0xFF4361EE),
@@ -254,7 +254,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'S? ti?n cần chuyển:',
+                  'Số tiền cần chuyển:',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Text(
@@ -288,19 +288,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Th�ng tindon h�ng',
+            'Thông tin đơn hàng',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          _buildSummaryRow('Tổng tiền h�ng', widget.totalAmount),
+          _buildSummaryRow('Tổng tiền hàng', widget.totalAmount),
           const SizedBox(height: 8),
-          _buildSummaryRow('Ph� vận chuyển', widget.shippingFee),
+          _buildSummaryRow('Phí vận chuyển', widget.shippingFee),
           if (widget.discount > 0) ...[
             const SizedBox(height: 8),
-            _buildSummaryRow('Giảm giá�', widget.discount, isDiscount: true),
+            _buildSummaryRow('Giảm giá', widget.discount, isDiscount: true),
           ],
           const Divider(height: 24),
-          _buildSummaryRow('T?ng thanh to�n', finalAmount, isTotal: true),
+          _buildSummaryRow('Tổng thanh toán', finalAmount, isTotal: true),
         ],
       ),
     );
@@ -321,7 +321,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           style: TextStyle(
             fontSize: isTotal ? 16 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-            color: isTotal ? Colors.black : Colors.black54,
+            color: isTotal ? Colors.black : Color(0xFF4B5563),
           ),
         ),
         Text(
@@ -378,7 +378,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 )
               : const Text(
-                  'X�c nh?n thanh to�n',
+                  'Xác nhận thanh toán',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
         ),
@@ -393,7 +393,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     if (!paymentVM.validatePaymentData()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(paymentVM.errorMessage ?? 'D? li?u kh�ng h?p l?'),
+          content: Text(paymentVM.errorMessage ?? 'Dữ liệu không hợp lệ'),
           backgroundColor: Colors.red,
         ),
       );
@@ -417,8 +417,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       barrierDismissible: false,
       builder: (_) => _OtpDialog(
         otp: generatedOtp,
-        label: 'X�c nh?n chuy?n kho?n',
-        description: 'M� OTP x�c nh?n chuy?n kho?n ng�n h�ng',
+        label: 'Xác nhận chuyển khoản',
+        description: 'Mã OTP xác nhận chuyển khoản ngân hàng',
       ),
     );
 
@@ -455,6 +455,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
             productImage: item.image,
             quantity: item.quantity,
             price: item.price,
+            color: item.color,
+            size: item.size,
           ),
         )
         .toList();
@@ -465,7 +467,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('C� l?i khi t?odon h�ng'),
+          content: Text('Có lỗi khi tạo đơn hàng'),
           backgroundColor: Colors.red,
         ),
       );
@@ -646,7 +648,7 @@ class _OtpDialogState extends State<_OtpDialog> {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        '?? Tin nhắn SMS (m� ph?ng):',
+                        '📱 Tin nhắn SMS (mô phỏng):',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -661,8 +663,8 @@ class _OtpDialogState extends State<_OtpDialog> {
                       Expanded(
                         child: Text(
                           _otpVisible
-                              ? 'M� OTP: ${widget.otp}'
-                              : 'M� OTP: ������',
+                              ? 'Mã OTP: ${widget.otp}'
+                              : 'Mã OTP: ••••••',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -700,8 +702,8 @@ class _OtpDialogState extends State<_OtpDialog> {
                   const SizedBox(width: 6),
                   Text(
                     isExpired
-                        ? 'OTPd� h?t h?n!'
-                        : 'C�n l?i: $minutes:$seconds',
+                        ? 'OTP đã hết hạn!'
+                        : 'Còn lại: $minutes:$seconds',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -728,7 +730,7 @@ class _OtpDialogState extends State<_OtpDialog> {
               decoration: InputDecoration(
                 hintText: '------',
                 hintStyle: TextStyle(
-                  color: Colors.black38,
+                  color: Color(0xFF9CA3AF),
                   fontSize: 22,
                   letterSpacing: 6,
                 ),
@@ -757,7 +759,7 @@ class _OtpDialogState extends State<_OtpDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'M� OTPd� h?t h?n. Vui l�ng quay l?i v� th? l?i.',
+                  'Mã OTP đã hết hạn. Vui lòng quay lại và thử lại.',
                   style: TextStyle(color: Colors.red[700], fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
@@ -790,7 +792,7 @@ class _OtpDialogState extends State<_OtpDialog> {
                         if (_otpController.text.trim() == widget.otp) {
                           Navigator.pop(context, true);
                         } else {
-                          setState(() => _errorText = 'M� OTP kh�ngd�ng!');
+                          setState(() => _errorText = 'Mã OTP không đúng!');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -802,7 +804,7 @@ class _OtpDialogState extends State<_OtpDialog> {
                         ),
                       ),
                       child: const Text(
-                        'X�c nh?n',
+                        'Xác nhận',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

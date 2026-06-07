@@ -164,13 +164,13 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                     const Icon(
                       Icons.error_outline,
                       size: 56,
-                      color: Colors.black54,
+                      color: Color(0xFF4B5563),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       'Lỗi tải cửa hàng:\n${vm.errorMessage}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.black54),
+                      style: const TextStyle(color: Color(0xFF4B5563)),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
@@ -463,12 +463,12 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: Colors.black54),
+        Icon(icon, size: 16, color: Color(0xFF4B5563)),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 13, color: Colors.black54),
+            style: TextStyle(fontSize: 13, color: Color(0xFF4B5563)),
           ),
         ),
       ],

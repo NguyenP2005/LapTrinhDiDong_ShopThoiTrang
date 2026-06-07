@@ -62,7 +62,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white), // �?i icon mui t�n sang tr?ng
+        iconTheme: const IconThemeData(color: Colors.white), // Đổi icon mũi tên sang trắng
+
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -136,8 +137,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               icon: Icons.email_outlined,
               controller: _emailCtrl,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui l�ng nh?p Email';
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) return 'Email kh�ngd�ngd?nh d?ng';
+                if (val == null || val.isEmpty) return 'Vui lòng nhập Email';
+                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) return 'Email không đúng định dạng';
                 return null;
               }
             ),
@@ -153,7 +154,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   if (ok && mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('?? TIN NH?N SMS: M� OTP của bạn l�: ${vm.generatedOtp}'),
+                        content: Text('📱 TIN NHẮN SMS: Mã OTP của bạn là: ${vm.generatedOtp}'),
                         backgroundColor: Colors.green[700], duration: const Duration(seconds: 10), behavior: SnackBarBehavior.floating,
                       ),
                     );
@@ -188,8 +189,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _otpCtrl,
               keyboardType: TextInputType.number,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui l�ng nh?p m� OTP';
-                if (val.trim().length != 6) return 'M� OTP ph?i c�d�ng 6 ch? s?';
+                if (val == null || val.isEmpty) return 'Vui lòng nhập mã OTP';
+                if (val.trim().length != 6) return 'Mã OTP phải có đúng 6 chữ số';
                 return null;
               }
             ),
@@ -231,8 +232,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _passCtrl,
               obscure: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui l�ng nh?p m?t kh?u m?i';
-                if (val.length < 6) return 'M?t kh?u ph?i t? 6 k� t? tr? l�n';
+                if (val == null || val.isEmpty) return 'Vui lòng nhập mật khẩu mới';
+                if (val.length < 6) return 'Mật khẩu phải từ 6 ký tự trở lên';
                 return null;
               }
             ),
@@ -243,8 +244,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _confirmPassCtrl,
               obscure: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui l�ng x�c nh?n l?i m?t kh?u';
-                if (val != _passCtrl.text) return 'M?t kh?u x�c nh?n kh�ng kh?p!';
+                if (val == null || val.isEmpty) return 'Vui lòng xác nhận lại mật khẩu';
+                if (val != _passCtrl.text) return 'Mật khẩu xác nhận không khớp!';
                 return null;
               }
             ),
@@ -259,7 +260,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   final ok = await vm.resetPassword(_passCtrl.text);
                   if (ok && mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('�?i m?t kh?u m?i th�nh c�ng!'), backgroundColor: Colors.green)
+                      const SnackBar(content: Text('Đổi mật khẩu mới thành công!'), backgroundColor: Colors.green)
                     );
                     Navigator.pop(context); // Tr? v? Login
                   }
@@ -284,9 +285,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: Icon(icon, color: Colors.black38),
+        prefixIcon: Icon(icon, color: Color(0xFF9CA3AF)),
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
+        hintStyle: TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -304,7 +305,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Bo g�c nhu Login
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Bo góc như Login
+
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading

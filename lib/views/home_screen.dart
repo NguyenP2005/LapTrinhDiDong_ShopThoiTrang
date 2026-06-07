@@ -209,11 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: Row(
             children: [
-              const Icon(Icons.search, color: Colors.black54),
+              const Icon(Icons.search, color: Color(0xFF6B7280)),
               const SizedBox(width: 12),
               Text(
                 "Tìm kiếm sản phẩm...",
-                style: TextStyle(color: Colors.black54, fontSize: 15),
+                style: TextStyle(color: Color(0xFF4B5563), fontSize: 15),
               ),
             ],
           ),
@@ -853,7 +853,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: height,
       width: width,
       color: Colors.grey[300],
-      child: const Icon(Icons.image, color: Colors.black54),
+      child: const Icon(Icons.image, color: Color(0xFF9CA3AF)),
     );
   }
 }

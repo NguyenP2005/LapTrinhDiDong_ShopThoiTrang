@@ -219,9 +219,9 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: Icon(icon, color: Colors.black38),
+        prefixIcon: Icon(icon, color: Color(0xFF9CA3AF)),
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
+        hintStyle: TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),

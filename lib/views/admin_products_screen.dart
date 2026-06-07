@@ -68,19 +68,19 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.white,
         title: const Text(
-          'X�c nh?n x�a',
+          'Xác nhận xóa',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: colorTextPrimary),
         ),
         content: RichText(
           text: TextSpan(
-            style: const TextStyle(color: Colors.black54, fontSize: 14, height: 1.5),
+            style: const TextStyle(color: Color(0xFF4B5563), fontSize: 14, height: 1.5),
             children: [
-              const TextSpan(text: 'B?n c� ch?c mu?n x�a sản phẩm\n'),
+              const TextSpan(text: 'Bạn có chắc muốn xóa sản phẩm\n'),
               TextSpan(
                 text: '"${product.name}"',
                 style: const TextStyle(fontWeight: FontWeight.bold, color: colorTextPrimary),
               ),
-              const TextSpan(text: '?\n\nH�nhd?ng n�y kh�ng th? ho�n t�c.'),
+              const TextSpan(text: '?\n\nHành động này không thể hoàn tác.'),
             ],
           ),
         ),
@@ -97,7 +97,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               elevation: 0,
             ),
-            child: const Text('X�a', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text('Xóa', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -108,7 +108,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
       if (mounted) {
         messenger.showSnackBar(
           SnackBar(
-            content: Text(success ? '�� x�a "${product.name}"' : 'X�a th?t b?i, vui l�ng th? l?i'),
+            content: Text(success ? '"Đã xóa "${product.name}""' : 'Xóa thất bại, vui lòng thử lại'),
             backgroundColor: success ? Colors.green : Colors.red,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -164,14 +164,14 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.wifi_off, size: 56, color: Colors.black54),
+                  const Icon(Icons.wifi_off, size: 56, color: Color(0xFF9CA3AF)),
                   const SizedBox(height: 16),
-                  Text(vm.errorMessage!, style: const TextStyle(color: Colors.black54), textAlign: TextAlign.center),
+                  Text(vm.errorMessage!, style: const TextStyle(color: Color(0xFF4B5563)), textAlign: TextAlign.center),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: vm.fetchAll,
                     style: ElevatedButton.styleFrom(backgroundColor: colorPrimary, foregroundColor: Colors.white),
-                    child: const Text('Th? l?i'),
+                    child: const Text('Thử lại'),
                   ),
                 ],
               ),
@@ -204,12 +204,12 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                           onChanged: vm.setSearchQuery,
                           style: const TextStyle(fontSize: 14, color: colorTextPrimary),
                           decoration: InputDecoration(
-                            hintText: 'T�m ki?m sản phẩm...',
-                            hintStyle: TextStyle(fontSize: 13, color: Colors.black38),
-                            prefixIcon: const Icon(Icons.search, color: Colors.black54, size: 20),
+                            hintText: 'Tìm kiếm sản phẩm...',
+                            hintStyle: TextStyle(fontSize: 13, color: Color(0xFF9CA3AF)),
+                            prefixIcon: const Icon(Icons.search, color: Color(0xFF6B7280), size: 20),
                             suffixIcon: _searchCtrl.text.isNotEmpty
                                 ? IconButton(
-                                    icon: const Icon(Icons.close, size: 18, color: Colors.black54),
+                                    icon: const Icon(Icons.close, size: 18, color: Color(0xFF6B7280)),
                                     onPressed: () {
                                       _searchCtrl.clear();
                                       vm.setSearchQuery('');
@@ -229,7 +229,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
-                            _buildFilterChip('T?t c?', null, vm),
+                            _buildFilterChip('Tất cả', null, vm),
                             ...vm.categories.asMap().entries.map((entry) {
                               final idx = entry.key;
                               final cat = entry.value;
@@ -247,7 +247,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                         children: [
                           Text(
                             '${vm.products.length} sản phẩm',
-                            style: const TextStyle(fontSize: 12, color: Colors.black54, fontWeight: FontWeight.w600),
+                            style: const TextStyle(fontSize: 12, color: Color(0xFF4B5563), fontWeight: FontWeight.w600),
                           ),
                           if (vm.isLoading) ...[
                             const SizedBox(width: 8),
@@ -289,7 +289,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
         foregroundColor: Colors.white,
         elevation: 4,
         icon: const Icon(Icons.add),
-        label: const Text('Th�m sản phẩm', style: TextStyle(fontWeight: FontWeight.bold)),
+        label: const Text('Thêm sản phẩm', style: TextStyle(fontWeight: FontWeight.bold)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
     );
@@ -445,7 +445,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 4),
             child: PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, color: Colors.black54, size: 20),
+              icon: const Icon(Icons.more_vert, color: Color(0xFF6B7280), size: 20),
               color: Colors.white,
               elevation: 8,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -470,7 +470,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                         child: const Icon(Icons.edit_outlined, color: colorPrimary, size: 16),
                       ),
                       const SizedBox(width: 10),
-                      const Text('Ch?nh s?a', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                      const Text('Chỉnh sửa', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ),
@@ -487,7 +487,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                         child: const Icon(Icons.delete_outline, color: Colors.red, size: 16),
                       ),
                       const SizedBox(width: 10),
-                      const Text('X�a', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.red)),
+                      const Text('Xóa', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.red)),
                     ],
                   ),
                 ),
@@ -515,7 +515,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
           ),
           const SizedBox(height: 16),
           const Text(
-            'Kh�ng t�m th?y sản phẩm',
+            'Không tìm thấy sản phẩm',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -524,8 +524,8 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Th? thayd?i b? l?c ho?c th�m sản phẩm m?i',
-            style: TextStyle(fontSize: 13, color: Colors.black54),
+            'Thử thay đổi bộ lọc hoặc thêm sản phẩm mới',
+            style: TextStyle(fontSize: 13, color: Color(0xFF4B5563)),
             textAlign: TextAlign.center,
           ),
         ],
@@ -563,7 +563,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
     return Container(
       color: Colors.grey.shade100,
       child: const Center(
-        child: Icon(Icons.image_not_supported_outlined, color: Colors.black54, size: 30),
+        child: Icon(Icons.image_not_supported_outlined, color: Color(0xFF9CA3AF), size: 30),
       ),
     );
   }

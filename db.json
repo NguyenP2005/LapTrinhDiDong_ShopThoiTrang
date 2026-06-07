@@ -152,7 +152,7 @@
       "description": "Áo thun basic trắng được làm từ 100% cotton cao cấp, mềm mại và thoáng khí, phù hợp với thời tiết Việt Nam. Thiết kế tối giản nhưng tinh tế, cổ tròn vừa phải, form dáng regular fit tôn lên vóc dáng tự nhiên. Chất liệu thấm hút mồ hôi tốt, không phai màu sau nhiều lần giặt. Dễ dàng phối cùng quần jean, quần tây hay chân váy. Màu trắng tinh khôi, thích hợp cho nhiều dịp từ đi học, đi làm đến dạo phố.",
       "image": "assets/images/image01.webp",
       "category_id": 1,
-      "stock": 95,
+      "stock": 93,
       "rating": 4.5,
       "sizes": [
         "S",
@@ -175,7 +175,7 @@
       "description": "Áo thun đen form rộng mang phong cách street style hiện đại, được ưa chuộng bởi giới trẻ. Chất liệu cotton pha spandex co giãn 4 chiều, thoải mái khi vận động. Form oversize giúp che khuyết điểm và tạo cảm giác phóng khoáng. Cổ áo được may viền chắc chắn, không bị giãn sau khi giặt nhiều lần. Màu đen dễ phối đồ, thích hợp kết hợp với quần jogger, quần short hay quần jean rách. Sản phẩm được kiểm định chất lượng kỹ lưỡng trước khi xuất xưởng.",
       "category_id": 1,
       "rating": 4.3,
-      "stock": 40,
+      "stock": 36,
       "sizes": [
         "M",
         "L",
@@ -331,7 +331,7 @@
       "description": "Quần short thể thao siêu thoáng mát với chất liệu polyester microfiber nhẹ nhàng và nhanh khô. Thiết kế lưng thun co giãn tốt, dây rút điều chỉnh vòng eo linh hoạt. Độ dài vừa phải đến giữa đùi, tạo cảm giác thoải mái khi vận động. Túi hai bên tiện lợi, có lớp lót bên trong. Màu sắc tươi sáng, dễ phối đồ. Phù hợp cho chạy bộ, tập gym, đá bóng hoặc các hoạt động thể thao ngoài trời.",
       "category_id": 2,
       "rating": 4,
-      "stock": 55,
+      "stock": 54,
       "sizes": [
         "S",
         "M",
@@ -729,6 +729,54 @@
       "created_at": "2026-06-07T17:36:00.105230",
       "updated_at": "2026-06-07T17:36:00.106089",
       "id": "6cucZflAe8I"
+    },
+    {
+      "user_id": "25CtJP76uhs",
+      "address_id": "-QBhXZQWrcs",
+      "total_amount": 180000,
+      "shipping_fee": 30000,
+      "final_amount": 192000,
+      "status": "pending",
+      "payment_method": "COD",
+      "created_at": "2026-06-08T01:16:40.547630",
+      "updated_at": "2026-06-08T01:16:40.574023",
+      "id": "HHEb7wVqcLo"
+    },
+    {
+      "user_id": "25CtJP76uhs",
+      "address_id": "-QBhXZQWrcs",
+      "total_amount": 199000,
+      "shipping_fee": 30000,
+      "final_amount": 209100,
+      "status": "pending",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-08T01:21:05.429292",
+      "updated_at": "2026-06-08T01:21:05.431631",
+      "id": "vV_lBC1S7XA"
+    },
+    {
+      "user_id": "25CtJP76uhs",
+      "address_id": "-QBhXZQWrcs",
+      "total_amount": 637000,
+      "shipping_fee": 30000,
+      "final_amount": 617000,
+      "status": "pending",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-08T01:37:09.848628",
+      "updated_at": "2026-06-08T01:37:09.859876",
+      "id": "Y93n1WVvbnc"
+    },
+    {
+      "user_id": "25CtJP76uhs",
+      "address_id": "-QBhXZQWrcs",
+      "total_amount": 438000,
+      "shipping_fee": 30000,
+      "final_amount": 424200,
+      "status": "pending",
+      "payment_method": "COD",
+      "created_at": "2026-06-08T01:53:04.162998",
+      "updated_at": "2026-06-08T01:53:04.196154",
+      "id": "R_fnwNnw-FA"
     }
   ],
   "order_items": [
@@ -857,6 +905,53 @@
       "quantity": 1,
       "price": 199000,
       "id": "9TkdyAuPNqg"
+    },
+    {
+      "order_id": "HHEb7wVqcLo",
+      "product_id": "9",
+      "product_name": "Quần short thể thao",
+      "product_image": "assets/images/image09.png",
+      "quantity": 1,
+      "price": 180000,
+      "id": "EW2yS3HkSg4"
+    },
+    {
+      "order_id": "vV_lBC1S7XA",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng 1",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 1,
+      "price": 199000,
+      "id": "0Yfer3tpRko"
+    },
+    {
+      "order_id": "Y93n1WVvbnc",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng 1 (M�u: Trắng, Size: S)",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 1,
+      "price": 199000,
+      "id": "YDudi4SOewk"
+    },
+    {
+      "order_id": "Y93n1WVvbnc",
+      "product_id": "2",
+      "product_name": "Áo thun đen form rộng (M�u: Đen, Size: M)",
+      "product_image": "assets/images/image02.webp",
+      "quantity": 2,
+      "price": 219000,
+      "id": "u25ceylhYpw"
+    },
+    {
+      "order_id": "R_fnwNnw-FA",
+      "product_id": "2",
+      "product_name": "Áo thun đen form rộng",
+      "product_image": "assets/images/image02.webp",
+      "quantity": 2,
+      "price": 219000,
+      "color": "",
+      "size": "",
+      "id": "hq_KpcFH8R0"
     }
   ],
   "payments": [
@@ -989,6 +1084,46 @@
       "account_number": null,
       "paid_at": "2026-06-07T17:36:01.333927",
       "id": "QJgJ3Z8CFpA"
+    },
+    {
+      "order_id": "HHEb7wVqcLo",
+      "method": "BANK_TRANSFER",
+      "amount": 192000,
+      "status": "success",
+      "bank_name": null,
+      "account_number": null,
+      "paid_at": "2026-06-08T01:16:44.524847",
+      "id": "QEr56WEhVTA"
+    },
+    {
+      "order_id": "vV_lBC1S7XA",
+      "method": "BANK_TRANSFER",
+      "amount": 209100,
+      "status": "success",
+      "bank_name": "VietinBank",
+      "account_number": "1522389975",
+      "paid_at": "2026-06-08T01:21:08.318290",
+      "id": "85FWXqGUD6M"
+    },
+    {
+      "order_id": "Y93n1WVvbnc",
+      "method": "BANK_TRANSFER",
+      "amount": 617000,
+      "status": "success",
+      "bank_name": "BIDV",
+      "account_number": "1314343443",
+      "paid_at": "2026-06-08T01:37:16.617569",
+      "id": "izOCApxvGq4"
+    },
+    {
+      "order_id": "R_fnwNnw-FA",
+      "method": "COD",
+      "amount": 424200,
+      "status": "success",
+      "bank_name": null,
+      "account_number": null,
+      "paid_at": "2026-06-08T01:53:07.908348",
+      "id": "IsKyJAHAYEA"
     }
   ],
   "addresses": [
@@ -1071,6 +1206,14 @@
       "address": "go vap 123",
       "is_default": true,
       "id": "wGasYdUyjCM"
+    },
+    {
+      "user_id": "25CtJP76uhs",
+      "receiver_name": "quan",
+      "phone": "0903221463",
+      "address": "dagwdaiwadhihs",
+      "is_default": true,
+      "id": "-QBhXZQWrcs"
     }
   ],
   "stores": [
@@ -1106,6 +1249,52 @@
       "open_time": "09:00",
       "close_time": "21:00",
       "image": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "1",
+      "code": "WELCOME10",
+      "description": "Giảm 10% cho đơn hàng đầu tiên",
+      "type": "percent",
+      "value": 10,
+      "maxDiscount": 50000,
+      "minOrder": 100000,
+      "isActive": true,
+      "expiresAt": "2026-12-31"
+    },
+    {
+      "id": "2",
+      "code": "FREESHIP",
+      "description": "Miễn phí vận chuyển cho đơn từ 200k",
+      "type": "fixed",
+      "value": 30000,
+      "maxDiscount": 30000,
+      "minOrder": 200000,
+      "isActive": true,
+      "expiresAt": "2026-12-31"
+    },
+    {
+      "id": "3",
+      "code": "SALE20",
+      "description": "Giảm 20% tối đa 100k",
+      "type": "percent",
+      "value": 20,
+      "maxDiscount": 100000,
+      "minOrder": 300000,
+      "isActive": true,
+      "expiresAt": "2026-09-30"
+    },
+    {
+      "id": "4",
+      "code": "SUMMER50K",
+      "description": "Giảm 50.000đ cho đơn từ 500k (hết hạn)",
+      "type": "fixed",
+      "value": 50000,
+      "maxDiscount": 50000,
+      "minOrder": 500000,
+      "isActive": false,
+      "expiresAt": "2025-08-31"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

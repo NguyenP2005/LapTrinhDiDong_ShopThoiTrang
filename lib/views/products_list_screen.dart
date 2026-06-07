@@ -131,7 +131,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: "Tìm kiếm sản phẩm...",
-                    prefixIcon: const Icon(Icons.search, color: Colors.black54),
+                    prefixIcon: const Icon(Icons.search, color: Color(0xFF6B7280)),
 
                     suffixIcon: searchText.isNotEmpty
                         ? IconButton(

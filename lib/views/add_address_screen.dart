@@ -35,7 +35,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          'Th�md?a ch? m?i',
+          'Thêm địa chỉ mới',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -68,19 +68,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             // T�n ngu?i nh?n
             _buildTextField(
               controller: _nameController,
-              label: 'T�n ngu?i nh?n',
-              hint: 'Nh?p h? v� t�nd?yd?',
+              label: 'Tên người nhận',
+              hint: 'Nhập họ và tên đầy đủ',
               icon: Icons.person_outline,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui l�ng nh?p t�n ngu?i nh?n';
+                  return 'Vui lòng nhập tên người nhận';
                 }
                 if (value.trim().length < 3) {
-                  return 'T�n ph?i c� �t nh?t 3 k� t?';
+                  return 'Tên phải có ít nhất 3 ký tự';
                 }
                 // Ki?m tra t�n ch? ch?a ch? c�i v� kho?ng tr?ng
                 if (!RegExp(r"^[\p{L}\s]+$", unicode: true).hasMatch(value.trim())) {
-                  return 'T�n kh�ngdu?c ch?a s? ho?c k� t?d?c bi?t';
+                  return 'Tên không được chứa số hoặc ký tự đặc biệt';
                 }
                 return null;
               },
@@ -91,18 +91,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             // S?di?n tho?i
             _buildTextField(
               controller: _phoneController,
-              label: 'S?di?n tho?i',
+              label: 'Số điện thoại',
               hint: 'VD: 0901234567',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui l�ng nh?p s?di?n tho?i';
+                  return 'Vui lòng nhập số điện thoại';
                 }
                 // Chu?n Vi?t Nam: 10 s?, b?td?u b?ng 03/05/07/08/09
                 final phoneRegex = RegExp(r'^(03|05|07|08|09)[0-9]{8}$');
                 if (!phoneRegex.hasMatch(value.trim())) {
-                  return 'S?di?n tho?i kh�ng h?p l? (VD: 0901234567)';
+                  return 'Số điện thoại không hợp lệ (VD: 0901234567)';
                 }
                 return null;
               },
@@ -113,16 +113,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             // �?a ch? c? th?
             _buildTextField(
               controller: _addressController,
-              label: '�?a ch? c? th?',
-              hint: 'S? nh�, t�ndu?ng, phu?ng/x�, qu?n/huy?n, t?nh/th�nh ph?',
+              label: 'Địa chỉ cụ thể',
+              hint: 'Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố',
               icon: Icons.location_on_outlined,
               maxLines: 3,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui l�ng nh?pd?a ch?';
+                  return 'Vui lòng nhập địa chỉ';
                 }
                 if (value.trim().length < 10) {
-                  return '�?a ch? qu� ng?n, vui l�ng nh?pd?yd?';
+                  return 'Địa chỉ quá ngắn, vui lòng nhập đầy đủ';
                 }
                 return null;
               },
@@ -149,7 +149,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     activeColor: const Color(0xFF4361EE),
                   ),
                   const Text(
-                    '�?t l�md?a ch? m?cd?nh',
+                    'Đặt làm địa chỉ mặc định',
                     style: TextStyle(fontSize: 15),
                   ),
                 ],
@@ -180,7 +180,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         ),
                       )
                     : const Text(
-                        'Luud?a ch?',
+                        'Lưu địa chỉ',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -252,7 +252,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('�� th�md?a ch? th�nh c�ng'),
+          content: Text('Đã thêm địa chỉ thành công'),
           backgroundColor: Colors.green,
         ),
       );
@@ -260,7 +260,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(addressVM.errorMessage ?? 'C� l?i x?y ra'),
+          content: Text(addressVM.errorMessage ?? 'Có lỗi xảy ra'),
           backgroundColor: Colors.red,
         ),
       );
