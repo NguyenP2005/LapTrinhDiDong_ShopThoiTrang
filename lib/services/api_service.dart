@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/product.dart';
+import '../models/category.dart';
 
 class ApiService {
   static const String baseUrl = "http://10.0.2.2:3000";
@@ -15,8 +16,21 @@ class ApiService {
     }
   }
 
+  // Lấy danh sách danh mục (dùng cho trang chủ)
+  Future<List<Category>> getCategories() async {
+    final response = await http.get(Uri.parse('$baseUrl/categories'));
+    if (response.statusCode == 200) {
+      List data = json.decode(response.body);
+      return data.map((e) => Category.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load categories');
+    }
+  }
+
   Future<Product?> getProductById(String productId) async {
-    final response = await http.get(Uri.parse('$baseUrl/products/$productId'));
+    final response = await http.get(
+      Uri.parse('$baseUrl/products/$productId'),
+    );
     if (response.statusCode == 200) {
       return Product.fromJson(json.decode(response.body));
     }
@@ -33,8 +47,9 @@ class ApiService {
   }
 
   Future<List<Product>> getProductsByCategory(int categoryId) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/products?category_id=$categoryId'));
+    final response = await http.get(
+      Uri.parse('$baseUrl/products?category_id=$categoryId'),
+    );
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       return data.map((e) => Product.fromJson(e)).toList();

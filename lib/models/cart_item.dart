@@ -13,7 +13,6 @@ class CartItem {
     this.quantity = 1,
   });
 
-  // Chuyển sang Map để lưu SQLite
   Map<String, dynamic> toMap() {
     return {
       'productId': productId,

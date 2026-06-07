@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/auth_viewmodel.dart';
-import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -80,7 +78,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Lược bỏ logo lớn để tiết kiệm không gian cho form dài
                   const SizedBox(height: 10),
                   const Text('Create Account', textAlign: TextAlign.center, style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
                   const SizedBox(height: 8),
@@ -99,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (val.length < 3) return 'Tên phải có ít nhất 3 ký tự';
                             if (RegExp(r'[0-9]').hasMatch(val)) return 'Tên không được chứa chữ số';
                             return null;
-                          }
+                          },
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
@@ -108,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (val == null || val.isEmpty) return 'Vui lòng nhập số điện thoại';
                             if (!RegExp(r'^(0)[0-9]{9}$').hasMatch(val)) return 'Số điện thoại không hợp lệ (10 số)';
                             return null;
-                          }
+                          },
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
@@ -117,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (val == null || val.isEmpty) return 'Vui lòng nhập email';
                             if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) return 'Định dạng email không hợp lệ';
                             return null;
-                          }
+                          },
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
@@ -127,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (val.length < 8) return 'Mật khẩu phải >= 8 ký tự';
                             if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]').hasMatch(val)) return 'Cần có chữ hoa, thường và số';
                             return null;
-                          }
+                          },
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
@@ -136,21 +133,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (val == null || val.isEmpty) return 'Vui lòng xác nhận mật khẩu';
                             if (val != passCtrl.text) return 'Mật khẩu nhập lại không khớp!';
                             return null;
-                          }
+                          },
                         ),
                         const SizedBox(height: 24),
 
                         Row(
                           children: [
                             SizedBox(
-                              width: 24, height: 24,
+                              width: 24,
+                              height: 24,
                               child: Checkbox(
                                 value: isAgreed,
                                 activeColor: Colors.white,
                                 checkColor: Colors.black,
                                 side: const BorderSide(color: Colors.white70),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                onChanged: (val) => setState(() => isAgreed = val ?? false)
+                                onChanged: (val) => setState(() => isAgreed = val ?? false),
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -159,7 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
 
                         if (vm.errorMessage != null)
-                          Padding(padding: const EdgeInsets.only(top: 16), child: Text(vm.errorMessage!, style: const TextStyle(color: Colors.redAccent, fontSize: 13), textAlign: TextAlign.center)),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Text(vm.errorMessage!, style: const TextStyle(color: Colors.redAccent, fontSize: 13), textAlign: TextAlign.center),
+                          ),
 
                         const SizedBox(height: 32),
 
@@ -173,18 +174,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               elevation: 0,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                             ),
-                            onPressed: isAgreed && !vm.isLoading ? () async {
-                              if (_formKey.currentState!.validate()) {
-                                final ok = await vm.register(nameCtrl.text, phoneCtrl.text, emailCtrl.text, passCtrl.text);
-                                if (!mounted) return;
-                                if (ok) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Đăng ký tài khoản mới thành công!'), backgroundColor: Colors.green)
-                                  );
-                                  Navigator.pop(context);
-                                }
-                              }
-                            } : null,
+                            onPressed: isAgreed && !vm.isLoading
+                                ? () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      final messenger = ScaffoldMessenger.of(context);
+                                      final navigator = Navigator.of(context);
+                                      final ok = await vm.register(nameCtrl.text, phoneCtrl.text, emailCtrl.text, passCtrl.text);
+                                      if (!mounted) return;
+                                      if (ok) {
+                                        messenger.showSnackBar(
+                                          const SnackBar(content: Text('Đăng ký tài khoản mới thành công!'), backgroundColor: Colors.green),
+                                        );
+                                        navigator.pop();
+                                      }
+                                    }
+                                  }
+                                : null,
                             child: vm.isLoading
                                 ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                                 : const Text('SIGN UP', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 2)),
@@ -214,7 +219,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildInputField({required String hint, required IconData icon, required TextEditingController controller, bool obscure = false, TextInputType? keyboardType, String? Function(String?)? validator}) {
+  Widget _buildInputField({
+    required String hint,
+    required IconData icon,
+    required TextEditingController controller,
+    bool obscure = false,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
     return TextFormField(
       controller: controller,
       obscureText: obscure,

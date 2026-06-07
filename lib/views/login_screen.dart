@@ -208,7 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Khung nhập liệu nền trắng, bo tròn dài
   Widget _buildInputField({required String hint, required IconData icon, required TextEditingController controller, bool obscure = false, String? Function(String?)? validator}) {
     return TextFormField(
       controller: controller,

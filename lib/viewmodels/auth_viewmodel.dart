@@ -53,7 +53,9 @@ class AuthViewModel extends ChangeNotifier {
       final cleanEmail = email.trim();
       final cleanPassword = password.trim();
 
-      final res = await http.get(Uri.parse('$baseUrl/users?email=$cleanEmail'));
+      final res = await http
+          .get(Uri.parse('$baseUrl/users?email=$cleanEmail'))
+          .timeout(const Duration(seconds: 10));
       final data = jsonDecode(res.body) as List;
 
       if (data.isNotEmpty) {
@@ -88,8 +90,10 @@ class AuthViewModel extends ChangeNotifier {
       } else {
         errorMessage = "Sai email hoặc mật khẩu! (Sai $failedAttempts/3 lần)";
       }
+    } on TimeoutException {
+      errorMessage = "Kết nối quá thời gian! Server chưa chạy hoặc mạng yếu.";
     } catch (e) {
-      errorMessage = "Lỗi kết nối server!";
+      errorMessage = "Lỗi kết nối server! Hãy chắc chắn json-server đang chạy.";
     }
 
     isLoading = false;

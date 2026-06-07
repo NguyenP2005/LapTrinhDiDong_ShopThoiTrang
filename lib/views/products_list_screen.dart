@@ -17,7 +17,15 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   String searchText = "";
   String selectedCategory = "All";
+  String selectedPriceRange = "Tất cả";
   final TextEditingController _searchController = TextEditingController();
+
+  static const Map<String, (double, double)> _priceRanges = {
+    "Tất cả":   (0, double.infinity),
+    "< 200K":   (0, 199999),
+    "200-400K": (200000, 400000),
+    "> 400K":   (400001, double.infinity),
+  };
 
   String getCategoryName(int id) {
     switch (id) {
@@ -160,6 +168,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
               ),
             ),
 
+            const SizedBox(height: 6),
+
+            SizedBox(
+              height: 36,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                children: _priceRanges.keys
+                    .map((label) => buildPriceFilter(label))
+                    .toList(),
+              ),
+            ),
+
             const SizedBox(height: 10),
 
             Expanded(
@@ -169,6 +190,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     return const Center(child: CircularProgressIndicator());
                   }
 
+                  final (minPrice, maxPrice) = _priceRanges[selectedPriceRange]!;
                   final filtered = vm.products.where((p) {
                     final name = p.name.toLowerCase().trim();
                     final search = searchText.toLowerCase().trim();
@@ -184,7 +206,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         getCategoryName(p.catergoryID).toLowerCase().trim() ==
                             selectedCategory.toLowerCase().trim();
 
-                    return matchSearch && matchCategory;
+                    final matchPrice =
+                        p.price >= minPrice && p.price <= maxPrice;
+
+                    return matchSearch && matchCategory && matchPrice;
                   }).toList();
 
                   if (filtered.isEmpty) {
@@ -421,6 +446,41 @@ class _ProductListScreenState extends State<ProductListScreen> {
       height: 140,
       color: Colors.grey[300],
       child: const Icon(Icons.image),
+    );
+  }
+
+  Widget buildPriceFilter(String label) {
+    final isSelected = selectedPriceRange == label;
+    return GestureDetector(
+      onTap: () => setState(() => selectedPriceRange = label),
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xff8E2DE2) : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? const Color(0xff8E2DE2) : Colors.grey.shade300,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.attach_money, size: 13,
+                color: isSelected ? Colors.white : Colors.grey[600]),
+            const SizedBox(width: 3),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                color: isSelected ? Colors.white : Colors.black87,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

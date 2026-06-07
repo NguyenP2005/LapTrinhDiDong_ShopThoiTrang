@@ -191,7 +191,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, -4)),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -4),
+                  ),
                 ],
               ),
               child: ElevatedButton(
@@ -199,9 +203,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4361EE),
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: const Text('CẬP NHẬT TRẠNG THÁI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+                child: const Text(
+                  'CẬP NHẬT TRẠNG THÁI',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                  ),
+                ),
               ),
             )
           : null,
@@ -352,20 +365,32 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'pending': return Colors.orange;
-      case 'shipping': return Colors.blue;
-      case 'delivered': return Colors.green;
-      case 'cancelled': return Colors.red;
-      default: return Colors.black;
+      case 'pending':
+        return Colors.orange;
+      case 'shipping':
+        return Colors.blue;
+      case 'delivered':
+        return Colors.green;
+      case 'cancelled':
+        return Colors.red;
+      default:
+        return Colors.black;
     }
   }
 
   void _showStatusUpdateDialog() {
-    final List<String> statuses = ['pending', 'shipping', 'delivered', 'cancelled'];
+    final List<String> statuses = [
+      'pending',
+      'shipping',
+      'delivered',
+      'cancelled',
+    ];
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (BuildContext bottomSheetContext) {
         return Container(
           padding: const EdgeInsets.all(20),
@@ -373,15 +398,29 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('CẬP NHẬT TRẠNG THÁI', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+              const Text(
+                'CẬP NHẬT TRẠNG THÁI',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                ),
+              ),
               const SizedBox(height: 20),
               ...statuses.map((status) {
                 return ListTile(
                   title: Text(
                     _getStatusText(status),
-                    style: TextStyle(fontWeight: currentStatus == status ? FontWeight.bold : FontWeight.normal, color: _getStatusColor(status)),
+                    style: TextStyle(
+                      fontWeight: currentStatus == status
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      color: _getStatusColor(status),
+                    ),
                   ),
-                  trailing: currentStatus == status ? const Icon(Icons.check, color: Colors.black) : null,
+                  trailing: currentStatus == status
+                      ? const Icon(Icons.check, color: Colors.black)
+                      : null,
                   onTap: () {
                     Navigator.pop(bottomSheetContext);
                     if (currentStatus != status) {
@@ -390,28 +429,63 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         builder: (dialogContext) {
                           return AlertDialog(
                             backgroundColor: Colors.white,
-                            title: const Text('Xác nhận', style: TextStyle(fontWeight: FontWeight.bold)),
-                            content: Text('Bạn có chắc chắn muốn chuyển trạng thái đơn hàng thành ${_getStatusText(status)} không?'),
+                            title: const Text(
+                              'Xác nhận',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            content: Text(
+                              'Bạn có chắc chắn muốn chuyển trạng thái đơn hàng thành ${_getStatusText(status)} không?',
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(dialogContext),
-                                child: const Text('Hủy', style: TextStyle(color: Colors.grey)),
+                                child: const Text(
+                                  'Hủy',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
                               ElevatedButton(
                                 onPressed: () async {
                                   Navigator.pop(dialogContext);
-                                  final success = await context.read<OrderViewModel>().updateOrderStatus(widget.order.id, status, isAdmin: true);
+                                  final success = await context
+                                      .read<OrderViewModel>()
+                                      .updateOrderStatus(
+                                        widget.order.id,
+                                        status,
+                                        isAdmin: true,
+                                      );
                                   if (mounted) {
                                     if (success) {
                                       setState(() => currentStatus = status);
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Cập nhật trạng thái thành công!'), backgroundColor: Colors.green));
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Cập nhật trạng thái thành công!',
+                                          ),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Có lỗi xảy ra!'), backgroundColor: Colors.red));
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Có lỗi xảy ra!'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
                                     }
                                   }
                                 },
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                                child: const Text('Đồng ý', style: TextStyle(color: Colors.white)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                ),
+                                child: const Text(
+                                  'Đồng ý',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ],
                           );

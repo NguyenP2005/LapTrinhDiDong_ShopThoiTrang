@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'views/home_screen.dart';
 import 'views/main.screen.dart';
 import 'views/login_screen.dart';
@@ -12,6 +11,8 @@ import 'viewmodels/cart_viewmodel.dart';
 import 'viewmodels/address_viewmodel.dart';
 import 'viewmodels/order_viewmodel.dart';
 import 'viewmodels/payment_viewmodel.dart';
+import 'viewmodels/coupon_viewmodel.dart';
+import 'viewmodels/store_viewmodel.dart';
 import 'viewmodels/settings_viewmodel.dart';
 import 'viewmodels/user_management_viewmodel.dart';
 import 'viewmodels/dashboard_viewmodel.dart';
@@ -58,6 +59,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AddressViewModel()),
         ChangeNotifierProvider(create: (_) => OrderViewModel()),
         ChangeNotifierProvider(create: (_) => PaymentViewModel()),
+        ChangeNotifierProvider(create: (_) => CouponViewModel()),
+        ChangeNotifierProvider(create: (_) => StoreViewModel()),
         ChangeNotifierProvider(create: (_) => UserManagementViewModel()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       ],
