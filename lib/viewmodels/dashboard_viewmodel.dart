@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -27,7 +27,7 @@ class DashboardViewModel extends ChangeNotifier {
     Future.microtask(() => notifyListeners());
 
     try {
-      // Gọi đồng thời 3 API để lấy dữ liệu
+      // Gọiđồng thời 3 APIđể lấy dữ liệu
       final resOrders = await http.get(Uri.parse('$baseUrl/orders'));
       final resUsers = await http.get(Uri.parse('$baseUrl/users'));
       final resProducts = await http.get(Uri.parse('$baseUrl/products'));
@@ -39,7 +39,7 @@ class DashboardViewModel extends ChangeNotifier {
 
         _cachedOrdersData = ordersData;
 
-        // 1. Tính tổng số đơn hàng
+        // 1. Tính tổng sốđơn hàng
         totalOrders = ordersData.length;
 
         // 2. Tính tổng doanh thu (Ép kiểu an toàn bằng "as num" và chuyển thành double)
@@ -48,16 +48,16 @@ class DashboardViewModel extends ChangeNotifier {
         // 3. Tính tổng khách hàng (Những user không phải admin)
         totalCustomers = usersData.where((u) => u['role'] != 'admin').length;
 
-        // 4. Tính tổng số lượng sản phẩm đang bán
+        // 4. Tính tổng số lượng sản phẩmđang bán
         totalProducts = productsData.length;
 
-        // 5. Lấy danh sách 3 đơn hàng mới nhất
+        // 5. Lấy danh sách 3đơn hàng mới nhất
         var sortedOrders = List.from(ordersData);
         // Sắp xếp theo ngày tạo mới nhất (giảm dần)
         sortedOrders.sort((a, b) => (b['created_at'] ?? '').compareTo(a['created_at'] ?? ''));
 
         recentOrders = sortedOrders.take(3).map((order) {
-          // Khớp user_id trong order với danh sách user để lấy ra tên người mua
+          // Khớp user_id trong order với danh sách userđể lấy ra tên người mua
           var user = usersData.firstWhere((u) => u['id'].toString() == order['user_id'].toString(), orElse: () => null);
           return {
             'id': order['id'],
@@ -179,7 +179,7 @@ class DashboardViewModel extends ChangeNotifier {
 
     filteredRevenue = revenues.fold(0.0, (sum, val) => sum + val);
 
-    // Tìm doanh thu cao nhất để tính phần trăm (cho chiều cao cột)
+    // Tìm doanh thu cao nhấtđể tính phần trăm (cho chiều cao cột)
     double maxRevenue = revenues.fold(0.0, (max, v) => v > max ? v : max);
     
     weeklyRevenueData = [];

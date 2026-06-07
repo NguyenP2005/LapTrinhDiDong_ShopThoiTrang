@@ -1,11 +1,11 @@
-class CouponModel {
+﻿class CouponModel {
   final String id;
   final String code;
   final String description;
   final String type; // 'percent' (giảm %) hoặc 'fixed' (giảm tiền)
   final double value; // % nếu percent, số tiền (VND) nếu fixed
   final double maxDiscount; // trần giảm cho loại percent (0 = không giới hạn)
-  final double minOrder; // đơn tối thiểu để áp dụng
+  final double minOrder; //đơn tối thiểuđể áp dụng
   final bool isActive;
 
   CouponModel({
@@ -42,8 +42,8 @@ class CouponModel {
     'is_active': isActive,
   };
 
-  /// Tính số tiền được giảm dựa trên tổng tiền hàng [orderAmount].
-  /// Trả về 0 nếu chưa đạt đơn tối thiểu.
+  /// Tính số tiềnđược giảm dựa trên tổng tiền hàng [orderAmount].
+  /// Trả về 0 nếu chưađạtđơn tối thiểu.
   double calculateDiscount(double orderAmount) {
     if (orderAmount < minOrder) return 0;
 

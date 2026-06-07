@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/address_viewmodel.dart';
 import 'add_address_screen.dart';
@@ -69,7 +69,7 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Text(address.phone, style: const TextStyle(color: Colors.grey)),
+                      Text(address.phone, style: const TextStyle(color: Colors.black54)),
                       const SizedBox(height: 4),
                       Text(address.address),
                     ],

@@ -6,13 +6,13 @@ import '../models/order_item_model.dart';
 class OrderService {
   static const String baseUrl = "http://10.0.2.2:3000";
 
-  // Lấy tất cả đơn hàng (Dành cho Admin)
+  // Lấy tất cảđơn hàng (Dành cho Admin)
   Future<List<OrderModel>> getAllOrders() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/orders'));
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         final allOrders = data.map((e) => OrderModel.fromJson(e)).toList();
         allOrders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
         return allOrders;
@@ -24,26 +24,26 @@ class OrderService {
     }
   }
 
-  // Lấy tất cả đơn hàng của user
+  // Lấy tất cảđơn hàng của user
   // Sửa lại hàm này trong order_service.dart
-  // Lấy danh sách đơn hàng (Dùng Dart để tự lọc thay vì nhờ json-server)
+  // Lấy danh sáchđơn hàng (Dùng Dartđể tự lọc thay vì nhờ json-server)
   Future<List<OrderModel>> getOrdersByUserId(String userId) async {
     try {
-      // 1. Kéo TOÀN BỘ đơn hàng về máy
+      // 1. Kéo TOÀN BỘđơn hàng về máy
       final response = await http.get(Uri.parse('$baseUrl/orders'));
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
 
         // 2. Chuyển hết JSON thành Model
         final allOrders = data.map((e) => OrderModel.fromJson(e)).toList();
 
-        // 3. Dùng Dart để lọc đúng user (Cách này ép kiểu an toàn 100%)
+        // 3. Dùng Dartđể lọcđúng user (Cách này ép kiểu an toàn 100%)
         final userOrders = allOrders
             .where((order) => order.userId == userId)
             .toList();
 
-        // 4. Tự sắp xếp đơn hàng mới nhất lên đầu
+        // 4. Tự sắp xếpđơn hàng mới nhất lênđầu
         userOrders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
         return userOrders;
@@ -55,22 +55,22 @@ class OrderService {
     }
   }
 
-  // Lấy chi tiết 1 đơn hàng
+  // Lấy chi tiết 1đơn hàng
   Future<OrderModel> getOrderById(String orderId) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/orders/$orderId'));
 
       if (response.statusCode == 200) {
-        return OrderModel.fromJson(json.decode(response.body));
+        return OrderModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
-        throw Exception('Lỗi tải chi tiết đơn hàng: ${response.statusCode}');
+        throw Exception('Lỗi tải chi tiếtđơn hàng: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
-  // Lấy các items của 1 đơn hàng
+  // Lấy các items của 1đơn hàng
   Future<List<OrderItemModel>> getOrderItems(String orderId) async {
     try {
       final response = await http.get(
@@ -78,7 +78,7 @@ class OrderService {
       );
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         return data.map((e) => OrderItemModel.fromJson(e)).toList();
       } else {
         throw Exception('Lỗi tải danh sách sản phẩm: ${response.statusCode}');
@@ -88,7 +88,7 @@ class OrderService {
     }
   }
 
-  // Tạo đơn hàng mới
+  // Tạođơn hàng mới
   Future<OrderModel> createOrder(OrderModel order) async {
     try {
       final response = await http.post(
@@ -98,16 +98,16 @@ class OrderService {
       );
 
       if (response.statusCode == 201) {
-        return OrderModel.fromJson(json.decode(response.body));
+        return OrderModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
-        throw Exception('Lỗi khi tạo đơn hàng: ${response.statusCode}');
+        throw Exception('Lỗi khi tạođơn hàng: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
-  // Thêm items vào đơn hàng
+  // Thêm items vàođơn hàng
   Future<void> addOrderItems(List<OrderItemModel> items) async {
     try {
       for (var item in items) {
@@ -118,7 +118,7 @@ class OrderService {
         );
         if (response.statusCode != 201) {
           throw Exception(
-            'Lỗi khi lưu sản phẩm vào đơn: ${response.statusCode}',
+            'Lỗi khi lưu sản phẩm vàođơn: ${response.statusCode}',
           );
         }
       }
@@ -127,7 +127,7 @@ class OrderService {
     }
   }
 
-  // Cập nhật trạng thái đơn hàng
+  // Cập nhật trạng tháiđơn hàng
   Future<OrderModel> updateOrderStatus(String orderId, String newStatus) async {
     try {
       final order = await getOrderById(orderId);
@@ -151,7 +151,7 @@ class OrderService {
       );
 
       if (response.statusCode == 200) {
-        return OrderModel.fromJson(json.decode(response.body));
+        return OrderModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception('Lỗi khi cập nhật trạng thái: ${response.statusCode}');
       }

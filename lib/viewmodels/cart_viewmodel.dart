@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/cart_item.dart';
@@ -20,7 +20,7 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Lấy số lượng tồn kho từ server để kiểm tra trước khi thêm/cập nhật
+  /// Lấy số lượng tồn kho từ serverđể kiểm tra trước khi thêm/cập nhật
   Future<int> _fetchStock(String productId) async {
     try {
       final res = await http.get(Uri.parse('$_baseUrl/products/$productId'));
@@ -34,7 +34,7 @@ class CartViewModel extends ChangeNotifier {
 
   /// Thêm sản phẩm vào giỏ hàng với kiểm tra tồn kho
   Future<void> addToCart(CartItem item) async {
-    // Lấy số lượng hiện tại trong giỏ (nếu sản phẩm đã tồn tại)
+    // Lấy số lượng hiện tại trong giỏ (nếu sản phẩmđã tồn tại)
     final existingItem = _items.firstWhere(
       (e) => e.productId == item.productId,
       orElse: () => CartItem(
@@ -80,7 +80,7 @@ class CartViewModel extends ChangeNotifier {
     await loadCart();
   }
 
-  /// Xóa toàn bộ giỏ hàng an toàn (không dùng vòng lặp để tránh ConcurrentModificationError)
+  /// Xóa toàn bộ giỏ hàng an toàn (không dùng vòng lặpđể tránh ConcurrentModificationError)
   Future<void> clearCart() async {
     await _cartService.clearCart();
     await loadCart();

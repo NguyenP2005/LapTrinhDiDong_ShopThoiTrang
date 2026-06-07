@@ -1,4 +1,4 @@
-class PaymentModel {
+﻿class PaymentModel {
   final String id;
   final String orderId;
   final String method; // COD, BANK_TRANSFER

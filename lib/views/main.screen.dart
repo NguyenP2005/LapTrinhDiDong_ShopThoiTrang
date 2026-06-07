@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Import ViewModels
@@ -72,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
           onTap: changeTab,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          selectedItemColor: const Color(0xff8E2DE2),
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: const Color(0xFF4361EE),
+          unselectedItemColor: Colors.black54,
           selectedFontSize: 12,
           unselectedFontSize: 12,
           items: const [

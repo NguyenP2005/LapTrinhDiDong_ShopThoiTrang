@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
@@ -14,20 +14,20 @@ class AuthViewModel extends ChangeNotifier {
   // Hỗ trợ lấy nhanh role của user hiện tại
   String? get userRole => currentUser?['role'];
 
-  // Biến phục vụ tính năng chống Spam đăng nhập
+  // Biến phục vụ tính năng chống Spamđăng nhập
   int failedAttempts = 0;
   bool isLocked = false;
 
   // Biến phục vụ luồng Quên mật khẩu (Lưu tạm ID user cần reset)
   String? resetUserId;
 
-  // OTP ngẫu nhiên được tạo mỗi lần gửi yêu cầu reset
+  // OTP ngẫu nhiênđược tạo mỗi lần gửi yêu cầu reset
   String? _generatedOtp;
 
-  /// Trả về mã OTP đã tạo (dùng cho UI hiển thị mô phỏng SMS)
+  /// Trả về mã OTPđã tạo (dùng cho UI hiển thị mô phỏng SMS)
   String? get generatedOtp => _generatedOtp;
 
-  // 1. Kiểm tra xem user đã đăng nhập từ trước chưa (Auto Login)
+  // 1. Kiểm tra xem userđãđăng nhập từ trước chưa (Auto Login)
   Future<void> checkLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final userStr = prefs.getString('current_user');
@@ -37,10 +37,10 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  // 2. Logic Đăng nhập (Có kèm bộ đếm chống Spam & Check khóa tài khoản)
+  // 2. Logic Đăng nhập (Có kèm bộđếm chống Spam & Check khóa tài khoản)
   Future<bool> login(String email, String password) async {
     if (isLocked) {
-      errorMessage = "Nhập sai quá nhiều. Vui lòng đợi 30 giây!";
+      errorMessage = "Nhập sai quá nhiều. Vui lòngđợi 30 giây!";
       notifyListeners();
       return false;
     }
@@ -63,16 +63,16 @@ class AuthViewModel extends ChangeNotifier {
         if (user['password'].toString() == cleanPassword) {
           // Kiểm tra xem tài khoản có bị Admin khóa không
           if (user['isLocked'] == true) {
-            errorMessage = "Tài khoản của bạn đã bị khóa bởi Admin!";
+            errorMessage = "Tài khoản của bạnđã bị khóa bởi Admin!";
             isLoading = false;
             notifyListeners();
             return false;
           }
 
           currentUser = user;
-          failedAttempts = 0; // Reset số lần sai nếu đăng nhập đúng
+          failedAttempts = 0; // Reset số lần sai nếuđăng nhậpđúng
 
-          // Lưu thông tin vào bộ nhớ thiết bị để lần sau Auto Login
+          // Lưu thông tin vào bộ nhớ thiết bịđể lần sau Auto Login
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('current_user', jsonEncode(user));
           await prefs.setBool('is_logged_in', true);
@@ -93,7 +93,7 @@ class AuthViewModel extends ChangeNotifier {
     } on TimeoutException {
       errorMessage = "Kết nối quá thời gian! Server chưa chạy hoặc mạng yếu.";
     } catch (e) {
-      errorMessage = "Lỗi kết nối server! Hãy chắc chắn json-server đang chạy.";
+      errorMessage = "Lỗi kết nối server! Hãy chắc chắn json-serverđang chạy.";
     }
 
     isLoading = false;
@@ -101,10 +101,10 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // Hàm khóa đăng nhập tạm thời 30 giây khi spam sai 3 lần
+  // Hàm khóađăng nhập tạm thời 30 giây khi spam sai 3 lần
   void _lockLogin() {
     isLocked = true;
-    errorMessage = "Khóa đăng nhập 30 giây do sai quá nhiều lần.";
+    errorMessage = "Khóađăng nhập 30 giây do sai quá nhiều lần.";
     notifyListeners();
     Timer(const Duration(seconds: 30), () {
       isLocked = false;
@@ -114,7 +114,7 @@ class AuthViewModel extends ChangeNotifier {
     });
   }
 
-  // 3. Logic Đăng ký tài khoản mới (Mặc định quyền là customer)
+  // 3. Logic Đăng ký tài khoản mới (Mặcđịnh quyền là customer)
   Future<bool> register(String name, String phone, String email, String password) async {
     isLoading = true;
     errorMessage = null;
@@ -126,7 +126,7 @@ class AuthViewModel extends ChangeNotifier {
       final existing = jsonDecode(check.body) as List;
 
       if (existing.isNotEmpty) {
-        errorMessage = "Email đã tồn tại!";
+        errorMessage = "Emailđã tồn tại!";
         isLoading = false;
         notifyListeners();
         return false;
@@ -141,8 +141,8 @@ class AuthViewModel extends ChangeNotifier {
           'email': cleanEmail,
           'password': password.trim(),
           'avatar': 'https://i.pravatar.cc/150?img=11',
-          'role': 'customer', // Mặc định người mới là khách hàng
-          'isLocked': false,  // Mặc định không bị khóa
+          'role': 'customer', // Mặcđịnh người mới là khách hàng
+          'isLocked': false,  // Mặcđịnh không bị khóa
         }),
       );
 
@@ -151,7 +151,7 @@ class AuthViewModel extends ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        errorMessage = "Lỗi khi đăng ký!";
+        errorMessage = "Lỗi khiđăng ký!";
       }
     } catch (e) {
       errorMessage = "Lỗi kết nối server!";
@@ -162,7 +162,7 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // 4. Cập nhật ảnh đại diện (Avatar) cho User
+  // 4. Cập nhật ảnhđại diện (Avatar) cho User
   Future<bool> updateAvatar(String newAvatarPath) async {
     if (currentUser == null) return false;
     final userId = currentUser!['id'];
@@ -203,7 +203,7 @@ class AuthViewModel extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        // Cập nhật lại dữ liệu đang hiển thị và lưu xuống local
+        // Cập nhật lại dữ liệuđang hiển thị và lưu xuống local
         currentUser!['name'] = name;
         currentUser!['phone'] = phone;
         final prefs = await SharedPreferences.getInstance();
@@ -230,7 +230,7 @@ class AuthViewModel extends ChangeNotifier {
   // LOGIC FORGOT PASSWORD (QUÊN MẬT KHẨU)
   // ==========================================================================
 
-  // Bước A: Kiểm tra Email có tồn tại trong db.json để cấp quyền reset không
+  // Bước A: Kiểm tra Email có tồn tại trong db.jsonđể cấp quyền reset không
   Future<bool> checkEmailForReset(String email) async {
     isLoading = true;
     errorMessage = null;
@@ -262,7 +262,7 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // Bước B: Xác thực mã OTP (So sánh với mã ngẫu nhiên đã tạo, không hardcode)
+  // Bước B: Xác thực mã OTP (So sánh với mã ngẫu nhiênđã tạo, không hardcode)
   bool verifyOTP(String otp) {
     if (_generatedOtp != null && otp.trim() == _generatedOtp) {
       errorMessage = null;
@@ -274,7 +274,7 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
-  // Bước C: Gọi API PATCH cập nhật mật khẩu mới đè lên tài khoản dựa trên resetUserId
+  // Bước C: Gọi API PATCH cập nhật mật khẩu mớiđè lên tài khoản dựa trên resetUserId
   Future<bool> resetPassword(String newPassword) async {
     if (resetUserId == null) return false;
 

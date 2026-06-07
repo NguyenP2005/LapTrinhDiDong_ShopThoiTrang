@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
@@ -45,7 +45,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
     final p = widget.product;
     _nameCtrl = TextEditingController(text: p?.name ?? '');
     _priceCtrl = TextEditingController(
-        text: p != null ? p.price.toStringAsFixed(0) : '');
+        text: p != null ? p.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.') : '');
     _descCtrl = TextEditingController(text: p?.description ?? '');
     _imageCtrl = TextEditingController(text: p?.image ?? '');
     _stockCtrl =
@@ -105,7 +105,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         ),
         content: Text(
           _isEditing 
-            ? 'Bạn có chắc chắn muốn lưu các thay đổi cho sản phẩm này không?' 
+            ? 'Bạn có chắc chắn muốn lưu các thayđổi cho sản phẩm này không?' 
             : 'Bạn có chắc chắn muốn thêm sản phẩm mới này vào hệ thống không?',
           style: const TextStyle(color: _textMid, fontSize: 14),
         ),
@@ -198,10 +198,10 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.broken_image_outlined, size: 36, color: Colors.grey),
+            const Icon(Icons.broken_image_outlined, size: 36, color: Colors.black54),
             const SizedBox(height: 6),
             Text(msg,
-                style: const TextStyle(color: Colors.grey, fontSize: 11),
+                style: const TextStyle(color: Colors.black54, fontSize: 11),
                 textAlign: TextAlign.center),
           ],
         ),
@@ -302,7 +302,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         ),
       ),
 
-      // ── Nút Lưu cố định dưới đáy ──────────────────────────────────────────
+      // ── Nút Lưu cốđịnh dướiđáy ──────────────────────────────────────────
       bottomNavigationBar: _buildBottomBar(),
     );
   }
@@ -375,7 +375,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                 Text(
                   _isEditing
                       ? 'Cập nhật thông tin sản phẩm của bạn'
-                      : 'Điền đầy đủ thông tin bên dưới',
+                      : 'Điềnđầyđủ thông tin bên dưới',
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 12,
@@ -503,7 +503,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                               size: 28, color: _primary),
                         ),
                         const SizedBox(height: 10),
-                        const Text('Nhập URL hoặc đường dẫn ảnh bên dưới',
+                        const Text('Nhập URL hoặcđường dẫn ảnh bên dưới',
                             style: TextStyle(color: _textMid, fontSize: 12)),
                       ],
                     )
@@ -518,9 +518,9 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
           hint: 'assets/images/image01.webp  hoặc  https://...',
           prefixIcon: Icons.link,
           validator: (v) {
-            if (v == null || v.trim().isEmpty) return 'Nhập đường dẫn ảnh';
+            if (v == null || v.trim().isEmpty) return 'Nhậpđường dẫn ảnh';
             if (!v.startsWith('http') && !v.startsWith('assets/')) {
-              return 'Đường dẫn phải bắt đầu bằng http hoặc assets/';
+              return 'Đường dẫn phải bắtđầu bằng http hoặc assets/';
             }
             return null;
           },
@@ -539,7 +539,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
           hint: 'VD: Áo thun basic trắng',
           prefixIcon: Icons.label_outline,
           validator: (v) {
-            if (v == null || v.trim().isEmpty) return 'Tên không được trống';
+            if (v == null || v.trim().isEmpty) return 'Tên khôngđược trống';
             if (v.trim().length < 3) return 'Tên phải dài hơn 3 ký tự';
             return null;
           },
@@ -580,7 +580,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                   if (v == null || v.trim().isEmpty) return 'Nhập rating';
                   final r = double.tryParse(v.trim());
                   if (r == null) return 'Phải là số';
-                  if (r < 0 || r > 5) return 'Từ 0 đến 5';
+                  if (r < 0 || r > 5) return 'Từ 0đến 5';
                   return null;
                 },
               ),
@@ -666,7 +666,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
             if (v == null || v.trim().isEmpty) return 'Nhập tồn kho';
             final stock = int.tryParse(v.trim());
             if (stock == null) return 'Phải là số';
-            if (stock < 0) return 'Không được âm';
+            if (stock < 0) return 'Khôngđược âm';
             return null;
           },
         ),
@@ -745,7 +745,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         ] else ...[
           const SizedBox(height: 10),
           Text(
-            'Chưa có mục nào — nhập và nhấn + để thêm',
+            'Chưa có mục nào — nhập và nhấn +để thêm',
             style: TextStyle(fontSize: 12, color: Colors.grey.shade400, fontStyle: FontStyle.italic),
           ),
         ],

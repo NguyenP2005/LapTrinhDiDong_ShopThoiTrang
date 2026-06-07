@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../models/payment_model.dart';
 import '../services/payment_service.dart';
 
@@ -77,7 +77,7 @@ class PaymentViewModel extends ChangeNotifier {
     }
   }
 
-  // Lấy thông tin payment của đơn hàng
+  // Lấy thông tin payment củađơn hàng
   Future<void> loadPaymentByOrderId(String orderId) async {
     _isLoading = true;
     _errorMessage = null;

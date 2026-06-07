@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/wishlist_viewmodel.dart';
 import '../models/product.dart';
@@ -9,7 +9,7 @@ class WishlistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const colorPrimary = Color(0xff8E2DE2);
+    const colorPrimary = Color(0xFF4361EE);
 
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
@@ -18,7 +18,7 @@ class WishlistScreen extends StatelessWidget {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xff8E2DE2), Color(0xff4A00E0)],
+              colors: [Color(0xFF4361EE), Color(0xff4A00E0)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -26,7 +26,7 @@ class WishlistScreen extends StatelessWidget {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Sản phẩm yêu thích",
+          "Sản phẩm y�u th�ch",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
@@ -38,11 +38,11 @@ class WishlistScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite_border, size: 80, color: Colors.grey[400]),
+                  Icon(Icons.favorite_border, size: 80, color: Colors.black38),
                   const SizedBox(height: 16),
                   Text(
-                    "Bạn chưa yêu thích sản phẩm nào",
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                    "B?n chưa y�u th�ch sản phẩm n�o",
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
                   ),
                 ],
               ),
@@ -91,7 +91,7 @@ class WishlistScreen extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: _buildProductImage(product.image), // Đã sửa lại chỗ này
+                  child: _buildProductImage(product.image), // �� s?a l?i ch? n�y
                 ),
                 Positioned(
                   top: 8,
@@ -120,8 +120,8 @@ class WishlistScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    "${product.price.toStringAsFixed(0)} ₫",
-                    style: const TextStyle(color: Color(0xff8E2DE2), fontWeight: FontWeight.bold, fontSize: 15),
+                    "${product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
+                    style: const TextStyle(color: Color(0xFF4361EE), fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ],
               ),
@@ -132,7 +132,7 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  // --- HÀM LOAD ẢNH THÔNG MINH ---
+  // --- H�M LOAD ?NH TH�NG MINH ---
   Widget _buildProductImage(String path) {
     if (path.startsWith("http")) {
       return Image.network(
@@ -143,7 +143,7 @@ class WishlistScreen extends StatelessWidget {
         errorBuilder: (_, __, ___) => _errorImage(),
       );
     }
-    // Nếu không có chữ http thì load từ máy
+    // N?u kh�ng c� ch? http th� load t? m�y
     return Image.asset(
       path,
       height: 140,
@@ -158,7 +158,7 @@ class WishlistScreen extends StatelessWidget {
       height: 140,
       width: double.infinity,
       color: Colors.grey[200],
-      child: const Icon(Icons.image, color: Colors.grey),
+      child: const Icon(Icons.image, color: Colors.black54),
     );
   }
 }

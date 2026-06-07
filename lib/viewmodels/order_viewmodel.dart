@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../models/order_model.dart';
 import '../models/order_item_model.dart';
 import '../services/order_service.dart';
@@ -19,12 +19,12 @@ class OrderViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  // Lọc đơn hàng theo trạng thái
+  // Lọcđơn hàng theo trạng thái
   List<OrderModel> getOrdersByStatus(String status) {
     return _orders.where((order) => order.status == status).toList();
   }
 
-  // Lấy danh sách đơn hàng của user (Dùng cho MyOrdersScreen)
+  // Lấy danh sáchđơn hàng của user (Dùng cho MyOrdersScreen)
   Future<void> loadUserOrders(String userId) async {
     _isLoading = true;
     _errorMessage = null;
@@ -40,7 +40,7 @@ class OrderViewModel extends ChangeNotifier {
     }
   }
 
-  // Lấy TẤT CẢ đơn hàng (Dùng cho Admin)
+  // Lấy TẤT CẢđơn hàng (Dùng cho Admin)
   Future<void> loadAllOrders() async {
     _isLoading = true;
     _errorMessage = null;
@@ -66,7 +66,7 @@ class OrderViewModel extends ChangeNotifier {
     }
   }
 
-  // Lấy chi tiết đơn hàng + items lưu vào state
+  // Lấy chi tiếtđơn hàng + items lưu vào state
   Future<void> loadOrderDetail(String orderId) async {
     _isLoading = true;
     _errorMessage = null;
@@ -83,7 +83,7 @@ class OrderViewModel extends ChangeNotifier {
     }
   }
 
-  // Tạo đơn hàng mới
+  // Tạođơn hàng mới
   Future<OrderModel?> createOrder(
     OrderModel order,
     List<OrderItemModel> items,
@@ -123,7 +123,7 @@ class OrderViewModel extends ChangeNotifier {
             await apiService.updateProductStock(item.productId, newStock);
           }
         } catch (_) {
-          // Bỏ qua lỗi trừ kho đơn lẻ, không block luồng đặt hàng
+          // Bỏ qua lỗi trừ khođơn lẻ, không block luồngđặt hàng
         }
       }
 
@@ -138,7 +138,7 @@ class OrderViewModel extends ChangeNotifier {
     }
   }
 
-  // Cập nhật trạng thái đơn hàng
+  // Cập nhật trạng tháiđơn hàng
   Future<bool> updateOrderStatus(String orderId, String newStatus, {bool isAdmin = false}) async {
     _isLoading = true;
     _errorMessage = null;
@@ -147,7 +147,7 @@ class OrderViewModel extends ChangeNotifier {
     try {
       await _orderService.updateOrderStatus(orderId, newStatus);
 
-      // Nếu trạng thái là đã hủy, hoàn trả lại số lượng tồn kho
+      // Nếu trạng thái làđã hủy, hoàn trả lại số lượng tồn kho
       if (newStatus == 'cancelled') {
         final apiService = ApiService();
         final itemsToRestore = await _orderService.getOrderItems(orderId);
@@ -159,7 +159,7 @@ class OrderViewModel extends ChangeNotifier {
               await apiService.updateProductStock(item.productId, newStock);
             }
           } catch (_) {
-            // Bỏ qua lỗi cập nhật tồn kho đơn lẻ
+            // Bỏ qua lỗi cập nhật tồn khođơn lẻ
           }
         }
       }

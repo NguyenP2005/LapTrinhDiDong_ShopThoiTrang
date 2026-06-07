@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import '../models/store_model.dart';
 import '../services/store_service.dart';
@@ -18,7 +18,7 @@ class StoreViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get locationDenied => _locationDenied;
 
-  // Cửa hàng gần nhất (sau khi đã tính khoảng cách)
+  // Cửa hàng gần nhất (sau khiđã tính khoảng cách)
   StoreModel? get nearestStore {
     if (_stores.isEmpty) return null;
     final withDistance = _stores.where((s) => s.distanceInKm != null).toList();
@@ -27,7 +27,7 @@ class StoreViewModel extends ChangeNotifier {
     return withDistance.first;
   }
 
-  // Tải danh sách cửa hàng + xác định vị trí + tính khoảng cách
+  // Tải danh sách cửa hàng + xácđịnh vị trí + tính khoảng cách
   Future<void> loadStores() async {
     _isLoading = true;
     _errorMessage = null;
@@ -75,7 +75,7 @@ class StoreViewModel extends ChangeNotifier {
   Future<void> _determinePosition() async {
     _locationDenied = false;
 
-    // Kiểm tra dịch vụ định vị có bật không
+    // Kiểm tra dịch vụđịnh vị có bật không
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       _locationDenied = true;

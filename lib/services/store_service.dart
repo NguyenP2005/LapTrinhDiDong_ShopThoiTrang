@@ -11,7 +11,7 @@ class StoreService {
       final response = await http.get(Uri.parse('$baseUrl/stores'));
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         return data.map((e) => StoreModel.fromJson(e)).toList();
       } else {
         throw Exception('Lỗi tải danh sách cửa hàng: ${response.statusCode}');

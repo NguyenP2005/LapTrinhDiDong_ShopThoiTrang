@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../models/coupon_model.dart';
 import '../services/coupon_service.dart';
 
@@ -17,7 +17,7 @@ class CouponViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  // Tải danh sách mã khuyến mãi đang hoạt động
+  // Tải danh sách mã khuyến mãiđang hoạtđộng
   Future<void> loadCoupons() async {
     _isLoading = true;
     _errorMessage = null;
@@ -42,7 +42,7 @@ class CouponViewModel extends ChangeNotifier {
     final coupon = await _couponService.findByCode(code);
 
     if (coupon == null) {
-      _errorMessage = 'Mã khuyến mãi không tồn tại hoặc đã hết hạn';
+      _errorMessage = 'Mã khuyến mãi không tồn tại hoặcđã hết hạn';
       _isLoading = false;
       notifyListeners();
       return false;
@@ -60,7 +60,7 @@ class CouponViewModel extends ChangeNotifier {
   bool _apply(CouponModel coupon, double orderAmount) {
     if (orderAmount < coupon.minOrder) {
       _errorMessage =
-          'Đơn tối thiểu ${coupon.minOrder.toStringAsFixed(0)}đ để dùng mã này';
+          'Đơn tối thiểu ${coupon.minOrder.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND để dùng mã này';
       _appliedCoupon = null;
       _discount = 0;
       _isLoading = false;
@@ -70,7 +70,7 @@ class CouponViewModel extends ChangeNotifier {
 
     final d = coupon.calculateDiscount(orderAmount);
     if (d <= 0) {
-      _errorMessage = 'Mã không áp dụng được cho đơn hàng này';
+      _errorMessage = 'Mã không áp dụngđược chođơn hàng này';
       _appliedCoupon = null;
       _discount = 0;
       _isLoading = false;
@@ -86,7 +86,7 @@ class CouponViewModel extends ChangeNotifier {
     return true;
   }
 
-  // Gỡ mã đang áp
+  // Gỡ mãđang áp
   void removeCoupon() {
     _appliedCoupon = null;
     _discount = 0;
@@ -94,7 +94,7 @@ class CouponViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Reset toàn bộ (gọi khi thoát checkout / đặt hàng xong)
+  // Reset toàn bộ (gọi khi thoát checkout /đặt hàng xong)
   void reset() {
     _availableCoupons = [];
     _appliedCoupon = null;

@@ -1,4 +1,4 @@
-class OrderItemModel {
+﻿class OrderItemModel {
   final String id;
   final String orderId;
   final String productId;

@@ -58,9 +58,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xff8E2DE2),
+          backgroundColor: const Color(0xFF4361EE),
 
-          // ← THÊM actions này
           actions: [
             Consumer<CartViewModel>(
               builder: (context, cartVM, child) {
@@ -68,7 +67,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(
-                        Icons.shopping_cart_outlined,
+                        Icons.shopping_bag_outlined, // Giữ icon túi xách
                         color: Colors.white,
                       ),
                       onPressed: () {
@@ -114,11 +113,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      color: Colors.black.withValues(alpha: 0.03),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
                     ),
                   ],
                 ),
@@ -131,7 +131,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: "Tìm kiếm sản phẩm...",
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    prefixIcon: const Icon(Icons.search, color: Colors.black54),
 
                     suffixIcon: searchText.isNotEmpty
                         ? IconButton(
@@ -244,8 +244,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.05),
-                                blurRadius: 10,
+                                color: Colors.black.withValues(alpha: 0.04),
+                                blurRadius: 15,
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
@@ -298,7 +299,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
                                     // Giá
                                     Text(
-                                      "${product.price.toStringAsFixed(0)} VND",
+                                      "${product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
                                       style: const TextStyle(
                                         color: Colors.red,
                                         fontWeight: FontWeight.bold,
@@ -330,7 +331,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: const Color(
-                                                    0xff8E2DE2,
+                                                    0xFF4361EE,
                                                   ),
                                                 ),
                                                 borderRadius:
@@ -340,7 +341,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                               child: const Text(
                                                 "Chi tiết",
                                                 style: TextStyle(
-                                                  color: Color(0xff8E2DE2),
+                                                  color: Color(0xFF4361EE),
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -374,10 +375,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                             ).showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                  "Đã thêm ${product.name} vào giỏ",
+                                                  "ĐĐã thêm ${product.name} vào giỏ",
                                                 ),
                                                 backgroundColor: const Color(
-                                                  0xff8E2DE2,
+                                                  0xFF4361EE,
                                                 ),
                                                 duration: const Duration(
                                                   seconds: 2,
@@ -389,13 +390,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                             width: 32,
                                             height: 32,
                                             decoration: BoxDecoration(
-                                              color: const Color(0xff8E2DE2),
+                                              color: const Color(0xFF4361EE).withValues(alpha: 0.1),
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
                                             child: const Icon(
-                                              Icons.shopping_cart_outlined,
-                                              color: Colors.white,
+                                              Icons.shopping_bag_outlined,
+                                              color: Color(0xFF4361EE),
                                               size: 18,
                                             ),
                                           ),
@@ -456,10 +457,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
         margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.symmetric(horizontal: 14),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xff8E2DE2) : Colors.white,
+          color: isSelected ? const Color(0xFF4361EE) : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? const Color(0xff8E2DE2) : Colors.grey.shade300,
+            color: isSelected ? const Color(0xFF4361EE) : Colors.grey.shade300,
           ),
         ),
         alignment: Alignment.center,
@@ -467,13 +468,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.attach_money, size: 13,
-                color: isSelected ? Colors.white : Colors.grey[600]),
+                color: isSelected ? Colors.white : Colors.black87),
             const SizedBox(width: 3),
             Text(
               label,
               style: TextStyle(
                 fontSize: 12,
-                color: isSelected ? Colors.white : Colors.black87,
+                color: isSelected ? Colors.white : Colors.black,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),

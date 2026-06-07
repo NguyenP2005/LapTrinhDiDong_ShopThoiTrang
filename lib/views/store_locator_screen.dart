@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,7 +15,7 @@ class StoreLocatorScreen extends StatefulWidget {
 class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
   GoogleMapController? _mapController;
 
-  // Camera mặc định: trung tâm TP.HCM
+  // Camera mặcđịnh: trung tâm TP.HCM
   static const LatLng _hcmCenter = LatLng(10.7769, 106.7009);
 
   @override
@@ -66,12 +66,12 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
     );
   }
 
-  // Mở Google Maps để chỉ đường tới cửa hàng (dùng app Google Maps có sẵn).
+  // Mở Google Mapsđể chỉđường tới cửa hàng (dùng app Google Maps có sẵn).
   Future<void> _openDirections(StoreModel store) async {
     final lat = store.latitude;
     final lng = store.longitude;
 
-    // origin để trống -> Google tự lấy vị trí hiện tại của người dùng.
+    // originđể trống -> Google tự lấy vị trí hiện tại của người dùng.
     final googleMapsUrl = Uri.parse(
       'https://www.google.com/maps/dir/?api=1'
       '&destination=$lat,$lng'
@@ -82,33 +82,33 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
       if (await canLaunchUrl(googleMapsUrl)) {
         await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication);
       } else {
-        throw 'Không mở được Google Maps';
+        throw 'Không mởđược Google Maps';
       }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Không mở được chỉ đường: $e'),
+          content: Text('Không mởđược chỉđường: $e'),
           backgroundColor: Colors.red,
         ),
       );
     }
   }
 
-  // Mở app gọi điện tới số của cửa hàng
+  // Mở app gọiđiện tới số của cửa hàng
   Future<void> _callStore(String phone) async {
     final telUri = Uri.parse('tel:${phone.replaceAll(' ', '')}');
     try {
       if (await canLaunchUrl(telUri)) {
         await launchUrl(telUri);
       } else {
-        throw 'Không gọi được';
+        throw 'Không gọiđược';
       }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Không thực hiện được cuộc gọi: $e'),
+          content: Text('Không thực hiệnđược cuộc gọi: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -129,7 +129,7 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xff8E2DE2),
+        backgroundColor: const Color(0xFF4361EE),
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: Container(
@@ -150,7 +150,7 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
         builder: (context, vm, child) {
           if (vm.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(color: Color(0xff8E2DE2)),
+              child: CircularProgressIndicator(color: Color(0xFF4361EE)),
             );
           }
 
@@ -164,19 +164,19 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                     const Icon(
                       Icons.error_outline,
                       size: 56,
-                      color: Colors.grey,
+                      color: Colors.black54,
                     ),
                     const SizedBox(height: 12),
                     Text(
                       'Lỗi tải cửa hàng:\n${vm.errorMessage}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.black54),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => vm.loadStores(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff8E2DE2),
+                        backgroundColor: const Color(0xFF4361EE),
                         foregroundColor: Colors.white,
                       ),
                       child: const Text('Thử lại'),
@@ -208,8 +208,8 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          'Chưa bật vị trí — không tính được khoảng cách. '
-                          'Vẫn xem được tất cả cửa hàng bên dưới.',
+                          'Chưa bật vị trí — không tínhđược khoảng cách. '
+                          'Vẫn xemđược tất cả cửa hàng bên dưới.',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.orange[900],
@@ -220,7 +220,7 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                   ),
                 ),
 
-              // Bản đồ Google Maps
+              // Bảnđồ Google Maps
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.42,
                 child: GoogleMap(
@@ -347,12 +347,12 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: const Color(0xff8E2DE2).withValues(alpha: 0.1),
+                    color: const Color(0xFF4361EE).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.store,
-                    color: Color(0xff8E2DE2),
+                    color: Color(0xFF4361EE),
                     size: 24,
                   ),
                 ),
@@ -417,16 +417,16 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
             const SizedBox(height: 6),
             _infoRow(Icons.access_time, 'Mở cửa: ${store.openHours}'),
             const SizedBox(height: 12),
-            // Hai nút: Chỉ đường + Gọi
+            // Hai nút: Chỉđường + Gọi
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: () => _openDirections(store),
                     icon: const Icon(Icons.directions, size: 18),
-                    label: const Text('Chỉ đường'),
+                    label: const Text('Chỉđường'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff8E2DE2),
+                      backgroundColor: const Color(0xFF4361EE),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -442,8 +442,8 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
                     icon: const Icon(Icons.call, size: 18),
                     label: const Text('Gọi'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xff8E2DE2),
-                      side: const BorderSide(color: Color(0xff8E2DE2)),
+                      foregroundColor: const Color(0xFF4361EE),
+                      side: const BorderSide(color: Color(0xFF4361EE)),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -463,12 +463,12 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: Colors.grey[500]),
+        Icon(icon, size: 16, color: Colors.black54),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+            style: TextStyle(fontSize: 13, color: Colors.black54),
           ),
         ),
       ],

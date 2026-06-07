@@ -27,12 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       "image": "assets/images/banner.png",
       "title": "Summer Sale 🔥",
-      "subtitle": "Giảm đến 50% toàn bộ sản phẩm",
+      "subtitle": "Giảmđến 50% toàn bộ sản phẩm",
     },
     {
       "image": "assets/images/banner2.png",
       "title": "New Arrivals 🌟",
-      "subtitle": "Bộ sưu tập mới đã lên kệ",
+      "subtitle": "Bộ sưu tập mớiđĐã lên kệ",
     },
   ];
 
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Tự động chuyển banner mỗi 4 giây
+    // Tựđộng chuyển banner mỗi 4 giây
     _bannerTimer = Timer.periodic(const Duration(seconds: 4), (timer) {
       if (!mounted) return;
       final next = (_currentBanner + 1) % _banners.length;
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xffF5F5F5),
         appBar: _buildAppBar(),
         body: RefreshIndicator(
-          color: const Color(0xff8E2DE2),
+          color: const Color(0xFF4361EE),
           onRefresh: () async {
             await context.read<ProductViewModel>().fetchProducts();
           },
@@ -117,11 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: const Color(0xff8E2DE2),
+      backgroundColor: const Color(0xFF4361EE),
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xff8E2DE2), Color(0xff4A00E0)],
+            colors: [Color(0xFF4361EE), Color(0xFF334CB8)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
-                    Icons.shopping_cart_outlined,
+                    Icons.shopping_bag_outlined, // Khách yêu cầu giữ icon mới
                     color: Colors.white,
                     size: 26,
                   ),
@@ -183,7 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        const SizedBox(width: 8),
       ],
     );
   }
@@ -199,21 +198,22 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Colors.grey.shade200),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
               ),
             ],
           ),
           child: Row(
             children: [
-              const Icon(Icons.search, color: Colors.grey),
+              const Icon(Icons.search, color: Colors.black54),
               const SizedBox(width: 12),
               Text(
                 "Tìm kiếm sản phẩm...",
-                style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                style: TextStyle(color: Colors.black54, fontSize: 15),
               ),
             ],
           ),
@@ -297,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 8,
               decoration: BoxDecoration(
                 color: _currentBanner == i
-                    ? const Color(0xff8E2DE2)
+                    ? const Color(0xFF4361EE)
                     : Colors.grey[350],
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -308,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ─────────────────────── Card mở bản đồ cửa hàng ───────────────────────
+  // ─────────────────────── Card mở bảnđồ cửa hàng ───────────────────────
   Widget _buildStoreLocatorCard() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -365,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 2),
                     Text(
-                      "Xem hệ thống cửa hàng trên bản đồ",
+                      "Xem hệ thống cửa hàng trên bảnđồ",
                       style: TextStyle(color: Colors.white70, fontSize: 13),
                     ),
                   ],
@@ -421,29 +421,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(16),
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff8E2DE2),
-                                    Color(0xff4A00E0),
-                                  ],
-                                ),
-                                shape: BoxShape.circle,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4361EE).withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(16),
                               ),
                               child: Icon(
                                 _categoryIcon(cat.name),
-                                color: Colors.white,
+                                color: const Color(0xFF4361EE),
                                 size: 26,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 8),
                             Text(
                               cat.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: Colors.black,
                               ),
                             ),
                           ],
@@ -536,7 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: _buildImage(product.image, height: 130, width: 150),
                 ),
-                // Nhãn HOT
+                // NhĐãn HOT
                 Positioned(
                   top: 8,
                   left: 8,
@@ -577,7 +573,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "${product.price.toStringAsFixed(0)} đ",
+                    "${product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
                     style: const TextStyle(
                       color: Color(0xffEE4D2D),
                       fontWeight: FontWeight.bold,
@@ -591,7 +587,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(width: 2),
                       Text(
                         product.rating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
                       ),
                     ],
                   ),
@@ -652,7 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.68,
+                childAspectRatio: 0.65,
               ),
               itemBuilder: (context, index) {
                 return _buildGridCard(items[index]);
@@ -712,38 +708,61 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(width: 2),
                       Text(
                         product.rating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
                       ),
                     ],
                   ),
                   const SizedBox(height: 6),
+                  Text(
+                    "${product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Nút "Chi tiết"
                       Expanded(
-                        child: Text(
-                          "${product.price.toStringAsFixed(0)} đ",
-                          style: const TextStyle(
-                            color: Color(0xff8E2DE2),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                        child: GestureDetector(
+                          onTap: () => _openDetail(product),
+                          child: Container(
+                            height: 32,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xFF4361EE),
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "Chi tiết",
+                              style: TextStyle(
+                                color: Color(0xFF4361EE),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      // Nút thêm nhanh vào giỏ
+                      const SizedBox(width: 6),
+                      // Nút giỏ hàng (icon)
                       GestureDetector(
                         onTap: () => _quickAddToCart(product),
                         child: Container(
                           width: 32,
                           height: 32,
                           decoration: BoxDecoration(
-                            color: const Color(0xff8E2DE2),
+                            color: const Color(0xFF4361EE).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 20,
+                            Icons.shopping_bag_outlined,
+                            color: Color(0xFF4361EE),
+                            size: 18,
                           ),
                         ),
                       ),
@@ -799,8 +818,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Đã thêm ${product.name} vào giỏ"),
-        backgroundColor: const Color(0xff8E2DE2),
+        content: Text("ĐĐã thêm ${product.name} vào giỏ"),
+        backgroundColor: const Color(0xFF4361EE),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -834,7 +853,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: height,
       width: width,
       color: Colors.grey[300],
-      child: const Icon(Icons.image, color: Colors.grey),
+      child: const Icon(Icons.image, color: Colors.black54),
     );
   }
 }
