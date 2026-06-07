@@ -6,6 +6,24 @@ import '../models/order_item_model.dart';
 class OrderService {
   static const String baseUrl = "http://10.0.2.2:3000";
 
+  // Lấy tất cả đơn hàng (Dành cho Admin)
+  Future<List<OrderModel>> getAllOrders() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/orders'));
+
+      if (response.statusCode == 200) {
+        final List data = json.decode(response.body);
+        final allOrders = data.map((e) => OrderModel.fromJson(e)).toList();
+        allOrders.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        return allOrders;
+      } else {
+        throw Exception('Lỗi tải danh sách: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception(e.toString().replaceAll('Exception: ', ''));
+    }
+  }
+
   // Lấy tất cả đơn hàng của user
   // Sửa lại hàm này trong order_service.dart
   // Lấy danh sách đơn hàng (Dùng Dart để tự lọc thay vì nhờ json-server)

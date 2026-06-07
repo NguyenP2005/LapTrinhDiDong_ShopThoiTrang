@@ -7,6 +7,8 @@ class Product {
   final int catergoryID;
   final double rating;
   final int stock;
+  final List<String> sizes;
+  final List<String> colors;
 
   Product({
     required this.id,
@@ -17,6 +19,8 @@ class Product {
     required this.catergoryID,
     required this.rating,
     required this.stock,
+    this.sizes = const [],
+    this.colors = const [],
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,8 @@ class Product {
       catergoryID: int.tryParse(json['category_id'].toString()) ?? 0,
       rating: (json['rating'] ?? 0).toDouble(),
       stock: json['stock'] ?? 0,
+      sizes: json['sizes'] != null ? List<String>.from(json['sizes']) : [],
+      colors: json['colors'] != null ? List<String>.from(json['colors']) : [],
     );
   }
 }

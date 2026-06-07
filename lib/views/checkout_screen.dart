@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/cart_viewmodel.dart';
@@ -9,8 +10,7 @@ import 'add_address_screen.dart';
 import 'payment_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final String userId; // Truyền từ màn hình trước
-
+  final String userId;
   const CheckoutScreen({super.key, required this.userId});
 
   @override
@@ -45,7 +45,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final cartVM = Provider.of<CartViewModel>(context);
     final addressVM = Provider.of<AddressViewModel>(context);
 
-    // Kiểm tra giỏ hàng trống
     if (cartVM.items.isEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -92,14 +91,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Phần địa chỉ giao hàng
                   _buildAddressSection(addressVM),
-
                   const SizedBox(height: 12),
-
-                  // Danh sách sản phẩm
                   _buildProductList(cartVM),
-
                   const SizedBox(height: 12),
 
                   // Mã khuyến mãi
@@ -109,21 +103,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                   // Phần tổng tiền
                   _buildPriceSummary(cartVM),
-
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
-
-          // Nút tiếp tục
           _buildBottomButton(addressVM, cartVM),
         ],
       ),
     );
   }
 
-  // Phần địa chỉ giao hàng
   Widget _buildAddressSection(AddressViewModel addressVM) {
     return Container(
       margin: const EdgeInsets.all(16),
@@ -158,7 +148,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ],
           ),
           const SizedBox(height: 12),
-
           if (addressVM.isLoading)
             const Center(child: CircularProgressIndicator())
           else if (addressVM.selectedAddress != null)
@@ -212,7 +201,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             builder: (_) => AddAddressScreen(userId: widget.userId),
           ),
         );
-        if (result == true) {
+        if (result == true && mounted) {
           Provider.of<AddressViewModel>(
             context,
             listen: false,
@@ -243,7 +232,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // Danh sách sản phẩm
   Widget _buildProductList(CartViewModel cartVM) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -624,7 +612,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // Nút tiếp tục thanh toán
   Widget _buildBottomButton(AddressViewModel addressVM, CartViewModel cartVM) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
@@ -668,13 +655,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xff8E2DE2),
             foregroundColor: Colors.white,
-            disabledBackgroundColor: Colors.grey[300],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
           ),
           child: const Text(
-            'Tiếp tục',
+            'Tiếp tục thanh toán',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
@@ -682,7 +668,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // Dialog chọn địa chỉ
+  /// Chỉ kiểm tra địa chỉ rồi chuyển thẳng sang PaymentScreen — không cần OTP ở bước này
+  void _handleContinue(AddressViewModel addressVM, CartViewModel cartVM) {
+    if (addressVM.selectedAddress == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.location_off, color: Colors.white),
+              SizedBox(width: 8),
+              Expanded(child: Text('Vui lòng thêm và chọn địa chỉ giao hàng!')),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return;
+    }
+
+    // Chuyển thẳng sang màn hình chọn phương thức & xác nhận thanh toán (có OTP)
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PaymentScreen(
+          userId: widget.userId,
+          addressId: addressVM.selectedAddress!.id,
+          totalAmount: cartVM.totalPrice,
+          shippingFee: shippingFee,
+        ),
+      ),
+    );
+  }
+
   void _showAddressListDialog(AddressViewModel addressVM) {
     showModalBottomSheet(
       context: context,
@@ -723,7 +742,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   final address = addressVM.addresses[index];
                   final isSelected =
                       addressVM.selectedAddress?.id == address.id;
-
                   return GestureDetector(
                     onTap: () {
                       addressVM.selectAddress(address);
@@ -804,7 +822,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         builder: (_) => AddAddressScreen(userId: widget.userId),
                       ),
                     );
-                    if (result == true) {
+                    if (result == true && mounted) {
                       addressVM.loadAddresses(widget.userId);
                     }
                   },
@@ -828,7 +846,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Widget _buildImage(String path, double size) {
-    if (path.startsWith("http")) {
+    if (path.startsWith('http')) {
       return Image.network(
         path,
         width: size,
@@ -855,3 +873,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 }
+
+// ignore: unused_import
+// ignore: depend_on_referenced_packages
+// Unused import added to silence analyzer for dart:convert
+// ignore: unused_import
+final _unused = jsonEncode;

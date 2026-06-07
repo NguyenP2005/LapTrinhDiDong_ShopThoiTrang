@@ -6,7 +6,8 @@
       "password": "123456",
       "name": "Admin",
       "avatar": "https://i.pravatar.cc/150",
-      "role": "admin"
+      "role": "admin",
+      "isLocked": false
     },
     {
       "id": "2",
@@ -14,7 +15,8 @@
       "password": "123456",
       "name": "Nguyễn Văn A",
       "avatar": "https://i.pravatar.cc/150",
-      "role": "user"
+      "role": "admin",
+      "isLocked": false
     },
     {
       "id": "3",
@@ -94,7 +96,22 @@
       "password": "quan205",
       "avatar": "https://i.pravatar.cc/150",
       "role": "user",
-      "id": "25CtJP76uhs"
+      "id": "25CtJP76uhs",
+      "name": "nguyen",
+      "email": "nguyen0000@gmail.com",
+      "password": "Khoinguyen123",
+      "avatar": "https://i.pravatar.cc/150",
+      "role": "user",
+      "id": "-XfdykulJ4Q"
+    },
+    {
+      "name": "nguyen",
+      "phone": "0900000000",
+      "email": "nguyen123@gmail.com",
+      "password": "Nguyen123",
+      "avatar": "https://i.pravatar.cc/150?img=11",
+      "role": "customer",
+      "id": "pa8nr0ep5r4"
     }
   ],
   "categories": [
@@ -121,180 +138,427 @@
       "name": "Áo thun basic trắng",
       "price": 199000,
       "image": "assets/images/image01.webp",
-      "description": "Cotton mềm",
+      "description": "Áo thun basic trắng được làm từ 100% cotton cao cấp, mềm mại và thoáng khí, phù hợp với thời tiết Việt Nam. Thiết kế tối giản nhưng tinh tế, cổ tròn vừa phải, form dáng regular fit tôn lên vóc dáng tự nhiên. Chất liệu thấm hút mồ hôi tốt, không phai màu sau nhiều lần giặt. Dễ dàng phối cùng quần jean, quần tây hay chân váy. Màu trắng tinh khôi, thích hợp cho nhiều dịp từ đi học, đi làm đến dạo phố.",
       "category_id": 1,
-      "stock": 50
+      "rating": 4.5,
+      "stock": 97,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Trắng",
+        "Xám nhạt",
+        "Be"
+      ]
     },
     {
       "id": "2",
       "name": "Áo thun đen form rộng",
       "price": 219000,
       "image": "assets/images/image02.webp",
-      "description": "Street style",
+      "description": "Áo thun đen form rộng mang phong cách street style hiện đại, được ưa chuộng bởi giới trẻ. Chất liệu cotton pha spandex co giãn 4 chiều, thoải mái khi vận động. Form oversize giúp che khuyết điểm và tạo cảm giác phóng khoáng. Cổ áo được may viền chắc chắn, không bị giãn sau khi giặt nhiều lần. Màu đen dễ phối đồ, thích hợp kết hợp với quần jogger, quần short hay quần jean rách. Sản phẩm được kiểm định chất lượng kỹ lưỡng trước khi xuất xưởng.",
       "category_id": 1,
-      "stock": 40
+      "rating": 4.3,
+      "stock": 40,
+      "sizes": [
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Đen",
+        "Xám đậm",
+        "Navy"
+      ]
     },
     {
       "id": "3",
       "name": "Áo hoodie xám",
       "price": 299000,
       "image": "assets/images/image03.webp",
-      "description": "Form rộng",
+      "description": "Áo hoodie xám form rộng với thiết kế mũ chụp tiện dụng, lý tưởng cho những ngày se lạnh hoặc buổi tối mát mẻ. Chất liệu cotton fleece dày dặn, giữ nhiệt tốt nhưng vẫn thoáng khí. Túi kangaroo phía trước rộng rãi, tiện lợi cho việc đựng điện thoại hoặc giữ ấm tay. Mũ hoodie có dây điều chỉnh linh hoạt. Đường may chắc chắn, bo gấu và cổ tay không bị giãn sau nhiều lần sử dụng. Phù hợp cho phong cách casual, sporty hoặc layering trong những ngày trời lạnh.",
       "category_id": 1,
-      "stock": 35
+      "rating": 4.7,
+      "stock": 35,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Xám",
+        "Đen",
+        "Trắng kem",
+        "Xanh rêu"
+      ]
     },
     {
       "id": "4",
       "name": "Áo sơ mi trắng",
       "price": 259000,
       "image": "assets/images/image04.jpg",
-      "description": "Thanh lịch",
+      "description": "Áo sơ mi trắng thanh lịch, được may từ vải poplin cao cấp, mềm mại và ít nhăn. Thiết kế cổ bẻ cổ điển, hàng cúc chắc chắn không bị bung. Form regular fit phù hợp với nhiều vóc dáng. Vải có độ thoáng khí cao, không gây khó chịu khi mặc cả ngày. Thích hợp cho môi trường công sở, gặp gỡ đối tác hay các sự kiện trang trọng. Dễ dàng phối cùng vest, quần tây, chân váy bút chì hoặc tucked vào quần jeans. Bảo quản bằng cách giặt nhẹ và ủi ở nhiệt độ thấp.",
       "category_id": 1,
-      "stock": 30
+      "rating": 4.4,
+      "stock": 30,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Trắng",
+        "Xanh nhạt",
+        "Hồng nhạt"
+      ]
     },
     {
       "id": "5",
       "name": "Áo polo xanh",
       "price": 229000,
       "image": "assets/images/image05.jpg",
-      "description": "Lịch sự",
+      "description": "Áo polo xanh navy với chất liệu pique cotton cao cấp, vừa thoáng mát vừa lịch sự. Cổ polo có dây kéo 3 cúc, tạo điểm nhấn thời trang và dễ điều chỉnh. Form slim fit vừa vặn, tôn dáng người mặc. Gấu áo và tay áo được bo viền neat, giữ dáng tốt sau nhiều lần giặt. Màu xanh navy đa năng, phù hợp cả văn phòng lẫn dạo phố. Sản phẩm được kiểm tra độ bền màu nghiêm ngặt, đảm bảo không phai sau 50 lần giặt.",
       "category_id": 1,
-      "stock": 45
+      "rating": 4.2,
+      "stock": 45,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Xanh navy",
+        "Trắng",
+        "Đỏ đô",
+        "Xanh lá"
+      ]
     },
     {
       "id": "6",
       "name": "Quần jean slim fit",
       "price": 399000,
       "image": "assets/images/image06.avif",
-      "description": "Co giãn",
+      "description": "Quần jean slim fit được dệt từ denim 98% cotton + 2% elastane, cho khả năng co giãn 4 chiều tuyệt vời. Thiết kế ôm vừa phải từ hông xuống ống chân, tôn lên đôi chân thon dài. Màu xanh indigo cổ điển với hiệu ứng wash nhẹ nhàng, tạo cảm giác vintage hiện đại. 5 túi tiêu chuẩn, khóa kéo và cúc chắc chắn. Đường may kép tăng độ bền. Bảo quản bằng cách giặt lộn trái ở nhiệt độ thấp để giữ màu lâu hơn.",
       "category_id": 2,
-      "stock": 30
+      "rating": 4.6,
+      "stock": 30,
+      "sizes": [
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34"
+      ],
+      "colors": [
+        "Xanh indigo",
+        "Xanh đậm",
+        "Đen"
+      ]
     },
     {
       "id": "7",
       "name": "Quần jean rách",
       "price": 420000,
       "image": "assets/images/image07.avif",
-      "description": "Cá tính",
+      "description": "Quần jean rách mang phong cách street style cá tính, hot trend trong giới trẻ hiện nay. Chất denim dày dặn 12oz, được xử lý rách có chọn lọc tại đầu gối và ống chân, tạo điểm nhấn độc đáo. Form slim fit modern với eo cao vừa phải. Màu xanh nhạt wash mạnh tạo cảm giác vintage. Đường may kép chắc chắn ngay cả tại các vị trí rách. Phối đẹp cùng áo thun, áo croptop hay áo phông oversize.",
       "category_id": 2,
-      "stock": 25
+      "rating": 4.1,
+      "stock": 25,
+      "sizes": [
+        "28",
+        "29",
+        "30",
+        "31",
+        "32"
+      ],
+      "colors": [
+        "Xanh nhạt",
+        "Xanh trung",
+        "Xám nhạt"
+      ]
     },
     {
       "id": "8",
       "name": "Quần jogger đen",
       "price": 270000,
       "image": "assets/images/image08.png",
-      "description": "Thoải mái",
+      "description": "Quần jogger đen thiết kế thể thao năng động, phù hợp cho cả tập luyện lẫn mặc hàng ngày. Chất liệu cotton pha polyester co giãn tốt, thoáng khí và thấm hút mồ hôi. Cạp thun rộng với dây rút tiện lợi, cổ chân bo gấu gọn gàng. Túi hai bên sâu rộng, có thêm túi khóa kéo phía sau. Màu đen thời trang, không lộ vết bẩn. Thích hợp cho jogging sáng, gym, yoga hoặc đơn giản là mặc ở nhà cho thoải mái.",
       "category_id": 2,
-      "stock": 60
+      "rating": 4.5,
+      "stock": 60,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [
+        "Đen",
+        "Xám đậm",
+        "Navy",
+        "Olive"
+      ]
     },
     {
       "id": "9",
       "name": "Quần short thể thao",
       "price": 180000,
       "image": "assets/images/image09.png",
-      "description": "Mát mẻ",
+      "description": "Quần short thể thao siêu thoáng mát với chất liệu polyester microfiber nhẹ nhàng và nhanh khô. Thiết kế lưng thun co giãn tốt, dây rút điều chỉnh vòng eo linh hoạt. Độ dài vừa phải đến giữa đùi, tạo cảm giác thoải mái khi vận động. Túi hai bên tiện lợi, có lớp lót bên trong. Màu sắc tươi sáng, dễ phối đồ. Phù hợp cho chạy bộ, tập gym, đá bóng hoặc các hoạt động thể thao ngoài trời.",
       "category_id": 2,
-      "stock": 55
+      "rating": 4,
+      "stock": 55,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Đen",
+        "Xanh navy",
+        "Đỏ",
+        "Xám"
+      ]
     },
     {
       "id": "10",
       "name": "Quần tây công sở",
       "price": 350000,
       "image": "assets/images/image10.jpg",
-      "description": "Lịch lãm",
+      "description": "Quần tây công sở cao cấp dành cho quý ông lịch lãm và phụ nữ thành đạt. Chất liệu wool pha polyester chống nhăn, giữ form cả ngày dài làm việc. Thiết kế eo cao cổ điển với hai túi bên và túi hậu. Đường may sắc sảo, gấu quần được may hoàn thiện tinh tế. Màu đen và xám đậm phù hợp với mọi màu áo sơ mi. Dễ bảo quản, chỉ cần giặt khô hoặc giặt tay nhẹ nhàng.",
       "category_id": 2,
-      "stock": 20
+      "rating": 4.3,
+      "stock": 20,
+      "sizes": [
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34"
+      ],
+      "colors": [
+        "Đen",
+        "Xám đậm",
+        "Navy"
+      ]
     },
     {
       "id": "11",
       "name": "Váy hoa nữ",
       "price": 320000,
       "image": "assets/images/image11.webp",
-      "description": "Nữ tính",
+      "description": "Váy hoa nữ dịu dàng và nữ tính với họa tiết hoa nhí tinh tế trên nền vải lụa nhân tạo mềm mại. Thiết kế A-line cổ V nhẹ nhàng, tôn lên vóc dáng người mặc. Độ dài midi vừa phải, phù hợp với nhiều hoàn cảnh từ dạo phố, đi cafe đến các bữa tiệc nhẹ nhàng. Bo eo nhún nhẹ giúp tạo cảm giác thon gọn. Dây cột eo điều chỉnh linh hoạt. Chất liệu thoáng mát, lý tưởng cho mùa hè Việt Nam.",
       "category_id": 3,
-      "stock": 25
+      "rating": 4.8,
+      "stock": 25,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Hoa nền trắng",
+        "Hoa nền vàng",
+        "Hoa nền hồng"
+      ]
     },
     {
       "id": "12",
       "name": "Váy công sở",
       "price": 380000,
       "image": "assets/images/image12.avif",
-      "description": "Thanh lịch",
+      "description": "Váy công sở thanh lịch và chuyên nghiệp, thiết kế bút chì ôm sát vừa phải tôn lên đường cong tự nhiên. Chất liệu crepe cao cấp chống nhăn, giữ form suốt ngày làm việc. Độ dài vừa đầu gối — lịch sự và phù hợp với môi trường văn phòng. Đường cắt may tinh tế, khóa kéo sau lưng kín đáo. Màu sắc trung tính dễ phối cùng áo sơ mi, blazer hoặc áo kiểu. Bảo quản bằng cách giặt khô hoặc giặt tay nhẹ nhàng.",
       "category_id": 3,
-      "stock": 20
+      "rating": 4.5,
+      "stock": 20,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Đen",
+        "Xám nhạt",
+        "Trắng sữa",
+        "Navy"
+      ]
     },
     {
       "id": "13",
       "name": "Váy maxi",
       "price": 420000,
       "image": "assets/images/image13.webp",
-      "description": "Dịu dàng",
+      "description": "Váy maxi dài chạm đất với phong cách boho-chic tự do và thanh thoát. Chất liệu chiffon cao cấp nhẹ nhàng, bay bổng trong gió tạo cảm giác nữ tính tuyệt vời. Thiết kế cổ V sâu vừa phải, dây đan bắt chéo sau lưng độc đáo. Nhiều màu sắc tươi sáng và họa tiết đẹp mắt. Phù hợp cho các buổi dạo biển, picnic, tiệc ngoài trời hoặc chụp ảnh concept. Dễ bảo quản, giặt tay nhẹ hoặc chế độ giặt nhẹ.",
       "category_id": 3,
-      "stock": 15
+      "rating": 4.6,
+      "stock": 15,
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colors": [
+        "Trắng",
+        "Xanh pastel",
+        "Hồng cam",
+        "Vàng"
+      ]
     },
     {
       "id": "14",
       "name": "Chân váy jean",
       "price": 290000,
       "image": "assets/images/image14.webp",
-      "description": "Trẻ trung",
+      "description": "Chân váy jean trẻ trung và năng động, phong cách casual-chic được yêu thích bởi các bạn gái. Chất denim co giãn nhẹ 98% cotton + 2% elastane, thoải mái khi di chuyển. Thiết kế A-line cạp cao tôn vóc dáng. Độ dài mini vừa phải — trẻ trung không quá hở. Đường may kép bền đẹp, nút và khóa kéo chắc chắn. Phối cùng áo thun tucked-in, áo croptop hoặc áo sơ mi oversized đều đẹp.",
       "category_id": 3,
-      "stock": 35
+      "rating": 4.4,
+      "stock": 35,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        "Xanh nhạt",
+        "Xanh đậm",
+        "Trắng",
+        "Đen"
+      ]
     },
     {
       "id": "15",
       "name": "Nón lưỡi trai",
       "price": 120000,
       "image": "assets/images/image15.jpg",
-      "description": "Thời trang",
+      "description": "Nón lưỡi trai thời trang với thiết kế unisex hiện đại, phù hợp cả nam lẫn nữ. Chất liệu canvas cao cấp bền đẹp, thoáng khí và nhẹ. Lưỡi trai cong vừa phải che nắng hiệu quả. Dây điều chỉnh phía sau giúp vừa với nhiều kích thước đầu. Logo thêu tay tinh tế ở trước. Có nhiều màu sắc hot trend. Rửa sạch dễ dàng bằng nước và bàn chải mềm.",
       "category_id": 4,
-      "stock": 100
+      "rating": 4.2,
+      "stock": 100,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        "Đen",
+        "Trắng",
+        "Xanh navy",
+        "Đỏ",
+        "Be"
+      ]
     },
     {
       "id": "16",
       "name": "Balo mini",
       "price": 250000,
       "image": "assets/images/image16.webp",
-      "description": "Tiện lợi",
+      "description": "Balo mini thời trang với thiết kế nhỏ gọn tiện lợi, đủ sức chứa đồ dùng cần thiết cho một ngày ra ngoài. Chất liệu nylon chống thấm nước, bền bỉ với thời gian. Dây đeo vai có đệm mềm, thoải mái khi đeo lâu. Ngăn chính rộng rãi chứa được A4, ngăn trước nhỏ tiện ứng. Khóa kéo êm mượt, không bị kẹt. Phù hợp cho đi học, đi làm, dạo phố hay du lịch ngắn ngày.",
       "category_id": 4,
-      "stock": 40
+      "rating": 4.3,
+      "stock": 40,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        "Đen",
+        "Trắng",
+        "Hồng",
+        "Xanh mint",
+        "Tím"
+      ]
     },
     {
       "id": "17",
       "name": "Túi xách nữ",
       "price": 450000,
       "image": "assets/images/image17.jpg",
-      "description": "Sang trọng",
+      "description": "Túi xách nữ cao cấp với thiết kế sang trọng và tinh tế, lý tưởng cho phụ nữ hiện đại. Chất liệu da PU cao cấp mềm mịn, chống trầy xước và dễ vệ sinh. Kết cấu chắc chắn giữ form tốt, quai xách và quai đeo vai điều chỉnh được chiều dài. Bên trong có nhiều ngăn chia đồ tiện lợi: ngăn chính rộng, ngăn phụ có khóa kéo, ngăn điện thoại. Phần khóa từ chắc chắn và thanh lịch. Phù hợp cho công sở, đi chơi, tiệc tùng.",
       "category_id": 4,
-      "stock": 30
+      "rating": 4.7,
+      "stock": 30,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        "Đen",
+        "Nâu caramel",
+        "Trắng kem",
+        "Đỏ đô"
+      ]
     },
     {
       "id": "18",
       "name": "Thắt lưng da",
       "price": 200000,
       "image": "assets/images/image18.avif",
-      "description": "Cao cấp",
+      "description": "Thắt lưng da thật cao cấp với mặt khóa hợp kim sang trọng, khẳng định phong cách quý ông. Da bò thật dày 3mm, bền bỉ và đẹp hơn theo thời gian. Khóa cài dạng pin chắc chắn, không bị lỏng trong quá trình sử dụng. Chiều rộng 3.5cm phù hợp với hầu hết vòng quai quần. Có sẵn nhiều lỗ điều chỉnh kích thước. Bảo quản bằng cách lau sạch bằng vải mềm, tránh tiếp xúc với nước lâu.",
       "category_id": 4,
-      "stock": 60
+      "rating": 4.4,
+      "stock": 60,
+      "sizes": [
+        "95cm",
+        "100cm",
+        "105cm",
+        "110cm"
+      ],
+      "colors": [
+        "Đen",
+        "Nâu"
+      ]
     },
     {
       "id": "19",
       "name": "Kính mát",
       "price": 150000,
       "image": "assets/images/image19.avif",
-      "description": "Chống UV",
+      "description": "Kính mát thời trang với khả năng chống tia UV400, bảo vệ đôi mắt toàn diện trước tia cực tím có hại. Gọng nhựa acetate nhẹ và chắc, không gây dị ứng da. Tròng kính phủ lớp chống trầy xước và chống lóa. Thiết kế unisex, phù hợp với nhiều kiểu khuôn mặt. Phần gọng kính có thể uốn nhẹ để vừa với nhiều kích cỡ đầu. Đi kèm hộp đựng cứng và khăn lau kính. Nhiều màu tròng và gọng để lựa chọn.",
       "category_id": 4,
-      "stock": 80
+      "rating": 4.1,
+      "stock": 80,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        "Đen",
+        "Vàng gold",
+        "Bạc",
+        "Nâu đồi mồi"
+      ]
     },
     {
       "id": "20",
       "name": "Đồng hồ thời trang",
       "price": 600000,
       "image": "assets/images/image20.webp",
-      "description": "Phong cách",
+      "description": "Đồng hồ thời trang với thiết kế thanh lịch kết hợp giữa phong cách cổ điển và hiện đại. Mặt đồng hồ tròn đường kính 38mm vừa phải, phù hợp cả nam lẫn nữ. Kính cường lực sapphire chống xước bảo vệ mặt đồng hồ. Máy quartz Nhật Bản chính xác, sai số không quá ±15 giây/tháng. Dây da thật hoặc dây thép có thể thay đổi theo sở thích. Chống nước 30m — an tâm khi rửa tay hay bị mưa. Bảo hành 12 tháng chính hãng.",
       "category_id": 4,
-      "stock": 20
+      "rating": 4.9,
+      "stock": 20,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        "Mặt trắng dây đen",
+        "Mặt đen dây nâu",
+        "Mặt vàng dây vàng"
+      ]
     }
   ],
   "orders": [
@@ -369,6 +633,66 @@
       "created_at": "2026-04-20T10:42:28.815119",
       "updated_at": "2026-04-20T10:42:28.818109",
       "id": "KBiA0JqQAYM"
+    },
+    {
+      "user_id": "3s_dB7HlSHc",
+      "address_id": "KlfJR37e15Y",
+      "total_amount": 199000,
+      "shipping_fee": 30000,
+      "final_amount": 229000,
+      "status": "pending",
+      "payment_method": "COD",
+      "created_at": "2026-04-20T13:59:12.669635",
+      "updated_at": "2026-04-20T13:59:12.673184",
+      "id": "G2K-CvugmI8"
+    },
+    {
+      "user_id": "3",
+      "address_id": "WMlz7daZQX8",
+      "total_amount": 597000,
+      "shipping_fee": 30000,
+      "final_amount": 627000,
+      "status": "pending",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-04T15:22:38.415774",
+      "updated_at": "2026-06-04T15:22:38.423588",
+      "id": "Ts-75X2Xqso"
+    },
+    {
+      "user_id": "3",
+      "address_id": "WMlz7daZQX8",
+      "total_amount": 259000,
+      "shipping_fee": 30000,
+      "final_amount": 289000,
+      "status": "shipping",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-04T15:23:23.388970",
+      "updated_at": "2026-06-04T17:02:00.300526",
+      "id": "LsaIJj81jQU"
+    },
+    {
+      "user_id": "3",
+      "address_id": "4xQFLHbhL6I",
+      "total_amount": 9950000,
+      "shipping_fee": 30000,
+      "final_amount": 9980000,
+      "status": "cancelled",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-04T16:01:35.700832",
+      "updated_at": "2026-06-04T16:57:44.361742",
+      "id": "DpOrHA_ZRjY"
+    },
+    {
+      "user_id": "3",
+      "address_id": "NufGV__kREY",
+      "total_amount": 597000,
+      "shipping_fee": 30000,
+      "final_amount": 627000,
+      "status": "cancelled",
+      "payment_method": "BANK_TRANSFER",
+      "created_at": "2026-06-04T16:17:53.810123",
+      "updated_at": "2026-06-04T16:50:09.023370",
+      "id": "GGC6KD9syfc"
     }
   ],
   "order_items": [
@@ -434,6 +758,51 @@
       "quantity": 1,
       "price": 219000,
       "id": "xajwVep9beo"
+    },
+    {
+      "order_id": "G2K-CvugmI8",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 1,
+      "price": 199000,
+      "id": "1WPyrvi84mE"
+    },
+    {
+      "order_id": "Ts-75X2Xqso",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 3,
+      "price": 199000,
+      "id": "Q6AcJmFmPUc"
+    },
+    {
+      "order_id": "LsaIJj81jQU",
+      "product_id": "4",
+      "product_name": "Áo sơ mi trắng",
+      "product_image": "assets/images/image04.jpg",
+      "quantity": 1,
+      "price": 259000,
+      "id": "m0XWwwdFbIM"
+    },
+    {
+      "order_id": "DpOrHA_ZRjY",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 50,
+      "price": 199000,
+      "id": "DNxzMFmkHrA"
+    },
+    {
+      "order_id": "GGC6KD9syfc",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng (Màu: Xám nhạt, Size: S)",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 3,
+      "price": 199000,
+      "id": "a2lWLSPmVak"
     }
   ],
   "payments": [
@@ -496,6 +865,56 @@
       "account_number": null,
       "paid_at": "2026-04-20T10:42:28.864487",
       "id": "8dX9i8oKWtE"
+    },
+    {
+      "order_id": "G2K-CvugmI8",
+      "method": "COD",
+      "amount": 229000,
+      "status": "success",
+      "bank_name": null,
+      "account_number": null,
+      "paid_at": "2026-04-20T13:59:14.475265",
+      "id": "cEfvmzgMNFw"
+    },
+    {
+      "order_id": "Ts-75X2Xqso",
+      "method": "BANK_TRANSFER",
+      "amount": 627000,
+      "status": "success",
+      "bank_name": "Agribank",
+      "account_number": "123456789",
+      "paid_at": "2026-06-04T15:22:38.546252",
+      "id": "v6qJ__AlcqY"
+    },
+    {
+      "order_id": "LsaIJj81jQU",
+      "method": "BANK_TRANSFER",
+      "amount": 289000,
+      "status": "success",
+      "bank_name": "Agribank",
+      "account_number": "123456789",
+      "paid_at": "2026-06-04T15:23:23.487132",
+      "id": "qeuo4zzSHHU"
+    },
+    {
+      "order_id": "DpOrHA_ZRjY",
+      "method": "BANK_TRANSFER",
+      "amount": 9980000,
+      "status": "success",
+      "bank_name": "Agribank",
+      "account_number": "123456789",
+      "paid_at": "2026-06-04T16:01:35.781944",
+      "id": "ZaoP19eS0vA"
+    },
+    {
+      "order_id": "GGC6KD9syfc",
+      "method": "BANK_TRANSFER",
+      "amount": 627000,
+      "status": "success",
+      "bank_name": "Agribank",
+      "account_number": "123456789",
+      "paid_at": "2026-06-04T16:17:53.947631",
+      "id": "4ye1x6-VMVE"
     }
   ],
   "addresses": [
@@ -522,6 +941,54 @@
       "address": "140 Le Trong Tan",
       "is_default": true,
       "id": "d_dWINpaQ_c"
+    },
+    {
+      "user_id": "3s_dB7HlSHc",
+      "receiver_name": "asdasda",
+      "phone": "0901827321",
+      "address": "asdsadasd",
+      "is_default": false,
+      "id": "KlfJR37e15Y"
+    },
+    {
+      "user_id": "1",
+      "receiver_name": "admin",
+      "phone": "0900000000",
+      "address": "asdasdasd",
+      "is_default": true,
+      "id": "GEMn0wqxUWQ"
+    },
+    {
+      "user_id": "3",
+      "receiver_name": "Tran Van A",
+      "phone": "0123456789",
+      "address": "binh tan, ho chi minh",
+      "is_default": false,
+      "id": "WMlz7daZQX8"
+    },
+    {
+      "user_id": "3",
+      "receiver_name": "Hoang Nguyen",
+      "phone": "0987612349",
+      "address": "Binh Tan, HCM",
+      "is_default": false,
+      "id": "cGXbhniUo6U"
+    },
+    {
+      "user_id": "3",
+      "receiver_name": "Hoang Nguyen",
+      "phone": "0912345678",
+      "address": "12A, Tan Nhut, TPHCM",
+      "is_default": true,
+      "id": "4xQFLHbhL6I"
+    },
+    {
+      "user_id": "3",
+      "receiver_name": "Hoang Nguyen",
+      "phone": "0912345678",
+      "address": "Binh Tan, TPHCM",
+      "is_default": true,
+      "id": "NufGV__kREY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
