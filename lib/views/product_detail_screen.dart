@@ -80,19 +80,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final cartVM = Provider.of<CartViewModel>(context, listen: false);
     final messenger = ScaffoldMessenger.of(context);
 
-    // T?o t�n k�m ph�n lo?i
-    String variation = '';
-    if (_selectedColor != null || _selectedSize != null) {
-      variation = ' (';
-      if (_selectedColor != null) variation += 'Màu: $_selectedColor';
-      if (_selectedColor != null && _selectedSize != null) variation += ', ';
-      if (_selectedSize != null) variation += 'Size: $_selectedSize';
-      variation += ')';
-    }
-
+    // Tạo CartItem với color và size riêng biệt để hiển thị chip đúng
     final cartItem = CartItem(
       productId: widget.product.id,
-      name: '${widget.product.name}$variation',
+      name: widget.product.name,
+      color: _selectedColor,
+      size: _selectedSize,
       price: widget.product.price,
       image: widget.product.image,
       quantity: _selectedQuantity,
@@ -287,7 +280,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Text(
                         product.rating > 0
                             ? product.rating.toStringAsFixed(1)
-                            : "Chưa có�d�nh gi�",
+                            : 'Chưa có đánh giá',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
