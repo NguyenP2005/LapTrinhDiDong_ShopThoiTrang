@@ -90,14 +90,4 @@ class ApiService {
     final response = await http.delete(Uri.parse('$baseUrl/products/$id'));
     return response.statusCode == 200;
   }
-
-  /// Lấy danh sách danh mục — GET /categories
-  Future<List<Map<String, dynamic>>> getCategories() async {
-    final response = await http.get(Uri.parse('$baseUrl/categories'));
-    if (response.statusCode == 200) {
-      List data = json.decode(response.body);
-      return data.cast<Map<String, dynamic>>();
-    }
-    return [];
-  }
 }

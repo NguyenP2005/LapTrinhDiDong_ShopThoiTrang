@@ -187,6 +187,37 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
+  // Hàm mới: Cập nhật thông tin profile (Tên, SĐT)
+  Future<bool> updateUserProfile({required String name, required String phone}) async {
+    if (currentUser == null) return false;
+
+    try {
+      final userId = currentUser!['id'];
+      final response = await http.patch(
+        Uri.parse('$baseUrl/users/$userId'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name,
+          'phone': phone,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Cập nhật lại dữ liệu đang hiển thị và lưu xuống local
+        currentUser!['name'] = name;
+        currentUser!['phone'] = phone;
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('current_user', jsonEncode(currentUser));
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint("Lỗi cập nhật profile: $e");
+      return false;
+    }
+  }
+
   // 5. Đăng xuất tài khoản
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
