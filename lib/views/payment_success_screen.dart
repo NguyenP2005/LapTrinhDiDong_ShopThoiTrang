@@ -34,7 +34,7 @@ class PaymentSuccessScreen extends StatelessWidget {
 
               // Ti�ud?
               const Text(
-                '�?t h�ng th�nh c�ng!',
+                'Đặt hàng thành công ',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -43,16 +43,16 @@ class PaymentSuccessScreen extends StatelessWidget {
 
               // M�don h�ng
               Text(
-                'M�don h�ng: #$orderId',
-                style: TextStyle(fontSize: 16, color: Colors.black54),
+                'Mã đơn hàng: #$orderId',
+                style: TextStyle(fontSize: 16, color: Color(0xFF4B5563)),
               ),
 
               const SizedBox(height: 8),
 
               // M� t?
               Text(
-                'Cảm ơn bạn đĐã� mua h�ng!\n�on h�ng c?a bạn đĐãangdu?c xử lý�.',
-                style: TextStyle(fontSize: 15, color: Colors.black54),
+                'Cảm ơn bạn đã mua hàng!\nĐơn hàng của bạn đang được xử lý.',
+                style: TextStyle(fontSize: 15, color: Color(0xFF4B5563)),
                 textAlign: TextAlign.center,
               ),
 
@@ -75,7 +75,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'V? trang ch?',
+                    'Về trang chủ',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -101,7 +101,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Xemdon h�ng c?a t�i',
+                    'Xem đơn hàng của tôi',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -113,4 +113,3 @@ class PaymentSuccessScreen extends StatelessWidget {
     );
   }
 }
-

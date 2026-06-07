@@ -6,7 +6,6 @@ import '../viewmodels/auth_viewmodel.dart';
 import 'checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
-  // S?A: �� th�m bi?n nh?n h�m chuy?n tab
   final Function(int)? onTabChange;
 
   const CartScreen({super.key, this.onTabChange});
@@ -19,7 +18,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    // Load gi? h�ng khi m? m�n h�nh
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CartViewModel>(context, listen: false).loadCart();
     });
@@ -31,7 +29,7 @@ class _CartScreenState extends State<CartScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          "Gi? h�ng",
+          "Giỏ hàng",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -40,7 +38,6 @@ class _CartScreenState extends State<CartScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFF4361EE),
-        // �� x�a n�t leading (Back)d? kh�ng b? l?i m�n h�nhden
       ),
 
       body: Consumer<CartViewModel>(
@@ -51,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
 
           return Column(
             children: [
-              // Danh s�ch sản phẩm trong gi?
+              // Danh sách sản phẩm trong giỏ
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(16),
@@ -63,7 +60,6 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
 
-              // Ph?n tổng tiền + n�t thanh to�n
               _buildBottomSummary(cartVM),
             ],
           );
@@ -72,7 +68,6 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  // Widget hi?n th? t?ng sản phẩm trong gi?
   Widget _buildCartItem(
     BuildContext context,
     CartItem item,
@@ -98,7 +93,6 @@ class _CartScreenState extends State<CartScreen> {
 
           const SizedBox(width: 12),
 
-          // Th�ng tin sản phẩm
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,6 +106,38 @@ class _CartScreenState extends State<CartScreen> {
                     fontSize: 14,
                   ),
                 ),
+                if (item.color != null || item.size != null) ...[
+                  const SizedBox(height: 3),
+                  Wrap(
+                    spacing: 6,
+                    children: [
+                      if (item.color != null && item.color!.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF4361EE).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            'Màu: ${item.color}',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFF4361EE)),
+                          ),
+                        ),
+                      if (item.size != null && item.size!.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            'Size: ${item.size}',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFF4B5563)),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: 6),
                 Text(
                   "${item.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
@@ -123,20 +149,18 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 const SizedBox(height: 8),
 
-                // B?di?u ch?nh s? lu?ng
+                // Điều chỉnh số lượng
                 Row(
                   children: [
                     _qtyButton(
                       icon: Icons.remove,
                       onTap: () async {
                         if (item.quantity > 1) {
-                          // Gi?m s? lu?ng
                           await cartVM.updateQuantity(
                             item.productId,
                             item.quantity - 1,
                           );
                         } else {
-                          // X�a n?u s? lu?ng v? 0
                           _confirmDelete(context, item, cartVM);
                         }
                       },
@@ -164,7 +188,7 @@ class _CartScreenState extends State<CartScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Kh�ng th? tang th�m! ${e.toString().replaceAll('Exception: ', '')}',
+                                'Không thể tăng thêm! ${e.toString().replaceAll("Exception: ", "")}',
                               ),
                               backgroundColor: Colors.orange[800],
                               behavior: SnackBarBehavior.floating,
@@ -176,7 +200,6 @@ class _CartScreenState extends State<CartScreen> {
 
                     const Spacer(),
 
-                    // N�t x�a sản phẩm
                     GestureDetector(
                       onTap: () => _confirmDelete(context, item, cartVM),
                       child: Container(
@@ -202,7 +225,6 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  // Dialog x�c nh?n x�a sản phẩm
   void _confirmDelete(
     BuildContext context,
     CartItem item,
@@ -212,8 +234,8 @@ class _CartScreenState extends State<CartScreen> {
       context: context,
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text("X�a sản phẩm"),
-        content: Text('B?n c� ch?c mu?n x�a "${item.name}" kh?i gi? h�ng?'),
+        title: const Text("Xóa sản phẩm"),
+        content: Text('Bạn có chắc muốn xóa "${item.name}" khỏi giỏ hàng?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -230,14 +252,13 @@ class _CartScreenState extends State<CartScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text("X�a", style: TextStyle(color: Colors.white)),
+            child: const Text("Xóa", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
     );
   }
 
-  // Ph?n tổng tiền + n�t thanh to�n
   Widget _buildBottomSummary(CartViewModel cartVM) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
@@ -259,8 +280,8 @@ class _CartScreenState extends State<CartScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "T?ng (${cartVM.totalCount} sản phẩm):",
-                style: const TextStyle(fontSize: 15, color: Colors.black54),
+                "Tổng (${cartVM.totalCount} sản phẩm):",
+                style: const TextStyle(fontSize: 15, color: Color(0xFF4B5563)),
               ),
               Text(
                 "${cartVM.totalPrice.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
@@ -299,7 +320,7 @@ class _CartScreenState extends State<CartScreen> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Vui l�ngdang nh?pđể tiếp tục!"),
+                      content: Text("Vui lòng đăng nhập để tiếp tục!"),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -313,7 +334,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               child: const Text(
-                "Ti?n h�nh thanh to�n",
+                "Tiến hành thanh toán",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
@@ -329,20 +350,20 @@ class _CartScreenState extends State<CartScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.shopping_cart_outlined, size: 80, color: Colors.black38),
+          Icon(Icons.shopping_cart_outlined, size: 80, color: Color(0xFF9CA3AF)),
           const SizedBox(height: 16),
           Text(
-            "Gi? h�ng tr?ng",
+            "Giỏ hàng trống",
             style: TextStyle(
               fontSize: 18,
-              color: Colors.black54,
+              color: Color(0xFF4B5563),
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            "H�y th�m sản phẩm v�o gi? h�ng",
-            style: TextStyle(color: Colors.black38),
+            "Hãy thêm sản phẩm vào giỏ hàng",
+            style: TextStyle(color: Color(0xFF6B7280)),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
@@ -389,7 +410,7 @@ class _CartScreenState extends State<CartScreen> {
       width: 80,
       height: 80,
       color: Colors.grey[300],
-      child: const Icon(Icons.image, color: Colors.black54),
+      child: const Icon(Icons.image, color: Color(0xFF9CA3AF)),
     );
   }
 

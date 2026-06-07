@@ -34,7 +34,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         backgroundColor: const Color(0xffF5F5F5),
         appBar: AppBar(
           title: const Text(
-            '�on h�ng c?a t�i',
+            'Đơn hàng của tôi',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -66,10 +66,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             tabs: [
-              Tab(text: 'Ch? x�c nh?n'),
-              Tab(text: '�ang giao'),
-              Tab(text: '�� giao'),
-              Tab(text: '�� h?y'),
+              Tab(text: 'Chờ xác nhận'),
+              Tab(text: 'Đang giao'),
+              Tab(text: 'Đã giao'),
+              Tab(text: 'Đã hủy'),
             ],
           ),
         ),
@@ -82,7 +82,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             if (orderVM.errorMessage != null) {
               return Center(
                 child: Text(
-                  'L?i: ${orderVM.errorMessage}',
+                  'Lỗi: ${orderVM.errorMessage}',
                   style: const TextStyle(color: Colors.red),
                 ),
               );
@@ -118,11 +118,11 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.receipt_long, size: 64, color: Colors.black38),
+            Icon(Icons.receipt_long, size: 64, color: Color(0xFF9CA3AF)),
             const SizedBox(height: 16),
             Text(
-              'Chưa có�don h�ng n�o',
-              style: TextStyle(color: Colors.black54, fontSize: 16),
+              'Chưa có đơn hàng nào',
+              style: TextStyle(color: Color(0xFF4B5563), fontSize: 16),
             ),
           ],
         ),
@@ -160,7 +160,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'M� �H: #${order.id}',
+                      'Mã ĐH: #${order.id}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -168,7 +168,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     ),
                     Text(
                       _formatDate(order.createdAt),
-                      style: TextStyle(color: Colors.black54, fontSize: 13),
+                      style: TextStyle(color: Color(0xFF4B5563), fontSize: 13),
                     ),
                   ],
                 ),
@@ -177,8 +177,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'T?ng thanh to�n:',
-                      style: TextStyle(color: Colors.black54, fontSize: 15),
+                      'Tổng thanh toán:',
+                      style: TextStyle(color: Color(0xFF4B5563), fontSize: 15),
                     ),
                     Text(
                       '${order.finalAmount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
@@ -203,7 +203,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
-                      'Xem chi ti?t',
+                      'Xem chi tiết',
                       style: TextStyle(
                         color: Color(0xFF4361EE),
                         fontSize: 13,

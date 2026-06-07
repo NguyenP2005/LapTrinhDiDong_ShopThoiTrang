@@ -198,10 +198,10 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.broken_image_outlined, size: 36, color: Colors.black54),
+            const Icon(Icons.broken_image_outlined, size: 36, color: Color(0xFF9CA3AF)),
             const SizedBox(height: 6),
             Text(msg,
-                style: const TextStyle(color: Colors.black54, fontSize: 11),
+                style: const TextStyle(color: Color(0xFF6B7280), fontSize: 11),
                 textAlign: TextAlign.center),
           ],
         ),

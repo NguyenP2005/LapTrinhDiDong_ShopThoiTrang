@@ -38,11 +38,11 @@ class WishlistScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite_border, size: 80, color: Colors.black38),
+                  Icon(Icons.favorite_border, size: 80, color: Color(0xFF9CA3AF)),
                   const SizedBox(height: 16),
                   Text(
                     "B?n chưa y�u th�ch sản phẩm n�o",
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    style: TextStyle(fontSize: 16, color: Color(0xFF4B5563)),
                   ),
                 ],
               ),
@@ -158,7 +158,7 @@ class WishlistScreen extends StatelessWidget {
       height: 140,
       width: double.infinity,
       color: Colors.grey[200],
-      child: const Icon(Icons.image, color: Colors.black54),
+      child: const Icon(Icons.image, color: Color(0xFF9CA3AF)),
     );
   }
 }

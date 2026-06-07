@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../viewmodels/auth_viewmodel.dart';
@@ -8,6 +8,8 @@ import 'admin_users_screen.dart';
 import 'admin_orders_screen.dart';
 import 'admin_products_screen.dart';
 import 'login_screen.dart';
+import 'admin_coupons_screen.dart';
+import '../viewmodels/admin_coupon_viewmodel.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -31,10 +33,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   String _translateStatus(String status) {
     switch (status) {
-      case 'pending': return 'CH? DUY?T';
-      case 'shipping': return '�ANG GIAO';
-      case 'delivered': return 'HO�N TH�NH';
-      case 'cancelled': return '�� H?Y';
+      case 'pending': return 'CHỜ DUYỆT';
+      case 'shipping': return 'ĐANG GIAO';
+      case 'delivered': return 'HOÀN THÀNH';
+      case 'cancelled': return 'ĐÃ HỦY';
       default: return status.toUpperCase();
     }
   }
@@ -54,7 +56,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     const colorBackground = Color(0xFFF4F7FC);
     const colorPrimary = Color(0xFF4361EE);
     const colorTextPrimary = Color(0xFF2B2B2B);
-    const colorTextSecondary = Colors.grey;
+    const colorTextSecondary = Color(0xFF6B7280);
 
     return Scaffold(
       backgroundColor: colorBackground,
@@ -98,8 +100,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 ),
               );
             }),
-            _buildDrawerItem(Icons.card_giftcard_outlined, 'Vouchers & Promotions', () {
+            _buildDrawerItem(Icons.card_giftcard_outlined, 'Mã khuyến mãi', () {
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider.value(
+                    value: context.read<AdminCouponViewModel>(),
+                    child: const AdminCouponsScreen(),
+                  ),
+                ),
+              );
             }),
             _buildDrawerItem(Icons.receipt_long_outlined, 'Orders', () {
               Navigator.pop(context);
@@ -177,11 +188,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             }
                           },
                           items: const [
-                            DropdownMenuItem(value: FilterPeriod.day, child: Text('Ng�y')),
-                            DropdownMenuItem(value: FilterPeriod.week, child: Text('Tu?n')),
-                            DropdownMenuItem(value: FilterPeriod.month, child: Text('Th�ng')),
-                            DropdownMenuItem(value: FilterPeriod.quarter, child: Text('Qu�')),
-                            DropdownMenuItem(value: FilterPeriod.year, child: Text('Nam')),
+                            DropdownMenuItem(value: FilterPeriod.day, child: Text('Ngày')),
+                            DropdownMenuItem(value: FilterPeriod.week, child: Text('Tuần')),
+                            DropdownMenuItem(value: FilterPeriod.month, child: Text('Tháng')),
+                            DropdownMenuItem(value: FilterPeriod.quarter, child: Text('Quý')),
+                            DropdownMenuItem(value: FilterPeriod.year, child: Text('Năm')),
                           ],
                         ),
                       ),
@@ -210,7 +221,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         SizedBox(
                           height: 150,
                           child: dashboardVM.weeklyRevenueData.isEmpty 
-                              ? const Center(child: Text('Loading...', style: TextStyle(fontSize: 10, color: Colors.black54)))
+                              ? const Center(child: Text('Loading...', style: TextStyle(fontSize: 10, color: Color(0xFF4B5563))))
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
@@ -226,7 +237,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 ),
                         ),
                         const SizedBox(height: 10),
-                        const Text('*Bi?ud? t�nh d?a tr�n t? l? doanh thu', style: TextStyle(fontSize: 10, color: Colors.black54, fontStyle: FontStyle.italic))
+                        const Text('*Biểu đồ tính dựa trên tỷ lệ doanh thu', style: TextStyle(fontSize: 10, color: Color(0xFF6B7280), fontStyle: FontStyle.italic))
                       ],
                     ),
                   ),
@@ -248,7 +259,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   const SizedBox(height: 8),
 
                   if (dashboardVM.recentOrders.isEmpty)
-                    const Padding(padding: EdgeInsets.all(20), child: Text("No orders found.", style: TextStyle(color: Colors.black54)))
+                    const Padding(padding: EdgeInsets.all(20), child: Text("No orders found.", style: TextStyle(color: Color(0xFF4B5563))))
                   else
                     ...dashboardVM.recentOrders.map((order) => _buildRecentOrderTile(
                       order['customer_name'],
@@ -297,7 +308,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           const SizedBox(height: 16),
           Text(value, style: const TextStyle(color: Color(0xFF2B2B2B), fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(title, style: const TextStyle(color: Colors.black54, fontSize: 10, letterSpacing: 1.0, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(color: Color(0xFF4B5563), fontSize: 10, letterSpacing: 1.0, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -320,7 +331,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           ),
         ),
         const SizedBox(height: 8),
-        Text(label, style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.bold)),
+        Text(label, style: const TextStyle(color: Color(0xFF4B5563), fontSize: 11, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -348,7 +359,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               children: [
                 Text(name.toUpperCase(), style: const TextStyle(color: Color(0xFF2B2B2B), fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
                 const SizedBox(height: 4),
-                Text(product, style: const TextStyle(color: Colors.black54, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(product, style: const TextStyle(color: Color(0xFF4B5563), fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),

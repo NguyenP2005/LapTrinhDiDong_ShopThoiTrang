@@ -17,7 +17,8 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  final double shippingFee = 30000; // Ph� ship c?d?nh
+  final double shippingFee = 30000; // Phí ship cố định
+
   final TextEditingController _couponController = TextEditingController();
 
   @override
@@ -46,11 +47,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (cartVM.items.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('�?t h�ng'),
+          title: const Text('Đặt hàng'),
           backgroundColor: const Color(0xFF4361EE),
           foregroundColor: Colors.white,
         ),
-        body: const Center(child: Text('Gi? h�ng tr?ng')),
+        body: const Center(child: Text('Giỏ hàng trống')),
       );
     }
 
@@ -58,7 +59,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          '�?t h�ng',
+          'Đặt hàng',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -131,7 +132,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const Icon(Icons.location_on, color: Color(0xFF4361EE), size: 24),
               const SizedBox(width: 8),
               const Text(
-                '�?a ch? giao h�ng',
+                'Địa chỉ giao hàng',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const Spacer(),
@@ -139,7 +140,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 TextButton(
                   onPressed: () => _showAddressListDialog(addressVM),
                   child: const Text(
-                    'Thayd?i',
+                    'Thay đổi',
                     style: TextStyle(color: Color(0xFF4361EE)),
                   ),
                 ),
@@ -176,7 +177,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
               child: Text(
                 address.phone,
-                style: TextStyle(fontSize: 12, color: Colors.black54),
+                style: TextStyle(fontSize: 12, color: Color(0xFF4B5563)),
               ),
             ),
           ],
@@ -184,7 +185,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         const SizedBox(height: 6),
         Text(
           address.address,
-          style: TextStyle(fontSize: 14, color: Colors.black54),
+          style: TextStyle(fontSize: 14, color: Color(0xFF4B5563)),
         ),
       ],
     );
@@ -218,7 +219,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Icon(Icons.add, color: Color(0xFF4361EE)),
             SizedBox(width: 8),
             Text(
-              'Th�md?a ch? giao h�ng',
+              'Thêm địa chỉ giao hàng',
               style: TextStyle(
                 color: Color(0xFF4361EE),
                 fontWeight: FontWeight.w600,
@@ -245,7 +246,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Sản phẩmd� ch?n',
+            'Sản phẩm đã chọn',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
@@ -272,12 +273,44 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        if (item.color != null || item.size != null) ...[
+                          const SizedBox(height: 3),
+                          Wrap(
+                            spacing: 5,
+                            children: [
+                              if (item.color != null && item.color!.isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4361EE).withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    'Màu: ${item.color}',
+                                    style: const TextStyle(fontSize: 11, color: Color(0xFF4361EE)),
+                                  ),
+                                ),
+                              if (item.size != null && item.size!.isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    'Size: ${item.size}',
+                                    style: const TextStyle(fontSize: 11, color: Color(0xFF4B5563)),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
                         const SizedBox(height: 4),
                         Text(
                           'x${item.quantity}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 13,
-                            color: Colors.black54,
+                            color: Color(0xFF4B5563),
                           ),
                         ),
                       ],
@@ -323,7 +356,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const Icon(Icons.local_offer, color: Color(0xFF4361EE), size: 22),
               const SizedBox(width: 8),
               const Text(
-                'M� khuy?n m�i',
+                'Mã khuyến mãi',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -342,7 +375,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     controller: _couponController,
                     textCapitalization: TextCapitalization.characters,
                     decoration: InputDecoration(
-                      hintText: 'Nh?p m� gi?m gi�',
+                      hintText: 'Nhập mã giảm giá',
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -374,7 +407,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text('�p d?ng'),
+                  child: const Text('Áp dụng'),
                 ),
               ],
             ),
@@ -393,8 +426,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             if (couponVM.availableCoupons.isNotEmpty) ...[
               const SizedBox(height: 14),
               Text(
-                'M� c� th? d�ng:',
-                style: TextStyle(fontSize: 13, color: Colors.black54),
+                'Mã có thể dùng:',
+                style: TextStyle(fontSize: 13, color: Color(0xFF4B5563)),
               ),
               const SizedBox(height: 8),
               ...couponVM.availableCoupons.map(
@@ -432,7 +465,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 Text(
                   coupon.description,
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
+                  style: TextStyle(fontSize: 12, color: Color(0xFF4B5563)),
                 ),
               ],
             ),
@@ -442,7 +475,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               couponVM.removeCoupon();
               _couponController.clear();
             },
-            child: const Text('G?', style: TextStyle(color: Colors.red)),
+            child: const Text('Gỡ', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -463,7 +496,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 _couponController.text = coupon.code;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('�� �p m� ${coupon.code}'),
+                    content: Text('Đã áp mã ${coupon.code}'),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -511,7 +544,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   size: 20,
                 )
               else
-                const Icon(Icons.lock_outline, color: Colors.black54, size: 18),
+                const Icon(Icons.lock_outline, color: Color(0xFF6B7280), size: 18),
             ],
           ),
         ),
@@ -526,7 +559,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final code = _couponController.text.trim();
     if (code.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui l�ng nh?p m� khuy?n m�i')),
+        const SnackBar(content: Text('Vui lòng nhập mã khuyến mãi')),
       );
       return;
     }
@@ -534,7 +567,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (ok && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('�p m� th�nh c�ng!'),
+          content: Text('Áp mã thành công!'),
           backgroundColor: Colors.green,
         ),
       );
@@ -560,16 +593,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          _buildPriceRow('Tổng tiền h�ng', totalAmount),
+          _buildPriceRow('Tổng tiền hàng', totalAmount),
           const SizedBox(height: 8),
-          _buildPriceRow('Ph� vận chuyển', shippingFee),
+          _buildPriceRow('Phí vận chuyển', shippingFee),
           // Hi?n th? d�ng gi?m gi� n?u c� �p m�
           if (discount > 0) ...[
             const SizedBox(height: 8),
-            _buildPriceRow('Giảm giá�', -discount, isDiscount: true),
+            _buildPriceRow('Giảm giá', -discount, isDiscount: true),
           ],
           const Divider(height: 24),
-          _buildPriceRow('T?ng thanh to�n', finalAmount, isTotal: true),
+          _buildPriceRow('Tổng thanh toán', finalAmount, isTotal: true),
         ],
       ),
     );
@@ -591,7 +624,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: TextStyle(
             fontSize: isTotal ? 16 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-            color: isTotal ? Colors.black : Colors.black54,
+            color: isTotal ? Colors.black : Color(0xFF4B5563),
           ),
         ),
         Text(
@@ -658,7 +691,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
           child: const Text(
-            'Ti?p t?c thanh to�n',
+            'Tiếp tục thanh toán',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
@@ -686,7 +719,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Row(
                 children: [
                   const Text(
-                    'Ch?nd?a ch? giao h�ng',
+                    'Chọn địa chỉ giao hàng',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
@@ -745,7 +778,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       address.phone,
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.black54,
+                                        color: Color(0xFF4B5563),
                                       ),
                                     ),
                                   ],
@@ -755,7 +788,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   address.address,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.black54,
+                                    color: Color(0xFF4B5563),
                                   ),
                                 ),
                               ],
@@ -791,7 +824,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     }
                   },
                   icon: const Icon(Icons.add),
-                  label: const Text('Th�md?a ch? m?i'),
+                  label: const Text('Thêm địa chỉ mới'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF4361EE),
                     side: const BorderSide(color: Color(0xFF4361EE)),
@@ -833,7 +866,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       width: size,
       height: size,
       color: Colors.grey[300],
-      child: const Icon(Icons.image, color: Colors.black54),
+      child: const Icon(Icons.image, color: Color(0xFF9CA3AF)),
     );
   }
 }
