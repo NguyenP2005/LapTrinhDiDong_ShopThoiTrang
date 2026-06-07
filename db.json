@@ -104,7 +104,8 @@
       "password": "Khoinguyen123",
       "avatar": "https://i.pravatar.cc/150",
       "role": "user",
-      "id": "-XfdykulJ4Q"
+      "id": "-XfdykulJ4Q",
+      "isLocked": true
     },
     {
       "name": "nguyen",
@@ -114,6 +115,16 @@
       "avatar": "https://i.pravatar.cc/150?img=11",
       "role": "customer",
       "id": "pa8nr0ep5r4"
+    },
+    {
+      "name": "moinguyen",
+      "phone": "0909876543",
+      "email": "moinguyen@gmail.com",
+      "password": "Ngyen123",
+      "avatar": "https://i.pravatar.cc/150?img=11",
+      "role": "customer",
+      "isLocked": false,
+      "id": "EZSyuaoOsGs"
     }
   ],
   "categories": [
@@ -141,7 +152,7 @@
       "description": "Áo thun basic trắng được làm từ 100% cotton cao cấp, mềm mại và thoáng khí, phù hợp với thời tiết Việt Nam. Thiết kế tối giản nhưng tinh tế, cổ tròn vừa phải, form dáng regular fit tôn lên vóc dáng tự nhiên. Chất liệu thấm hút mồ hôi tốt, không phai màu sau nhiều lần giặt. Dễ dàng phối cùng quần jean, quần tây hay chân váy. Màu trắng tinh khôi, thích hợp cho nhiều dịp từ đi học, đi làm đến dạo phố.",
       "image": "assets/images/image01.webp",
       "category_id": 1,
-      "stock": 97,
+      "stock": 95,
       "rating": 4.5,
       "sizes": [
         "S",
@@ -694,6 +705,30 @@
       "created_at": "2026-06-04T16:17:53.810123",
       "updated_at": "2026-06-04T16:50:09.023370",
       "id": "GGC6KD9syfc"
+    },
+    {
+      "user_id": "WTRbnvSI4UI",
+      "address_id": "wGasYdUyjCM",
+      "total_amount": 199000,
+      "shipping_fee": 30000,
+      "final_amount": 229000,
+      "status": "pending",
+      "payment_method": "COD",
+      "created_at": "2026-06-07T17:35:57.862792",
+      "updated_at": "2026-06-07T17:35:57.869570",
+      "id": "66IO_gGN-AI"
+    },
+    {
+      "user_id": "WTRbnvSI4UI",
+      "address_id": "wGasYdUyjCM",
+      "total_amount": 199000,
+      "shipping_fee": 30000,
+      "final_amount": 229000,
+      "status": "pending",
+      "payment_method": "COD",
+      "created_at": "2026-06-07T17:36:00.105230",
+      "updated_at": "2026-06-07T17:36:00.106089",
+      "id": "6cucZflAe8I"
     }
   ],
   "order_items": [
@@ -804,6 +839,24 @@
       "quantity": 3,
       "price": 199000,
       "id": "a2lWLSPmVak"
+    },
+    {
+      "order_id": "66IO_gGN-AI",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng 1",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 1,
+      "price": 199000,
+      "id": "XFqq3Grd6DY"
+    },
+    {
+      "order_id": "6cucZflAe8I",
+      "product_id": "1",
+      "product_name": "Áo thun basic trắng 1",
+      "product_image": "assets/images/image01.webp",
+      "quantity": 1,
+      "price": 199000,
+      "id": "9TkdyAuPNqg"
     }
   ],
   "payments": [
@@ -916,6 +969,26 @@
       "account_number": "123456789",
       "paid_at": "2026-06-04T16:17:53.947631",
       "id": "4ye1x6-VMVE"
+    },
+    {
+      "order_id": "66IO_gGN-AI",
+      "method": "COD",
+      "amount": 229000,
+      "status": "success",
+      "bank_name": null,
+      "account_number": null,
+      "paid_at": "2026-06-07T17:36:01.294454",
+      "id": "XZW1tyQ0kIw"
+    },
+    {
+      "order_id": "6cucZflAe8I",
+      "method": "COD",
+      "amount": 229000,
+      "status": "success",
+      "bank_name": null,
+      "account_number": null,
+      "paid_at": "2026-06-07T17:36:01.333927",
+      "id": "QJgJ3Z8CFpA"
     }
   ],
   "addresses": [
@@ -990,6 +1063,14 @@
       "address": "Binh Tan, TPHCM",
       "is_default": true,
       "id": "NufGV__kREY"
+    },
+    {
+      "user_id": "WTRbnvSI4UI",
+      "receiver_name": "Nguyen",
+      "phone": "0900000000",
+      "address": "go vap 123",
+      "is_default": true,
+      "id": "wGasYdUyjCM"
     }
   ],
   "stores": [

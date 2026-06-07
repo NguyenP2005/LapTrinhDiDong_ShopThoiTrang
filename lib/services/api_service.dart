@@ -88,5 +88,4 @@ class ApiService {
     final response = await http.delete(Uri.parse('$baseUrl/products/$id'));
     return response.statusCode == 200;
   }
-
 }

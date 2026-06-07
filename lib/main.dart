@@ -15,6 +15,7 @@ import 'viewmodels/store_viewmodel.dart';
 import 'viewmodels/settings_viewmodel.dart';
 import 'viewmodels/user_management_viewmodel.dart';
 import 'viewmodels/dashboard_viewmodel.dart';
+import 'viewmodels/wishlist_viewmodel.dart'; // THÊM DÒNG IMPORT NÀY
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => SettingsViewModel(),
-        ), // THÊM DÒNG NÀY
+        ),
         ChangeNotifierProvider(
           create: (_) => AuthViewModel()..checkLoginStatus(),
         ),
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => StoreViewModel()),
         ChangeNotifierProvider(create: (_) => UserManagementViewModel()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+        ChangeNotifierProvider(create: (_) => WishlistViewModel()), // THÊM PROVIDER NÀY VÀO
       ],
       // Dùng Consumer để lắng nghe thay đổi Dark Mode
       child: Consumer<SettingsViewModel>(
