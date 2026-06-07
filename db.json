@@ -136,26 +136,25 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Áo thun basic trắng",
+      "name": "Áo thun basic trắng 1",
       "price": 199000,
-      "image": "assets/images/image01.webp",
       "description": "Áo thun basic trắng được làm từ 100% cotton cao cấp, mềm mại và thoáng khí, phù hợp với thời tiết Việt Nam. Thiết kế tối giản nhưng tinh tế, cổ tròn vừa phải, form dáng regular fit tôn lên vóc dáng tự nhiên. Chất liệu thấm hút mồ hôi tốt, không phai màu sau nhiều lần giặt. Dễ dàng phối cùng quần jean, quần tây hay chân váy. Màu trắng tinh khôi, thích hợp cho nhiều dịp từ đi học, đi làm đến dạo phố.",
+      "image": "assets/images/image01.webp",
       "category_id": 1,
-      "rating": 4.5,
       "stock": 97,
+      "rating": 4.5,
       "sizes": [
         "S",
         "M",
         "L",
-        "XL",
-        "XXL"
+        "XL"
       ],
       "colors": [
         "Trắng",
         "Xám nhạt",
         "Be"
-      ]
+      ],
+      "id": "1"
     },
     {
       "id": "2",

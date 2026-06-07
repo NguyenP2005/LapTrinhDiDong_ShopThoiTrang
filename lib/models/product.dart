@@ -37,4 +37,44 @@ class Product {
       colors: json['colors'] != null ? List<String>.from(json['colors']) : [],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+      'image': image,
+      'description': description,
+      'category_id': catergoryID,
+      'rating': rating,
+      'stock': stock,
+      'sizes': sizes,
+      'colors': colors,
+    };
+  }
+
+  Product copyWith({
+    String? id,
+    String? name,
+    double? price,
+    String? image,
+    String? description,
+    int? catergoryID,
+    double? rating,
+    int? stock,
+    List<String>? sizes,
+    List<String>? colors,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      image: image ?? this.image,
+      description: description ?? this.description,
+      catergoryID: catergoryID ?? this.catergoryID,
+      rating: rating ?? this.rating,
+      stock: stock ?? this.stock,
+      sizes: sizes ?? this.sizes,
+      colors: colors ?? this.colors,
+    );
+  }
 }

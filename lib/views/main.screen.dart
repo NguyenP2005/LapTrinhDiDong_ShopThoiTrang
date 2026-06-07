@@ -25,6 +25,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CartViewModel>(context, listen: false).loadCart();
+    });
+  }
+
   void changeTab(int index) {
     setState(() {
       currentIndex = index;
