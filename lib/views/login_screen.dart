@@ -184,6 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
           obscureText: obscure,
           validator: validator,
           autovalidateMode: AutovalidateMode.onUserInteraction,
+          style: const TextStyle(color: Colors.black, fontSize: 15),
+          cursorColor: Colors.black,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey[400]),
@@ -191,7 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
             border: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
             focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.black, width: 2)),
+            focusedErrorBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
             errorBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+            errorStyle: const TextStyle(color: Colors.red),
           ),
         ),
       ],
@@ -202,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: 50, height: 50,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5), // Nền hơi trong suốt
+        color: Colors.white.withValues(alpha: 0.5),
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(4)
       ),
@@ -276,7 +280,7 @@ class _AnimatedBlurBackgroundState extends State<_AnimatedBlurBackground> {
           // Lớp Kính Mờ (Tán sắc màu)
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 80, sigmaY: 80), // Chỉnh thông số này để tăng giảm độ mờ
-            child: Container(color: Colors.white.withOpacity(0.6)), // Phủ lớp trắng đục nhẹ
+            child: Container(color: Colors.white.withValues(alpha: 0.6)),
           ),
         ],
       ),
