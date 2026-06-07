@@ -27,12 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       "image": "assets/images/banner.png",
       "title": "Summer Sale 🔥",
-      "subtitle": "Giảmđến 50% toàn bộ sản phẩm",
+      "subtitle": "Giảm đến 50% toàn bộ sản phẩm",
     },
     {
       "image": "assets/images/banner2.png",
       "title": "New Arrivals 🌟",
-      "subtitle": "Bộ sưu tập mớiđĐã lên kệ",
+      "subtitle": "Bộ sưu tập mới đã lên kệ",
     },
   ];
 
@@ -818,7 +818,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("ĐĐã thêm ${product.name} vào giỏ"),
+        content: Text("Đã thêm ${product.name} vào giỏ"),
         backgroundColor: const Color(0xFF4361EE),
         duration: const Duration(seconds: 2),
       ),

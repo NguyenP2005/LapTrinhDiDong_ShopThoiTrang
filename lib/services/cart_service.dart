@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -22,12 +22,12 @@ class CartService {
         return _createTable(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
+        if (oldVersion < 3) {
           await db.execute('DROP TABLE IF EXISTS cart');
           await _createTable(db);
         }
       },
-      version: 2,
+      version: 3,
     );
   }
 
@@ -37,6 +37,8 @@ class CartService {
         userId TEXT,
         productId TEXT,
         name TEXT,
+        color TEXT,
+        size TEXT,
         price REAL,
         image TEXT,
         quantity INTEGER,

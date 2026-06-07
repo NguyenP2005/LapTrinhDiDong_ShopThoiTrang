@@ -26,8 +26,12 @@ class WishlistScreen extends StatelessWidget {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Sản phẩm y�u th�ch",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          "Sản phẩm yêu thích",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
         centerTitle: true,
       ),
@@ -38,10 +42,14 @@ class WishlistScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.favorite_border, size: 80, color: Color(0xFF9CA3AF)),
+                  Icon(
+                    Icons.favorite_border,
+                    size: 80,
+                    color: Color(0xFF9CA3AF),
+                  ),
                   const SizedBox(height: 16),
                   Text(
-                    "B?n chưa y�u th�ch sản phẩm n�o",
+                    "Bạn chưa yêu thích sản phẩm nào",
                     style: TextStyle(fontSize: 16, color: Color(0xFF4B5563)),
                   ),
                 ],
@@ -68,12 +76,18 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildWishlistCard(BuildContext context, Product product, WishlistViewModel vm) {
+  Widget _buildWishlistCard(
+    BuildContext context,
+    Product product,
+    WishlistViewModel vm,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => ProductDetailScreen(product: product)),
+          MaterialPageRoute(
+            builder: (_) => ProductDetailScreen(product: product),
+          ),
         );
       },
       child: Container(
@@ -90,8 +104,12 @@ class WishlistScreen extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: _buildProductImage(product.image), // �� s?a l?i ch? n�y
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
+                  child: _buildProductImage(
+                    product.image,
+                  ), // Đã sửa lại chỗ này
                 ),
                 Positioned(
                   top: 8,
@@ -100,8 +118,15 @@ class WishlistScreen extends StatelessWidget {
                     onTap: () => vm.toggleFavorite(product),
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                      child: const Icon(Icons.favorite, color: Colors.redAccent, size: 18),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.favorite,
+                        color: Colors.redAccent,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -116,12 +141,19 @@ class WishlistScreen extends StatelessWidget {
                     product.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     "${product.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND",
-                    style: const TextStyle(color: Color(0xFF4361EE), fontWeight: FontWeight.bold, fontSize: 15),
+                    style: const TextStyle(
+                      color: Color(0xFF4361EE),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
                 ],
               ),
@@ -132,7 +164,7 @@ class WishlistScreen extends StatelessWidget {
     );
   }
 
-  // --- H�M LOAD ?NH TH�NG MINH ---
+  // --- HM LOAD ẢNH THNG MINH ---
   Widget _buildProductImage(String path) {
     if (path.startsWith("http")) {
       return Image.network(
@@ -143,7 +175,7 @@ class WishlistScreen extends StatelessWidget {
         errorBuilder: (_, __, ___) => _errorImage(),
       );
     }
-    // N?u kh�ng c� ch? http th� load t? m�y
+    // Nếu không có chữ http thì load từ máy
     return Image.asset(
       path,
       height: 140,
