@@ -41,4 +41,48 @@ class ApiService {
     }
     return [];
   }
+
+  // ─── ADMIN PRODUCT CRUD ───────────────────────────────────────────────────
+
+  /// Tạo sản phẩm mới — POST /products
+  Future<Product?> createProduct(Map<String, dynamic> data) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/products'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 201) {
+      return Product.fromJson(json.decode(response.body));
+    }
+    return null;
+  }
+
+  /// Cập nhật sản phẩm — PUT /products/:id
+  Future<Product?> updateProduct(String id, Map<String, dynamic> data) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/products/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      return Product.fromJson(json.decode(response.body));
+    }
+    return null;
+  }
+
+  /// Xóa sản phẩm — DELETE /products/:id
+  Future<bool> deleteProduct(String id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/products/$id'));
+    return response.statusCode == 200;
+  }
+
+  /// Lấy danh sách danh mục — GET /categories
+  Future<List<Map<String, dynamic>>> getCategories() async {
+    final response = await http.get(Uri.parse('$baseUrl/categories'));
+    if (response.statusCode == 200) {
+      List data = json.decode(response.body);
+      return data.cast<Map<String, dynamic>>();
+    }
+    return [];
+  }
 }

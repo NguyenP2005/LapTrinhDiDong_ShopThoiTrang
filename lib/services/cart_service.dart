@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/cart_item.dart';
@@ -16,34 +18,64 @@ class CartService {
     return openDatabase(
       join(dbPath, 'cart.db'),
       onCreate: (db, version) {
-        return db.execute('''
-          CREATE TABLE cart(
-            productId TEXT PRIMARY KEY,
-            name TEXT,
-            price REAL,
-            image TEXT,
-            quantity INTEGER
-          )
-        ''');
+        return _createTable(db);
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('DROP TABLE IF EXISTS cart');
+          await _createTable(db);
+        }
+      },
+      version: 2,
     );
   }
 
-  // Lấy tất cả items trong giỏ hàng
+  Future<void> _createTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE cart(
+        userId TEXT,
+        productId TEXT,
+        name TEXT,
+        price REAL,
+        image TEXT,
+        quantity INTEGER,
+        PRIMARY KEY (userId, productId)
+      )
+    ''');
+  }
+
+  Future<String> _getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userStr = prefs.getString('current_user');
+    if (userStr != null) {
+      try {
+        final user = jsonDecode(userStr);
+        return user['id'].toString();
+      } catch (e) {}
+    }
+    return 'guest';
+  }
+
+  // Lấy tất cả items trong giỏ hàng của user hiện tại
   Future<List<CartItem>> getCartItems() async {
     final db = await database;
-    final maps = await db.query('cart');
+    final userId = await _getUserId();
+    final maps = await db.query(
+      'cart',
+      where: 'userId = ?',
+      whereArgs: [userId],
+    );
     return maps.map((e) => CartItem.fromMap(e)).toList();
   }
 
-  // Thêm hoặc cập nhật số lượng nếu sản phẩm đã tồn tại
+  // Thêm hoặc cập nhật số lượng nếu sản phẩm đã tồn tại trong giỏ của user
   Future<void> addToCart(CartItem item) async {
     final db = await database;
+    final userId = await _getUserId();
     final existing = await db.query(
       'cart',
-      where: 'productId = ?',
-      whereArgs: [item.productId],
+      where: 'userId = ? AND productId = ?',
+      whereArgs: [userId, item.productId],
     );
 
     if (existing.isNotEmpty) {
@@ -52,32 +84,44 @@ class CartService {
       await db.update(
         'cart',
         {'quantity': currentQty + item.quantity},
-        where: 'productId = ?',
-        whereArgs: [item.productId],
+        where: 'userId = ? AND productId = ?',
+        whereArgs: [userId, item.productId],
       );
     } else {
-      await db.insert('cart', item.toMap());
+      final map = item.toMap();
+      map['userId'] = userId;
+      await db.insert('cart', map);
     }
   }
 
   Future<void> removeFromCart(String productId) async {
     final db = await database;
-    await db.delete('cart', where: 'productId = ?', whereArgs: [productId]);
+    final userId = await _getUserId();
+    await db.delete(
+      'cart', 
+      where: 'userId = ? AND productId = ?', 
+      whereArgs: [userId, productId],
+    );
   }
 
-  // Thêm hàm này vào cuối class CartService:
   Future<void> updateQuantity(String productId, int newQuantity) async {
     final db = await database;
+    final userId = await _getUserId();
     await db.update(
       'cart',
       {'quantity': newQuantity},
-      where: 'productId = ?',
-      whereArgs: [productId],
+      where: 'userId = ? AND productId = ?',
+      whereArgs: [userId, productId],
     );
   }
 
   Future<void> clearCart() async {
     final db = await database;
-    await db.delete('cart');
+    final userId = await _getUserId();
+    await db.delete(
+      'cart',
+      where: 'userId = ?',
+      whereArgs: [userId],
+    );
   }
 }

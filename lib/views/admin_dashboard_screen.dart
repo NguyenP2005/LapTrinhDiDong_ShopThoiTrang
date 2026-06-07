@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../viewmodels/auth_viewmodel.dart';
 import '../viewmodels/dashboard_viewmodel.dart';
+import '../viewmodels/admin_product_viewmodel.dart';
 import 'admin_users_screen.dart';
 import 'admin_orders_screen.dart';
+import 'admin_products_screen.dart';
 import 'login_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -86,6 +88,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             }),
             _buildDrawerItem(Icons.inventory_2_outlined, 'Products & Inventory', () {
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider(
+                    create: (_) => AdminProductViewModel(),
+                    child: const AdminProductsScreen(),
+                  ),
+                ),
+              );
             }),
             _buildDrawerItem(Icons.card_giftcard_outlined, 'Vouchers & Promotions', () {
               Navigator.pop(context);
