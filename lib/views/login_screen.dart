@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           // 2. LỚP PHỦ ĐEN MỜ ĐỂ NỔI BẬT CHỮ
           Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.55)),
+            child: Container(color: Colors.black.withValues(alpha: 0.55)),
           ),
 
           // 3. NỘI DUNG GIAO DIỆN
@@ -165,15 +165,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               onPressed: vm.isLoading ? null : () async {
                                 if (_formKey.currentState!.validate()) {
+                                  final navigator = Navigator.of(context);
                                   final ok = await vm.login(emailCtrl.text, passCtrl.text);
                                   if (!mounted) return;
 
                                   if (ok) {
                                     String role = vm.userRole ?? 'customer';
                                     if (role == 'admin') {
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AdminDashboardScreen()));
+                                      navigator.pushReplacement(MaterialPageRoute(builder: (_) => const AdminDashboardScreen()));
                                     } else {
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainScreen()));
+                                      navigator.pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
                                     }
                                   }
                                 }

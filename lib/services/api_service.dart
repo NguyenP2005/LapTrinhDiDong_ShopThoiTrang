@@ -28,9 +28,7 @@ class ApiService {
   }
 
   Future<Product?> getProductById(String productId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/products/$productId'),
-    );
+    final response = await http.get(Uri.parse('$baseUrl/products/$productId'));
     if (response.statusCode == 200) {
       return Product.fromJson(json.decode(response.body));
     }

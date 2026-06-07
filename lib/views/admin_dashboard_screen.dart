@@ -163,7 +163,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2)),
+                            BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 4, offset: const Offset(0, 2)),
                           ],
                         ),
                         child: DropdownButton<FilterPeriod>(
@@ -194,7 +194,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       color: Colors.white, 
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+                        BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
                       ],
                     ),
                     child: Column(
@@ -280,7 +280,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
         ],
       ),
       child: Column(
@@ -289,7 +289,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF4361EE).withOpacity(0.1),
+              color: const Color(0xFF4361EE).withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: const Color(0xFF4361EE), size: 20),
@@ -336,7 +336,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
         ],
       ),
       child: Row(
@@ -361,7 +361,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(statusText, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 0.5)),

@@ -1073,5 +1073,40 @@
       "id": "wGasYdUyjCM"
     }
   ],
+  "stores": [
+    {
+      "id": "1",
+      "name": "Brevk Fashion - Quận 1",
+      "address": "123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP.HCM",
+      "phone": "028 3822 1111",
+      "latitude": 10.7769,
+      "longitude": 106.7009,
+      "open_time": "08:00",
+      "close_time": "22:00",
+      "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400"
+    },
+    {
+      "id": "2",
+      "name": "Brevk Fashion - Bình Thạnh",
+      "address": "456 Xô Viết Nghệ Tĩnh, Phường 26, Quận Bình Thạnh, TP.HCM",
+      "phone": "028 3512 2222",
+      "latitude": 10.8142,
+      "longitude": 106.7118,
+      "open_time": "08:30",
+      "close_time": "21:30",
+      "image": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400"
+    },
+    {
+      "id": "3",
+      "name": "Brevk Fashion - Tân Phú",
+      "address": "789 Lũy Bán Bích, Phường Tân Thành, Quận Tân Phú, TP.HCM",
+      "phone": "028 3973 3333",
+      "latitude": 10.7889,
+      "longitude": 106.6281,
+      "open_time": "09:00",
+      "close_time": "21:00",
+      "image": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

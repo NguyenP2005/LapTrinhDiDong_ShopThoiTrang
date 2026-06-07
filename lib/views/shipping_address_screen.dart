@@ -15,7 +15,9 @@ class _ShippingAddressScreenState extends State<ShippingAddressScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<AddressViewModel>(context, listen: false).loadAddresses(widget.userId));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AddressViewModel>(context, listen: false).loadAddresses(widget.userId);
+    });
   }
 
   @override

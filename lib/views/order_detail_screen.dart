@@ -59,7 +59,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           child: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -192,7 +192,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, -4),
                   ),
@@ -230,7 +230,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -264,7 +264,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -319,7 +319,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         width: size,
         height: size,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(size),
+        errorBuilder: (_, _, _) => _errorImage(size),
       );
     }
     return Image.asset(
@@ -327,7 +327,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       width: size,
       height: size,
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => _errorImage(size),
+      errorBuilder: (_, _, _) => _errorImage(size),
     );
   }
 

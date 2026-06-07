@@ -22,7 +22,7 @@ class _StoreLocatorScreenState extends State<StoreLocatorScreen> {
   void initState() {
     super.initState();
     // Tải cửa hàng + vị trí ngay khi mở màn hình
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<StoreViewModel>().loadStores();
     });
   }

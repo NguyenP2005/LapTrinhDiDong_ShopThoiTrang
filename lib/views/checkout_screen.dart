@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/cart_viewmodel.dart';
@@ -24,12 +23,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AddressViewModel>(
         context,
         listen: false,
       ).loadAddresses(widget.userId);
-      // Tải danh sách mã khuyến mãi
       Provider.of<CouponViewModel>(context, listen: false).loadCoupons();
     });
   }
@@ -74,7 +72,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -122,7 +120,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
         ],
       ),
       child: Column(
@@ -240,7 +238,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
         ],
       ),
       child: Column(
@@ -620,7 +618,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, -4),
           ),
@@ -663,40 +661,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             'Tiếp tục thanh toán',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-        ),
-      ),
-    );
-  }
-
-  /// Chỉ kiểm tra địa chỉ rồi chuyển thẳng sang PaymentScreen — không cần OTP ở bước này
-  void _handleContinue(AddressViewModel addressVM, CartViewModel cartVM) {
-    if (addressVM.selectedAddress == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.location_off, color: Colors.white),
-              SizedBox(width: 8),
-              Expanded(child: Text('Vui lòng thêm và chọn địa chỉ giao hàng!')),
-            ],
-          ),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 3),
-        ),
-      );
-      return;
-    }
-
-    // Chuyển thẳng sang màn hình chọn phương thức & xác nhận thanh toán (có OTP)
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PaymentScreen(
-          userId: widget.userId,
-          addressId: addressVM.selectedAddress!.id,
-          totalAmount: cartVM.totalPrice,
-          shippingFee: shippingFee,
         ),
       ),
     );
@@ -752,7 +716,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? const Color(0xff8E2DE2).withOpacity(0.1)
+                            ? const Color(0xff8E2DE2).withValues(alpha: 0.1)
                             : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
@@ -852,7 +816,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         width: size,
         height: size,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(size),
+        errorBuilder: (_, _, _) => _errorImage(size),
       );
     }
     return Image.asset(
@@ -860,7 +824,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       width: size,
       height: size,
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => _errorImage(size),
+      errorBuilder: (_, _, _) => _errorImage(size),
     );
   }
 
@@ -874,8 +838,3 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 }
 
-// ignore: unused_import
-// ignore: depend_on_referenced_packages
-// Unused import added to silence analyzer for dart:convert
-// ignore: unused_import
-final _unused = jsonEncode;

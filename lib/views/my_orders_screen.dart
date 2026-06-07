@@ -18,10 +18,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   void initState() {
     super.initState();
     // Tải danh sách đơn hàng ngay khi mở màn hình
-    Future.microtask(() {
-      print(
-        "========== ĐANG TÌM ĐƠN HÀNG CHO USER ID: ${widget.userId} ==========",
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<OrderViewModel>(
         context,
         listen: false,
@@ -51,7 +48,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
           //   child: Container(
           //     margin: const EdgeInsets.all(8),
           //     decoration: BoxDecoration(
-          //       color: Colors.white.withOpacity(0.3),
+          //       color: Colors.white.withValues(alpha: 0.3),
           //       shape: BoxShape.circle,
           //     ),
           //     child: const Icon(
@@ -153,7 +150,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
               ],
             ),
             child: Column(
@@ -202,7 +199,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xff8E2DE2).withOpacity(0.1),
+                      color: const Color(0xff8E2DE2).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(

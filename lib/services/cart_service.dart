@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -51,7 +52,9 @@ class CartService {
       try {
         final user = jsonDecode(userStr);
         return user['id'].toString();
-      } catch (e) {}
+      } catch (e) {
+        debugPrint('cart_service: failed to parse userId: $e');
+      }
     }
     return 'guest';
   }

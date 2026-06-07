@@ -83,7 +83,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 : Container(color: const Color(0xFF1F1D2B)),
           ),
           Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.55)),
+            child: Container(color: Colors.black.withValues(alpha: 0.55)),
           ),
 
           // LUỒNG PAGEVIEW CỦA EM ĐƯỢC GIỮ NGUYÊN
