@@ -817,7 +817,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: height,
         width: width,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(height, width),
+        errorBuilder: (_, _, _) => _errorImage(height, width),
       );
     }
     return Image.asset(
@@ -825,7 +825,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: height,
       width: width,
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => _errorImage(height, width),
+      errorBuilder: (_, _, _) => _errorImage(height, width),
     );
   }
 

@@ -113,13 +113,15 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                               ElevatedButton(
                                 onPressed: () async {
                                   Navigator.pop(dialogContext);
-                                  final success = await context.read<OrderViewModel>().updateOrderStatus(
+                                  final orderVM = context.read<OrderViewModel>();
+                                  final messenger = ScaffoldMessenger.of(context);
+                                  final success = await orderVM.updateOrderStatus(
                                         order.id,
                                         status,
                                         isAdmin: true,
                                       );
                                   if (mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    messenger.showSnackBar(
                                       SnackBar(
                                         content: Text(
                                             success ? 'Cập nhật trạng thái thành công!' : 'Có lỗi xảy ra!'),
@@ -157,7 +159,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 4, offset: const Offset(0, 2)),
         ],
       ),
       child: Column(
@@ -309,7 +311,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+                        BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4)),
                       ],
                     ),
                     child: Row(
@@ -346,7 +348,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: _getStatusColor(order.status).withOpacity(0.1),
+                                  color: _getStatusColor(order.status).withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Row(

@@ -130,7 +130,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 18),
@@ -143,10 +143,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   margin: const EdgeInsets.only(right: 12),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4),
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4),
                     ],
                   ),
                   child: Icon(
@@ -174,7 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
                           colors: [
-                            Colors.black.withOpacity(0.5),
+                            Colors.black.withValues(alpha: 0.5),
                             Colors.transparent,
                           ],
                         ),
@@ -427,7 +427,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4, offset: const Offset(0, 2))
                 ],
               ),
               child: Column(
@@ -526,9 +526,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildProductImage(String path) {
     if (path.startsWith("http")) {
-      return Image.network(path, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _errorImage());
+      return Image.network(path, fit: BoxFit.cover, errorBuilder: (_, _, _) => _errorImage());
     }
-    return Image.asset(path, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _errorImage());
+    return Image.asset(path, fit: BoxFit.cover, errorBuilder: (_, _, _) => _errorImage());
   }
 
   Widget _errorImage() {

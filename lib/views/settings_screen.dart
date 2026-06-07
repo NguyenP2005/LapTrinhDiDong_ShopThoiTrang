@@ -36,7 +36,7 @@ class SettingsScreen extends StatelessWidget {
           SwitchListTile(
             title: const Text('Chế độ Tối (Dark Mode)', style: TextStyle(fontWeight: FontWeight.w500)),
             subtitle: const Text('Đổi màu nền ứng dụng'),
-            activeColor: Colors.black,
+            activeThumbColor: Colors.black,
             value: settingsVM.isDarkMode,
             onChanged: (val) => settingsVM.toggleTheme(val),
           ),
@@ -44,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
           SwitchListTile(
             title: const Text('Tiền tệ: USD (\$)', style: TextStyle(fontWeight: FontWeight.w500)),
             subtitle: const Text('Mặc định là VND (đ)'),
-            activeColor: Colors.black,
+            activeThumbColor: Colors.black,
             value: settingsVM.isUSD,
             onChanged: (val) => settingsVM.toggleCurrency(val),
           ),

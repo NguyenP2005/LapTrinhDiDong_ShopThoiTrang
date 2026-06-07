@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/category.dart';
 import '../models/product.dart';
 import '../services/api_service.dart';
 
@@ -7,7 +8,7 @@ class AdminProductViewModel extends ChangeNotifier {
 
   List<Product> _allProducts = [];
   List<Product> products = [];
-  List<Map<String, dynamic>> categories = [];
+  List<Category> categories = [];
 
   bool isLoading = false;
   String? errorMessage;
@@ -30,7 +31,7 @@ class AdminProductViewModel extends ChangeNotifier {
         _api.getCategories(),
       ]);
       _allProducts = results[0] as List<Product>;
-      categories = results[1] as List<Map<String, dynamic>>;
+      categories = results[1] as List<Category>;
       _applyFilters();
     } catch (e) {
       errorMessage = 'Không thể tải dữ liệu: $e';
@@ -143,11 +144,10 @@ class AdminProductViewModel extends ChangeNotifier {
   // ─── HELPERS ──────────────────────────────────────────────────────────────
 
   String getCategoryName(int categoryId) {
-    final cat = categories.firstWhere(
-      (c) => int.tryParse(c['id'].toString()) == categoryId,
-      orElse: () => {'name': 'Khác'},
-    );
-    return cat['name'] ?? 'Khác';
+    final cat = categories.where(
+      (c) => int.tryParse(c.id) == categoryId,
+    ).firstOrNull;
+    return cat?.name ?? 'Khác';
   }
 
   String formatPrice(double price) {

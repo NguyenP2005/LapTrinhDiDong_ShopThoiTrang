@@ -93,6 +93,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
       return;
     }
 
+    final vm = context.read<AdminProductViewModel>();
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -130,7 +131,6 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
     if (confirm != true) return;
 
     setState(() => _isSaving = true);
-    final vm = context.read<AdminProductViewModel>();
     final data = {
       'name': _nameCtrl.text.trim(),
       'price': double.tryParse(_priceCtrl.text.trim()) ?? 0,
@@ -186,11 +186,11 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
     if (path.startsWith('http')) {
       return Image.network(path,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => _imgPlaceholder('URL ảnh không hợp lệ'));
+          errorBuilder: (_, _, _) => _imgPlaceholder('URL ảnh không hợp lệ'));
     }
     return Image.asset(path,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _imgPlaceholder('Ảnh asset không tồn tại'));
+        errorBuilder: (_, _, _) => _imgPlaceholder('Ảnh asset không tồn tại'));
   }
 
   Widget _imgPlaceholder(String msg) => Container(
@@ -337,7 +337,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: _primary.withOpacity(0.35),
+            color: _primary.withValues(alpha: 0.35),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -349,7 +349,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
@@ -377,7 +377,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                       ? 'Cập nhật thông tin sản phẩm của bạn'
                       : 'Điền đầy đủ thông tin bên dưới',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     fontSize: 12,
                   ),
                 ),
@@ -401,7 +401,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 4)),
         ],
@@ -482,7 +482,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
               color: Colors.grey.shade50,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: path.isEmpty ? Colors.grey.shade200 : _primary.withOpacity(0.3),
+                color: path.isEmpty ? Colors.grey.shade200 : _primary.withValues(alpha: 0.3),
                 width: 1.5,
               ),
             ),
@@ -496,7 +496,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                           width: 56,
                           height: 56,
                           decoration: BoxDecoration(
-                            color: _primary.withOpacity(0.08),
+                            color: _primary.withValues(alpha: 0.08),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(Icons.add_photo_alternate_outlined,
@@ -606,7 +606,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: _selectedCategoryId != null
-                      ? _primary.withOpacity(0.5)
+                      ? _primary.withValues(alpha: 0.5)
                       : Colors.grey.shade300,
                   width: 1.2,
                 ),
@@ -630,7 +630,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                   style: const TextStyle(fontSize: 14, color: _textDark),
                   items: vm.categories.map((cat) {
                     return DropdownMenuItem<int>(
-                      value: int.tryParse(cat['id'].toString()),
+                      value: int.tryParse(cat.id),
                       child: Row(
                         children: [
                           Container(
@@ -642,7 +642,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Text(cat['name'],
+                          Text(cat.name,
                               style: const TextStyle(fontWeight: FontWeight.w500)),
                         ],
                       ),
@@ -723,7 +723,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                        color: _primary.withOpacity(0.3),
+                        color: _primary.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 3))
                   ],
@@ -759,10 +759,10 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
       padding: const EdgeInsets.only(left: 12, right: 6, top: 6, bottom: 6),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [color.withOpacity(0.12), color.withOpacity(0.06)],
+          colors: [color.withValues(alpha: 0.12), color.withValues(alpha: 0.06)],
         ),
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: color.withOpacity(0.35)),
+        border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -772,7 +772,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: color.withOpacity(0.85),
+              color: color.withValues(alpha: 0.85),
             ),
           ),
           const SizedBox(width: 6),
@@ -782,7 +782,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
               width: 18,
               height: 18,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.15),
+                color: color.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: Icon(Icons.close, size: 11, color: color),
@@ -800,7 +800,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 12,
               offset: const Offset(0, -4)),
         ],
@@ -842,7 +842,7 @@ class _AdminProductFormScreenState extends State<AdminProductFormScreen> {
                     ? []
                     : [
                         BoxShadow(
-                            color: _primary.withOpacity(0.4),
+                            color: _primary.withValues(alpha: 0.4),
                             blurRadius: 12,
                             offset: const Offset(0, 4))
                       ],

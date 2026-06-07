@@ -20,7 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     // Load giỏ hàng khi mở màn hình
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CartViewModel>(context, listen: false).loadCart();
     });
   }
@@ -85,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
         ],
       ),
       child: Row(
@@ -246,7 +246,7 @@ class _CartScreenState extends State<CartScreen> {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, -4),
           ),
@@ -372,7 +372,7 @@ class _CartScreenState extends State<CartScreen> {
         width: 80,
         height: 80,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(),
+        errorBuilder: (_, _, _) => _errorImage(),
       );
     }
     return Image.asset(
@@ -380,7 +380,7 @@ class _CartScreenState extends State<CartScreen> {
       width: 80,
       height: 80,
       fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) => _errorImage(),
+      errorBuilder: (_, _, _) => _errorImage(),
     );
   }
 

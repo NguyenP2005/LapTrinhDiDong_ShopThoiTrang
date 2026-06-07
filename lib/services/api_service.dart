@@ -28,9 +28,7 @@ class ApiService {
   }
 
   Future<Product?> getProductById(String productId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/products/$productId'),
-    );
+    final response = await http.get(Uri.parse('$baseUrl/products/$productId'));
     if (response.statusCode == 200) {
       return Product.fromJson(json.decode(response.body));
     }
@@ -91,13 +89,4 @@ class ApiService {
     return response.statusCode == 200;
   }
 
-  /// Lấy danh sách danh mục — GET /categories
-  Future<List<Map<String, dynamic>>> getCategories() async {
-    final response = await http.get(Uri.parse('$baseUrl/categories'));
-    if (response.statusCode == 200) {
-      List data = json.decode(response.body);
-      return data.cast<Map<String, dynamic>>();
-    }
-    return [];
-  }
 }

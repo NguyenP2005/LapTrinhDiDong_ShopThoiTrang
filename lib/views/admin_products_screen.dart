@@ -60,6 +60,8 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
   }
 
   Future<void> _confirmDelete(BuildContext context, Product product) async {
+    final vm = context.read<AdminProductViewModel>();
+    final messenger = ScaffoldMessenger.of(context);
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -102,10 +104,9 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
     );
 
     if (confirm == true && mounted) {
-      final vm = context.read<AdminProductViewModel>();
       final success = await vm.removeProduct(product.id);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger.showSnackBar(
           SnackBar(
             content: Text(success ? 'Đã xóa "${product.name}"' : 'Xóa thất bại, vui lòng thử lại'),
             backgroundColor: success ? Colors.green : Colors.red,
@@ -195,7 +196,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
-                            BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 2)),
+                            BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
                           ],
                         ),
                         child: TextField(
@@ -232,8 +233,8 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                             ...vm.categories.asMap().entries.map((entry) {
                               final idx = entry.key;
                               final cat = entry.value;
-                              final catId = int.tryParse(cat['id'].toString());
-                              return _buildFilterChip(cat['name'], catId, vm, color: _getCategoryColor(idx + 1));
+                              final catId = int.tryParse(cat.id.toString());
+                              return _buildFilterChip(cat.name, catId, vm, color: _getCategoryColor(idx + 1));
                             }),
                           ],
                         ),
@@ -309,7 +310,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: isSelected ? chipColor : Colors.grey.shade300),
             boxShadow: isSelected
-                ? [BoxShadow(color: chipColor.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 2))]
+                ? [BoxShadow(color: chipColor.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))]
                 : [],
           ),
           child: Text(
@@ -327,7 +328,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
 
   Widget _buildProductCard(BuildContext context, Product product, AdminProductViewModel vm) {
     final catIdx = vm.categories.indexWhere(
-      (c) => int.tryParse(c['id'].toString()) == product.catergoryID,
+      (c) => int.tryParse(c.id.toString()) == product.catergoryID,
     );
     final badgeColor = _getCategoryColor(catIdx >= 0 ? catIdx + 1 : 0);
 
@@ -337,7 +338,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
         ],
       ),
       child: Row(
@@ -365,7 +366,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: badgeColor.withOpacity(0.1),
+                          color: badgeColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -414,10 +415,10 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: product.stock > 10
-                              ? Colors.green.withOpacity(0.1)
+                              ? Colors.green.withValues(alpha: 0.1)
                               : product.stock > 0
-                                  ? Colors.orange.withOpacity(0.1)
-                                  : Colors.red.withOpacity(0.1),
+                                  ? Colors.orange.withValues(alpha: 0.1)
+                                  : Colors.red.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -463,7 +464,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                       Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: colorPrimary.withOpacity(0.1),
+                          color: colorPrimary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.edit_outlined, color: colorPrimary, size: 16),
@@ -480,7 +481,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
                       Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.1),
+                          color: Colors.red.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.delete_outline, color: Colors.red, size: 16),
@@ -507,7 +508,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: colorPrimary.withOpacity(0.08),
+              color: colorPrimary.withValues(alpha: 0.08),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.inventory_2_outlined, size: 40, color: colorPrimary),
@@ -537,7 +538,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
       return Image.network(
         imagePath,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _imgFallback(),
+        errorBuilder: (_, _, _) => _imgFallback(),
         loadingBuilder: (_, child, progress) {
           if (progress == null) return child;
           return Container(
@@ -552,7 +553,7 @@ class _AdminProductsScreenState extends State<AdminProductsScreen> {
       return Image.asset(
         imagePath,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _imgFallback(),
+        errorBuilder: (_, _, _) => _imgFallback(),
       );
     }
     return _imgFallback();

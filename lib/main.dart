@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'views/home_screen.dart';
 import 'views/main.screen.dart';
 import 'views/login_screen.dart';
 import 'views/admin_dashboard_screen.dart';

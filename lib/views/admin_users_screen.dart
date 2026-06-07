@@ -75,7 +75,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: Colors.black.withValues(alpha: 0.03),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -88,7 +88,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: colorPrimary.withOpacity(0.2), width: 2),
+                          border: Border.all(color: colorPrimary.withValues(alpha: 0.2), width: 2),
                         ),
                         child: CircleAvatar(
                           radius: 26,
@@ -194,7 +194,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: isPrimary ? colorPrimary.withOpacity(0.1) : Colors.grey[100],
+        color: isPrimary ? colorPrimary.withValues(alpha: 0.1) : Colors.grey[100],
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
@@ -213,7 +213,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.1),
+        color: Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: const Text(

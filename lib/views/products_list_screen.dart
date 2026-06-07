@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/product_viewmodel.dart';
-import '../models/product.dart';
 import 'package:clothing_app/views/product_detail_screen.dart';
 import '../models/cart_item.dart';
 import '../viewmodels/cart_viewmodel.dart';
@@ -428,7 +427,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         height: 140,
         width: double.infinity,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(),
+        errorBuilder: (_, _, _) => _errorImage(),
       );
     } else {
       return Image.asset(
@@ -436,7 +435,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         height: 140,
         width: double.infinity,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorImage(),
+        errorBuilder: (_, _, _) => _errorImage(),
       );
     }
   }
