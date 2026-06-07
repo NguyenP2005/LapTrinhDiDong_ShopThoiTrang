@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/address_viewmodel.dart';
 import '../models/address_model.dart';
@@ -35,7 +35,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          'Thêm địa chỉ mới',
+          'Th�md?a ch? m?i',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xff8E2DE2),
+        backgroundColor: const Color(0xFF4361EE),
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: Container(
@@ -65,22 +65,22 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            // Tên người nhận
+            // T�n ngu?i nh?n
             _buildTextField(
               controller: _nameController,
-              label: 'Tên người nhận',
-              hint: 'Nhập họ và tên đầy đủ',
+              label: 'T�n ngu?i nh?n',
+              hint: 'Nh?p h? v� t�nd?yd?',
               icon: Icons.person_outline,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui lòng nhập tên người nhận';
+                  return 'Vui l�ng nh?p t�n ngu?i nh?n';
                 }
                 if (value.trim().length < 3) {
-                  return 'Tên phải có ít nhất 3 ký tự';
+                  return 'T�n ph?i c� �t nh?t 3 k� t?';
                 }
-                // Kiểm tra tên chỉ chứa chữ cái và khoảng trắng
+                // Ki?m tra t�n ch? ch?a ch? c�i v� kho?ng tr?ng
                 if (!RegExp(r"^[\p{L}\s]+$", unicode: true).hasMatch(value.trim())) {
-                  return 'Tên không được chứa số hoặc ký tự đặc biệt';
+                  return 'T�n kh�ngdu?c ch?a s? ho?c k� t?d?c bi?t';
                 }
                 return null;
               },
@@ -88,21 +88,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
             const SizedBox(height: 16),
 
-            // Số điện thoại
+            // S?di?n tho?i
             _buildTextField(
               controller: _phoneController,
-              label: 'Số điện thoại',
+              label: 'S?di?n tho?i',
               hint: 'VD: 0901234567',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui lòng nhập số điện thoại';
+                  return 'Vui l�ng nh?p s?di?n tho?i';
                 }
-                // Chuẩn Việt Nam: 10 số, bắt đầu bằng 03/05/07/08/09
+                // Chu?n Vi?t Nam: 10 s?, b?td?u b?ng 03/05/07/08/09
                 final phoneRegex = RegExp(r'^(03|05|07|08|09)[0-9]{8}$');
                 if (!phoneRegex.hasMatch(value.trim())) {
-                  return 'Số điện thoại không hợp lệ (VD: 0901234567)';
+                  return 'S?di?n tho?i kh�ng h?p l? (VD: 0901234567)';
                 }
                 return null;
               },
@@ -110,19 +110,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
             const SizedBox(height: 16),
 
-            // Địa chỉ cụ thể
+            // �?a ch? c? th?
             _buildTextField(
               controller: _addressController,
-              label: 'Địa chỉ cụ thể',
-              hint: 'Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố',
+              label: '�?a ch? c? th?',
+              hint: 'S? nh�, t�ndu?ng, phu?ng/x�, qu?n/huy?n, t?nh/th�nh ph?',
               icon: Icons.location_on_outlined,
               maxLines: 3,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Vui lòng nhập địa chỉ';
+                  return 'Vui l�ng nh?pd?a ch?';
                 }
                 if (value.trim().length < 10) {
-                  return 'Địa chỉ quá ngắn, vui lòng nhập đầy đủ';
+                  return '�?a ch? qu� ng?n, vui l�ng nh?pd?yd?';
                 }
                 return null;
               },
@@ -130,7 +130,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
             const SizedBox(height: 16),
 
-            // Checkbox đặt làm mặc định
+            // Checkboxd?t l�m m?cd?nh
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -146,10 +146,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         _isDefault = value ?? false;
                       });
                     },
-                    activeColor: const Color(0xff8E2DE2),
+                    activeColor: const Color(0xFF4361EE),
                   ),
                   const Text(
-                    'Đặt làm địa chỉ mặc định',
+                    '�?t l�md?a ch? m?cd?nh',
                     style: TextStyle(fontSize: 15),
                   ),
                 ],
@@ -158,13 +158,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
             const SizedBox(height: 32),
 
-            // Nút lưu
+            // N�t luu
             SizedBox(
               height: 54,
               child: ElevatedButton(
                 onPressed: addressVM.isLoading ? null : _handleSave,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff8E2DE2),
+                  backgroundColor: const Color(0xFF4361EE),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -180,7 +180,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         ),
                       )
                     : const Text(
-                        'Lưu địa chỉ',
+                        'Luud?a ch?',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -217,7 +217,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
-          prefixIcon: Icon(icon, color: const Color(0xff8E2DE2)),
+          prefixIcon: Icon(icon, color: const Color(0xFF4361EE)),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -237,7 +237,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     final addressVM = Provider.of<AddressViewModel>(context, listen: false);
 
     final newAddress = AddressModel(
-      id: '', // Server sẽ tự tạo
+      id: '', // Server s? t? t?o
       userId: widget.userId,
       receiverName: _nameController.text.trim(),
       phone: _phoneController.text.trim(),
@@ -252,18 +252,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Đã thêm địa chỉ thành công'),
+          content: Text('�� th�md?a ch? th�nh c�ng'),
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.pop(context, true); // Trả về true để reload
+      Navigator.pop(context, true); // Tr? v? trued? reload
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(addressVM.errorMessage ?? 'Có lỗi xảy ra'),
+          content: Text(addressVM.errorMessage ?? 'C� l?i x?y ra'),
           backgroundColor: Colors.red,
         ),
       );
     }
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/order_viewmodel.dart';
 import '../models/order_model.dart';
@@ -24,19 +24,19 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   }
 
   String _formatCurrency(double amount) {
-    return '${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}đ';
+    return '${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.').replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND';
   }
 
   String _translateStatus(String status) {
     switch (status) {
       case 'pending':
-        return 'CHỜ DUYỆT';
+        return 'CH? DUY?T';
       case 'shipping':
-        return 'ĐANG GIAO';
+        return '�ANG GIAO';
       case 'delivered':
-        return 'HOÀN THÀNH';
+        return 'HO�N TH�NH';
       case 'cancelled':
-        return 'ĐÃ HỦY';
+        return '�� H?Y';
       default:
         return status.toUpperCase();
     }
@@ -74,7 +74,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'CẬP NHẬT TRẠNG THÁI',
+                'C?P NH?T TR?NG TH�I',
                 style: TextStyle(
                   color: Color(0xFF2B2B2B),
                   fontSize: 16,
@@ -95,7 +95,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                   ),
                   trailing: order.status == status ? Icon(Icons.check, color: _getStatusColor(status)) : null,
                   onTap: () {
-                    Navigator.pop(bottomSheetContext); // Đóng bottom sheet
+                    Navigator.pop(bottomSheetContext); // ��ng bottom sheet
                     if (order.status != status) {
                       showDialog(
                         context: context,
@@ -103,12 +103,12 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                           return AlertDialog(
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                            title: const Text('Xác nhận', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2B2B2B))),
-                            content: Text('Bạn có chắc chắn muốn chuyển trạng thái đơn hàng thành ${_translateStatus(status)} không?'),
+                            title: const Text('X�c nh?n', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2B2B2B))),
+                            content: Text('B?n c� ch?c ch?n mu?n chuy?n tr?ng th�idon h�ng th�nh ${_translateStatus(status)} kh�ng?'),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(dialogContext),
-                                child: const Text('Hủy', style: TextStyle(color: Colors.grey)),
+                                child: const Text('Hủy', style: TextStyle(color: Colors.black54)),
                               ),
                               ElevatedButton(
                                 onPressed: () async {
@@ -124,7 +124,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                                     messenger.showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                            success ? 'Cập nhật trạng thái thành công!' : 'Có lỗi xảy ra!'),
+                                            success ? 'C?p nh?t tr?ng th�i th�nh c�ng!' : 'C� l?i x?y ra!'),
                                         backgroundColor: success ? Colors.green : Colors.red,
                                         behavior: SnackBarBehavior.floating,
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -136,7 +136,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                                   backgroundColor: const Color(0xFF4361EE),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                 ),
-                                child: const Text('Đồng ý', style: TextStyle(color: Colors.white)),
+                                child: const Text('�?ng �', style: TextStyle(color: Colors.white)),
                               ),
                             ],
                           );
@@ -168,7 +168,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Bộ lọc trạng thái', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.grey)),
+              const Text('B? l?c tr?ng th�i', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black54)),
               DropdownButton<String>(
                 value: _sortOrder,
                 icon: const Icon(Icons.sort, size: 16, color: Color(0xFF4361EE)),
@@ -178,8 +178,8 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                   if (val != null) setState(() => _sortOrder = val);
                 },
                 items: const [
-                  DropdownMenuItem(value: 'newest', child: Text('Mới nhất')),
-                  DropdownMenuItem(value: 'oldest', child: Text('Cũ nhất')),
+                  DropdownMenuItem(value: 'newest', child: Text('M?i nh?t')),
+                  DropdownMenuItem(value: 'oldest', child: Text('Cu nh?t')),
                 ],
               ),
             ],
@@ -189,11 +189,11 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildFilterChip('Tất cả', 'all'),
-                _buildFilterChip('Chờ duyệt', 'pending'),
-                _buildFilterChip('Đang giao', 'shipping'),
-                _buildFilterChip('Hoàn thành', 'delivered'),
-                _buildFilterChip('Đã hủy', 'cancelled'),
+                _buildFilterChip('T?t c?', 'all'),
+                _buildFilterChip('Ch? duy?t', 'pending'),
+                _buildFilterChip('�ang giao', 'shipping'),
+                _buildFilterChip('Ho�n th�nh', 'delivered'),
+                _buildFilterChip('�� h?y', 'cancelled'),
               ],
             ),
           ),
@@ -283,8 +283,8 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                             SizedBox(height: 100),
                             Center(
                               child: Text(
-                                'Không tìm thấy đơn hàng nào.',
-                                style: TextStyle(color: Colors.grey, fontSize: 16),
+                                'Kh�ng t�m th?ydon h�ng n�o.',
+                                style: TextStyle(color: Colors.black54, fontSize: 16),
                               ),
                             ),
                           ],
@@ -321,14 +321,14 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'ĐƠN HÀNG #${order.id}',
+                                '�ON H�NG #${order.id}',
                                 style: const TextStyle(
                                     color: colorTextPrimary, fontWeight: FontWeight.bold, fontSize: 14),
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Ngày đặt: ${order.createdAt.split('T')[0]}',
-                                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                'Ng�yd?t: ${order.createdAt.split('T')[0]}',
+                                style: const TextStyle(color: Colors.black54, fontSize: 12),
                               ),
                               const SizedBox(height: 6),
                               Text(
@@ -386,3 +386,4 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
     );
   }
 }
+

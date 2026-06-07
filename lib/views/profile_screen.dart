@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Cập nhật ảnh đại diện thành công!'),
-            backgroundColor: Color(0xff8E2DE2),
+            backgroundColor: Color(0xFF4361EE),
           ),
         );
       }
@@ -43,7 +43,11 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ─────────────────────── DIALOG CHỈNH SỬA THÔNG TIN ───────────────────────
-  void _showEditProfileDialog(BuildContext context, AuthViewModel authVM, Map<String, dynamic>? user) {
+  void _showEditProfileDialog(
+    BuildContext context,
+    AuthViewModel authVM,
+    Map<String, dynamic>? user,
+  ) {
     final nameController = TextEditingController(text: user?['name'] ?? '');
     final phoneController = TextEditingController(text: user?['phone'] ?? '');
 
@@ -51,10 +55,15 @@ class ProfileScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           title: const Text(
             "Chỉnh sửa thôngত্তিn",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff8E2DE2)),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF4361EE),
+            ),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -63,11 +72,19 @@ class ProfileScreen extends StatelessWidget {
                 controller: nameController,
                 decoration: InputDecoration(
                   labelText: "Họ và tên",
-                  prefixIcon: const Icon(Icons.person_outline, color: Color(0xff8E2DE2)),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(
+                    Icons.person_outline,
+                    color: Color(0xFF4361EE),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xff8E2DE2), width: 2),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF4361EE),
+                      width: 2,
+                    ),
                   ),
                 ),
               ),
@@ -77,11 +94,19 @@ class ProfileScreen extends StatelessWidget {
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   labelText: "Số điện thoại",
-                  prefixIcon: const Icon(Icons.phone_outlined, color: Color(0xff8E2DE2)),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(
+                    Icons.phone_outlined,
+                    color: Color(0xFF4361EE),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xff8E2DE2), width: 2),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF4361EE),
+                      width: 2,
+                    ),
                   ),
                 ),
               ),
@@ -90,12 +115,14 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Hủy", style: TextStyle(color: Colors.grey)),
+              child: const Text("Hủy", style: TextStyle(color: Colors.black54)),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xff8E2DE2),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                backgroundColor: const Color(0xFF4361EE),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               onPressed: () async {
                 bool success = await authVM.updateUserProfile(
@@ -107,13 +134,22 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(success ? 'Cập nhật thông tin thành công!' : 'Lỗi cập nhật!'),
-                      backgroundColor: success ? const Color(0xff8E2DE2) : Colors.red,
+                      content: Text(
+                        success
+                            ? 'Cập nhật thông tin thành công!'
+                            : 'Lỗi cập nhật!',
+                      ),
+                      backgroundColor: success
+                          ? const Color(0xFF4361EE)
+                          : Colors.red,
                     ),
                   );
                 }
               },
-              child: const Text("Lưu thay đổi", style: TextStyle(color: Colors.white)),
+              child: const Text(
+                "Lưu thay đổi",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );
@@ -133,7 +169,10 @@ class ProfileScreen extends StatelessWidget {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xff8E2DE2), Color(0xff4A00E0)], // Đồng bộ Gradient Tím với Home
+              colors: [
+                Color(0xFF4361EE),
+                Color(0xff4A00E0),
+              ], // Đồng bộ Gradient Tím với Home
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -169,7 +208,12 @@ class ProfileScreen extends StatelessWidget {
                   onTap: () {
                     final userId = user?['id']?.toString() ?? "";
                     if (userId.isNotEmpty) {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => MyOrdersScreen(userId: userId)));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MyOrdersScreen(userId: userId),
+                        ),
+                      );
                     }
                   },
                 ),
@@ -178,21 +222,26 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.favorite_border_outlined,
                   title: 'Sản phẩm yêu thích',
                   onTap: () {
-                    // Đã vá lỗi chuyển trang ở đây nha!
+                    // ĐĐã vá lỗi chuyển trang ởđây nha!
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const WishlistScreen())
+                      MaterialPageRoute(builder: (_) => const WishlistScreen()),
                     );
                   },
                 ),
                 _buildDivider(),
                 _buildMenuItem(
                   icon: Icons.location_on_outlined,
-                  title: 'Sổ địa chỉ giao hàng',
+                  title: 'Địa chỉ giao hàng',
                   onTap: () {
                     final userId = user?['id']?.toString() ?? "";
                     if (userId.isNotEmpty) {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => ShippingAddressScreen(userId: userId)));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ShippingAddressScreen(userId: userId),
+                        ),
+                      );
                     }
                   },
                 ),
@@ -208,7 +257,10 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.settings_outlined,
                   title: 'Cài đặt ứng dụng',
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    );
                   },
                 ),
                 _buildDivider(),
@@ -228,9 +280,16 @@ class ProfileScreen extends StatelessWidget {
                   _buildMenuItem(
                     icon: Icons.admin_panel_settings_outlined,
                     title: 'Quản lý người dùng',
-                    iconColor: const Color(0xffEE4D2D), // Màu cam nổi bật cho Admin
+                    iconColor: const Color(
+                      0xffEE4D2D,
+                    ), // Màu cam nổi bật cho Admin
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUsersScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const AdminUsersScreen(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -281,7 +340,11 @@ class ProfileScreen extends StatelessWidget {
 
   // ─────────────────────── WIDGET UI ĐỒNG BỘ TRANG CHỦ ───────────────────────
 
-  Widget _buildProfileCard(BuildContext context, AuthViewModel authVM, Map<String, dynamic>? user) {
+  Widget _buildProfileCard(
+    BuildContext context,
+    AuthViewModel authVM,
+    Map<String, dynamic>? user,
+  ) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(20),
@@ -307,7 +370,10 @@ class ProfileScreen extends StatelessWidget {
                   height: 75,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xff8E2DE2), width: 2),
+                    border: Border.all(
+                      color: const Color(0xFF4361EE),
+                      width: 2,
+                    ),
                     image: DecorationImage(
                       image: _getAvatarProvider(user?['avatar']),
                       fit: BoxFit.cover,
@@ -320,10 +386,14 @@ class ProfileScreen extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: const BoxDecoration(
-                      color: Color(0xff8E2DE2),
+                      color: Color(0xFF4361EE),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.camera_alt, color: Colors.white, size: 12),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 12,
+                    ),
                   ),
                 ),
               ],
@@ -336,18 +406,23 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   user?['name'] ?? 'Khách',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   user?['email'] ?? 'Chưa cập nhật email',
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
                 ),
-                if (user?['phone'] != null && user!['phone'].toString().isNotEmpty) ...[
+                if (user?['phone'] != null &&
+                    user!['phone'].toString().isNotEmpty) ...[
                   const SizedBox(height: 2),
                   Text(
                     user['phone'],
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                 ],
               ],
@@ -355,7 +430,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           // Nút Edit mở Dialog
           IconButton(
-            icon: const Icon(Icons.edit_square, color: Color(0xff8E2DE2)),
+            icon: const Icon(Icons.edit_square, color: Color(0xFF4361EE)),
             onPressed: () => _showEditProfileDialog(context, authVM, user),
           ),
         ],
@@ -377,9 +452,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 
@@ -387,7 +460,7 @@ class ProfileScreen extends StatelessWidget {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
-    Color iconColor = const Color(0xff8E2DE2),
+    Color iconColor = const Color(0xFF4361EE),
   }) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
@@ -401,14 +474,29 @@ class ProfileScreen extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87),
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+        ),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 14),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.black54,
+        size: 14,
+      ),
       onTap: onTap,
     );
   }
 
   Widget _buildDivider() {
-    return Divider(height: 1, thickness: 1, color: Colors.grey[100], indent: 60, endIndent: 20);
+    return Divider(
+      height: 1,
+      thickness: 1,
+      color: Colors.grey[100],
+      indent: 60,
+      endIndent: 20,
+    );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/product.dart';
@@ -28,7 +28,7 @@ class WishlistViewModel extends ChangeNotifier {
   Future<void> _saveWishlist() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Đã xóa dòng categoryId để khớp với Model Product của nhóm
+    // Đã xóa dòng categoryIdđể khớp với Model Product của nhóm
     List<Map<String, dynamic>> encodedList = _wishlistItems.map((item) => {
       'id': item.id,
       'name': item.name,
@@ -41,7 +41,7 @@ class WishlistViewModel extends ChangeNotifier {
     await prefs.setString('user_wishlist', jsonEncode(encodedList));
   }
 
-  // Kiểm tra xem sản phẩm đã có trong wishlist chưa
+  // Kiểm tra xem sản phẩmđã có trong wishlist chưa
   bool isFavorite(String productId) {
     return _wishlistItems.any((item) => item.id == productId);
   }

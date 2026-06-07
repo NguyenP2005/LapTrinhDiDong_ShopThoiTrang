@@ -1,4 +1,4 @@
-class CartItem {
+﻿class CartItem {
   final String productId;
   final String name;
   final double price;

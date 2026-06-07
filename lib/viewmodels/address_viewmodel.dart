@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../models/address_model.dart';
 import '../services/address_service.dart';
 
@@ -15,7 +15,7 @@ class AddressViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  // Lấy danh sách địa chỉ của user
+  // Lấy danh sáchđịa chỉ của user
   Future<void> loadAddresses(String userId) async {
     _isLoading = true;
     _errorMessage = null;
@@ -24,7 +24,7 @@ class AddressViewModel extends ChangeNotifier {
     try {
       _addresses = await _addressService.getAddressesByUserId(userId);
 
-      // Tự động chọn địa chỉ mặc định
+      // Tựđộng chọnđịa chỉ mặcđịnh
       if (_selectedAddress == null && _addresses.isNotEmpty) {
         _selectedAddress = _addresses.firstWhere(
           (addr) => addr.isDefault,
@@ -39,13 +39,13 @@ class AddressViewModel extends ChangeNotifier {
     }
   }
 
-  // Chọn địa chỉ
+  // Chọnđịa chỉ
   void selectAddress(AddressModel address) {
     _selectedAddress = address;
     notifyListeners();
   }
 
-  // Thêm địa chỉ mới
+  // Thêmđịa chỉ mới
   Future<bool> addAddress(AddressModel address) async {
     _isLoading = true;
     _errorMessage = null;
@@ -55,7 +55,7 @@ class AddressViewModel extends ChangeNotifier {
       final newAddress = await _addressService.addAddress(address);
       _addresses.add(newAddress);
 
-      // Nếu là địa chỉ đầu tiên hoặc được đánh dấu mặc định, chọn nó
+      // Nếu làđịa chỉđầu tiên hoặcđượcđánh dấu mặcđịnh, chọn nó
       if (_addresses.length == 1 || newAddress.isDefault) {
         _selectedAddress = newAddress;
       }
@@ -71,7 +71,7 @@ class AddressViewModel extends ChangeNotifier {
     }
   }
 
-  // Cập nhật địa chỉ
+  // Cập nhậtđịa chỉ
   Future<bool> updateAddress(String id, AddressModel address) async {
     _isLoading = true;
     _errorMessage = null;
@@ -98,7 +98,7 @@ class AddressViewModel extends ChangeNotifier {
     }
   }
 
-  // Xóa địa chỉ
+  // Xóađịa chỉ
   Future<bool> deleteAddress(String id) async {
     _isLoading = true;
     _errorMessage = null;
@@ -108,7 +108,7 @@ class AddressViewModel extends ChangeNotifier {
       await _addressService.deleteAddress(id);
       _addresses.removeWhere((addr) => addr.id == id);
 
-      // Nếu xóa địa chỉ đang chọn, chọn địa chỉ khác
+      // Nếu xóađịa chỉđang chọn, chọnđịa chỉ khác
       if (_selectedAddress?.id == id) {
         _selectedAddress = _addresses.isNotEmpty ? _addresses.first : null;
       }

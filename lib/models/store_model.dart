@@ -1,4 +1,4 @@
-class StoreModel {
+﻿class StoreModel {
   final String id;
   final String name;
   final String address;
@@ -9,7 +9,7 @@ class StoreModel {
   final String image;
 
   // Khoảng cách từ vị trí user tới cửa hàng (km).
-  // Không lưu trên server, được tính ở client sau khi lấy vị trí.
+  // Không lưu trên server,được tính ở client sau khi lấy vị trí.
   double? distanceInKm;
 
   StoreModel({

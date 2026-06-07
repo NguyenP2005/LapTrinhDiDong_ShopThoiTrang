@@ -5,13 +5,13 @@ import '../models/coupon_model.dart';
 class CouponService {
   static const String baseUrl = "http://10.0.2.2:3000";
 
-  // Lấy tất cả mã khuyến mãi đang hoạt động
+  // Lấy tất cả mã khuyến mãiđang hoạtđộng
   Future<List<CouponModel>> getActiveCoupons() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/coupons'));
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         return data
             .map((e) => CouponModel.fromJson(e))
             .where((c) => c.isActive)
@@ -24,7 +24,7 @@ class CouponService {
     }
   }
 
-  // Tìm mã khuyến mãi theo code (dùng để áp mã thủ công)
+  // Tìm mã khuyến mãi theo code (dùngđể áp mã thủ công)
   Future<CouponModel?> findByCode(String code) async {
     try {
       final coupons = await getActiveCoupons();

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/order_viewmodel.dart';
 import '../models/order_model.dart';
@@ -17,7 +17,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   void initState() {
     super.initState();
-    // Tải danh sách đơn hàng ngay khi mở màn hình
+    // T?i danh s�chdon h�ng ngay khi m? m�n h�nh
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<OrderViewModel>(
         context,
@@ -34,7 +34,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         backgroundColor: const Color(0xffF5F5F5),
         appBar: AppBar(
           title: const Text(
-            'Đơn hàng của tôi',
+            '�on h�ng c?a t�i',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -42,7 +42,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xff8E2DE2),
+          backgroundColor: const Color(0xFF4361EE),
           // leading: GestureDetector(
           //   onTap: () => Navigator.of(context).pop(),
           //   child: Container(
@@ -66,10 +66,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             tabs: [
-              Tab(text: 'Chờ xác nhận'),
-              Tab(text: 'Đang giao'),
-              Tab(text: 'Đã giao'),
-              Tab(text: 'Đã hủy'),
+              Tab(text: 'Ch? x�c nh?n'),
+              Tab(text: '�ang giao'),
+              Tab(text: '�� giao'),
+              Tab(text: '�� h?y'),
             ],
           ),
         ),
@@ -82,7 +82,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             if (orderVM.errorMessage != null) {
               return Center(
                 child: Text(
-                  'Lỗi: ${orderVM.errorMessage}',
+                  'L?i: ${orderVM.errorMessage}',
                   style: const TextStyle(color: Colors.red),
                 ),
               );
@@ -118,11 +118,11 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.receipt_long, size: 64, color: Colors.grey[400]),
+            Icon(Icons.receipt_long, size: 64, color: Colors.black38),
             const SizedBox(height: 16),
             Text(
-              'Chưa có đơn hàng nào',
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
+              'Chưa có�don h�ng n�o',
+              style: TextStyle(color: Colors.black54, fontSize: 16),
             ),
           ],
         ),
@@ -160,7 +160,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Mã ĐH: #${order.id}',
+                      'M� �H: #${order.id}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -168,7 +168,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     ),
                     Text(
                       _formatDate(order.createdAt),
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      style: TextStyle(color: Colors.black54, fontSize: 13),
                     ),
                   ],
                 ),
@@ -177,13 +177,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng thanh toán:',
-                      style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                      'T?ng thanh to�n:',
+                      style: TextStyle(color: Colors.black54, fontSize: 15),
                     ),
                     Text(
-                      '${order.finalAmount.toStringAsFixed(0)} đ',
+                      '${order.finalAmount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
                       style: const TextStyle(
-                        color: Color(0xff8E2DE2),
+                        color: Color(0xFF4361EE),
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -199,13 +199,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xff8E2DE2).withValues(alpha: 0.1),
+                      color: const Color(0xFF4361EE).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
-                      'Xem chi tiết',
+                      'Xem chi ti?t',
                       style: TextStyle(
-                        color: Color(0xff8E2DE2),
+                        color: Color(0xFF4361EE),
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
@@ -220,7 +220,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  // Hàm cắt chuỗi ngày tháng đơn giản (từ ISO8601 sang YYYY-MM-DD)
+  // H�m c?t chu?i ng�y th�ngdon gi?n (t? ISO8601 sang YYYY-MM-DD)
   String _formatDate(String isoString) {
     try {
       return isoString.substring(0, 10);
@@ -229,3 +229,4 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     }
   }
 }
+

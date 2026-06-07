@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,12 +62,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white), // Đổi icon mũi tên sang trắng
+        iconTheme: const IconThemeData(color: Colors.white), // �?i icon mui t�n sang tr?ng
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          // LỚP VIDEO NỀN
+          // L?P VIDEO N?N
           Positioned.fill(
             child: _videoController.value.isInitialized
                 ? SizedBox.expand(
@@ -86,11 +86,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Container(color: Colors.black.withValues(alpha: 0.55)),
           ),
 
-          // LUỒNG PAGEVIEW CỦA EM ĐƯỢC GIỮ NGUYÊN
+          // LU?NG PAGEVIEW C?A EM �U?C GI? NGUY�N
           SafeArea(
             child: Column(
               children: [
-                // Logo Brevk cho đẹp đồng bộ
+                // Logo Brevk chod?pd?ng b?
                 Text(
                   'Brevk',
                   style: GoogleFonts.pacifico(
@@ -117,7 +117,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  // BƯỚC 1: NHẬP EMAIL
+  // BU?C 1: NH?P EMAIL
   Widget _buildEmailStep(AuthViewModel vm) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(32.0),
@@ -136,8 +136,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               icon: Icons.email_outlined,
               controller: _emailCtrl,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui lòng nhập Email';
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) return 'Email không đúng định dạng';
+                if (val == null || val.isEmpty) return 'Vui l�ng nh?p Email';
+                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val)) return 'Email kh�ngd�ngd?nh d?ng';
                 return null;
               }
             ),
@@ -153,7 +153,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   if (ok && mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('📱 TIN NHẮN SMS: Mã OTP của bạn là: ${vm.generatedOtp}'),
+                        content: Text('?? TIN NH?N SMS: M� OTP của bạn l�: ${vm.generatedOtp}'),
                         backgroundColor: Colors.green[700], duration: const Duration(seconds: 10), behavior: SnackBarBehavior.floating,
                       ),
                     );
@@ -168,7 +168,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  // BƯỚC 2: XÁC THỰC MÃ OTP
+  // BU?C 2: X�C TH?C M� OTP
   Widget _buildOTPStep(AuthViewModel vm) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(32.0),
@@ -188,8 +188,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _otpCtrl,
               keyboardType: TextInputType.number,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui lòng nhập mã OTP';
-                if (val.trim().length != 6) return 'Mã OTP phải có đúng 6 chữ số';
+                if (val == null || val.isEmpty) return 'Vui l�ng nh?p m� OTP';
+                if (val.trim().length != 6) return 'M� OTP ph?i c�d�ng 6 ch? s?';
                 return null;
               }
             ),
@@ -211,7 +211,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  // BƯỚC 3: THIẾT LẬP MẬT KHẨU MỚI
+  // BU?C 3: THI?T L?P M?T KH?U M?I
   Widget _buildNewPasswordStep(AuthViewModel vm) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(32.0),
@@ -231,8 +231,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _passCtrl,
               obscure: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui lòng nhập mật khẩu mới';
-                if (val.length < 6) return 'Mật khẩu phải từ 6 ký tự trở lên';
+                if (val == null || val.isEmpty) return 'Vui l�ng nh?p m?t kh?u m?i';
+                if (val.length < 6) return 'M?t kh?u ph?i t? 6 k� t? tr? l�n';
                 return null;
               }
             ),
@@ -243,8 +243,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               controller: _confirmPassCtrl,
               obscure: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return 'Vui lòng xác nhận lại mật khẩu';
-                if (val != _passCtrl.text) return 'Mật khẩu xác nhận không khớp!';
+                if (val == null || val.isEmpty) return 'Vui l�ng x�c nh?n l?i m?t kh?u';
+                if (val != _passCtrl.text) return 'M?t kh?u x�c nh?n kh�ng kh?p!';
                 return null;
               }
             ),
@@ -259,9 +259,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   final ok = await vm.resetPassword(_passCtrl.text);
                   if (ok && mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Đổi mật khẩu mới thành công!'), backgroundColor: Colors.green)
+                      const SnackBar(content: Text('�?i m?t kh?u m?i th�nh c�ng!'), backgroundColor: Colors.green)
                     );
-                    Navigator.pop(context); // Trở về Login
+                    Navigator.pop(context); // Tr? v? Login
                   }
                 }
               },
@@ -272,7 +272,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  // Khung Input bo tròn chuẩn Brevk
+  // Khung Input bo tr�n chu?n Brevk
   Widget _buildInputField({required String hint, required IconData icon, required TextEditingController controller, bool obscure = false, TextInputType? keyboardType, String? Function(String?)? validator}) {
     return TextFormField(
       controller: controller,
@@ -284,9 +284,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: Icon(icon, color: Colors.grey[400]),
+        prefixIcon: Icon(icon, color: Colors.black38),
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+        hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
@@ -295,7 +295,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  // Nút nhấn Đen Minimalist
+  // N�t nh?n �en Minimalist
   Widget _buildMinimalButton({required String text, required VoidCallback onPressed, required bool isLoading}) {
     return SizedBox(
       height: 50,
@@ -304,7 +304,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Bo góc như Login
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)), // Bo g�c nhu Login
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading

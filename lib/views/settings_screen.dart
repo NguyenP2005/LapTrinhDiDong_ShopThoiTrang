@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/settings_viewmodel.dart';
 
@@ -34,7 +34,10 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: [
           SwitchListTile(
-            title: const Text('Chế độ Tối (Dark Mode)', style: TextStyle(fontWeight: FontWeight.w500)),
+            title: const Text(
+              'Chế độ Tối (Dark Mode)',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
             subtitle: const Text('Đổi màu nền ứng dụng'),
             activeThumbColor: Colors.black,
             value: settingsVM.isDarkMode,
@@ -42,8 +45,11 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(height: 1),
           SwitchListTile(
-            title: const Text('Tiền tệ: USD (\$)', style: TextStyle(fontWeight: FontWeight.w500)),
-            subtitle: const Text('Mặc định là VND (đ)'),
+            title: const Text(
+              'Tiền tệ: USD (\$)',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: const Text('Mặc định là VND'),
             activeThumbColor: Colors.black,
             value: settingsVM.isUSD,
             onChanged: (val) => settingsVM.toggleCurrency(val),

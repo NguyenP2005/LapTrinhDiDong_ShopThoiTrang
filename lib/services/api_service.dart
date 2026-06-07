@@ -9,7 +9,7 @@ class ApiService {
   Future<List<Product>> getProducts() async {
     final response = await http.get(Uri.parse('$baseUrl/products'));
     if (response.statusCode == 200) {
-      List data = json.decode(response.body);
+      List data = json.decode(utf8.decode(response.bodyBytes));
       return data.map((e) => Product.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load products');
@@ -20,7 +20,7 @@ class ApiService {
   Future<List<Category>> getCategories() async {
     final response = await http.get(Uri.parse('$baseUrl/categories'));
     if (response.statusCode == 200) {
-      List data = json.decode(response.body);
+      List data = json.decode(utf8.decode(response.bodyBytes));
       return data.map((e) => Category.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load categories');
@@ -30,12 +30,12 @@ class ApiService {
   Future<Product?> getProductById(String productId) async {
     final response = await http.get(Uri.parse('$baseUrl/products/$productId'));
     if (response.statusCode == 200) {
-      return Product.fromJson(json.decode(response.body));
+      return Product.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     return null;
   }
 
-  /// Trừ tồn kho sau khi đặt hàng thành công
+  /// Trừ tồn kho sau khiđặt hàng thành công
   Future<void> updateProductStock(String productId, int newStock) async {
     await http.patch(
       Uri.parse('$baseUrl/products/$productId'),
@@ -49,7 +49,7 @@ class ApiService {
       Uri.parse('$baseUrl/products?category_id=$categoryId'),
     );
     if (response.statusCode == 200) {
-      List data = json.decode(response.body);
+      List data = json.decode(utf8.decode(response.bodyBytes));
       return data.map((e) => Product.fromJson(e)).toList();
     }
     return [];
@@ -65,7 +65,7 @@ class ApiService {
       body: jsonEncode(data),
     );
     if (response.statusCode == 201) {
-      return Product.fromJson(json.decode(response.body));
+      return Product.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     return null;
   }
@@ -78,7 +78,7 @@ class ApiService {
       body: jsonEncode(data),
     );
     if (response.statusCode == 200) {
-      return Product.fromJson(json.decode(response.body));
+      return Product.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     }
     return null;
   }

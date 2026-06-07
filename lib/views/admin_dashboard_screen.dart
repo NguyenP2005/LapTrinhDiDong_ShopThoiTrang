@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../viewmodels/auth_viewmodel.dart';
@@ -26,15 +26,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 
   String _formatCurrency(num amount) {
-    return '${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}đ';
+    return '${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.').replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND';
   }
 
   String _translateStatus(String status) {
     switch (status) {
-      case 'pending': return 'CHỜ DUYỆT';
-      case 'shipping': return 'ĐANG GIAO';
-      case 'delivered': return 'HOÀN THÀNH';
-      case 'cancelled': return 'ĐÃ HỦY';
+      case 'pending': return 'CH? DUY?T';
+      case 'shipping': return '�ANG GIAO';
+      case 'delivered': return 'HO�N TH�NH';
+      case 'cancelled': return '�� H?Y';
       default: return status.toUpperCase();
     }
   }
@@ -177,11 +177,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             }
                           },
                           items: const [
-                            DropdownMenuItem(value: FilterPeriod.day, child: Text('Ngày')),
-                            DropdownMenuItem(value: FilterPeriod.week, child: Text('Tuần')),
-                            DropdownMenuItem(value: FilterPeriod.month, child: Text('Tháng')),
-                            DropdownMenuItem(value: FilterPeriod.quarter, child: Text('Quý')),
-                            DropdownMenuItem(value: FilterPeriod.year, child: Text('Năm')),
+                            DropdownMenuItem(value: FilterPeriod.day, child: Text('Ng�y')),
+                            DropdownMenuItem(value: FilterPeriod.week, child: Text('Tu?n')),
+                            DropdownMenuItem(value: FilterPeriod.month, child: Text('Th�ng')),
+                            DropdownMenuItem(value: FilterPeriod.quarter, child: Text('Qu�')),
+                            DropdownMenuItem(value: FilterPeriod.year, child: Text('Nam')),
                           ],
                         ),
                       ),
@@ -210,7 +210,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         SizedBox(
                           height: 150,
                           child: dashboardVM.weeklyRevenueData.isEmpty 
-                              ? const Center(child: Text('Loading...', style: TextStyle(fontSize: 10, color: Colors.grey)))
+                              ? const Center(child: Text('Loading...', style: TextStyle(fontSize: 10, color: Colors.black54)))
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
@@ -226,7 +226,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 ),
                         ),
                         const SizedBox(height: 10),
-                        const Text('*Biểu đồ tính dựa trên tỷ lệ doanh thu', style: TextStyle(fontSize: 10, color: Colors.grey, fontStyle: FontStyle.italic))
+                        const Text('*Bi?ud? t�nh d?a tr�n t? l? doanh thu', style: TextStyle(fontSize: 10, color: Colors.black54, fontStyle: FontStyle.italic))
                       ],
                     ),
                   ),
@@ -248,7 +248,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   const SizedBox(height: 8),
 
                   if (dashboardVM.recentOrders.isEmpty)
-                    const Padding(padding: EdgeInsets.all(20), child: Text("No orders found.", style: TextStyle(color: Colors.grey)))
+                    const Padding(padding: EdgeInsets.all(20), child: Text("No orders found.", style: TextStyle(color: Colors.black54)))
                   else
                     ...dashboardVM.recentOrders.map((order) => _buildRecentOrderTile(
                       order['customer_name'],
@@ -297,7 +297,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           const SizedBox(height: 16),
           Text(value, style: const TextStyle(color: Color(0xFF2B2B2B), fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 10, letterSpacing: 1.0, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(color: Colors.black54, fontSize: 10, letterSpacing: 1.0, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -320,7 +320,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           ),
         ),
         const SizedBox(height: 8),
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.bold)),
+        Text(label, style: const TextStyle(color: Colors.black54, fontSize: 11, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -348,7 +348,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               children: [
                 Text(name.toUpperCase(), style: const TextStyle(color: Color(0xFF2B2B2B), fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.5)),
                 const SizedBox(height: 4),
-                Text(product, style: const TextStyle(color: Colors.grey, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(product, style: const TextStyle(color: Colors.black54, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),

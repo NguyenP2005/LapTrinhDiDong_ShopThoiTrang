@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/user_management_viewmodel.dart';
 import '../models/user_model.dart';
@@ -12,7 +12,7 @@ class AdminUsersScreen extends StatefulWidget {
 
 class _AdminUsersScreenState extends State<AdminUsersScreen> {
   final TextEditingController _searchController = TextEditingController();
-  String _selectedTab = 'all'; // Trạng thái tab hiển thị nội bộ trên UI
+  String _selectedTab = 'all'; // Tr?ng th�i tab hi?n th? n?i b? tr�n UI
 
   @override
   void initState() {
@@ -30,8 +30,8 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Định nghĩa bảng màu Minimalist nguyên bản
-    const colorBackground = Color(0xffF9F9F9); // Nền xám trắng siêu sang của các website luxury
+    // �?nh nghia b?ng m�u Minimalist nguy�n b?n
+    const colorBackground = Color(0xffF9F9F9); // N?n x�m tr?ng si�u sang c?a c�c website luxury
     const colorContent = Colors.white;
     const colorMainBlack = Color(0xFF111111);
     const colorSubGrey = Color(0xFF757575);
@@ -45,11 +45,11 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(color: Colors.grey[200], height: 1), // Đường gạch chân mảnh tinh tế
+          child: Container(color: Colors.grey[200], height: 1), // �u?ng g?ch ch�n m?nh tinh t?
         ),
         iconTheme: const IconThemeData(color: colorMainBlack),
         title: const Text(
-          'QUẢN LÝ NGƯỜI DÙNG',
+          'QU?N L� NGU?I D�NG',
           style: TextStyle(
             color: colorMainBlack,
             fontWeight: FontWeight.bold,
@@ -61,23 +61,23 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       ),
       body: Column(
         children: [
-          // --- 1. THANH THỐNG KÊ TỐI GIẢN (HEADER STATS) ---
+          // --- 1. THANH TH?NG K� T?I GI?N (HEADER STATS) ---
           Container(
             color: colorContent,
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildStatItem("TỔNG SỐ", viewModel.totalCount.toString(), colorMainBlack),
+                _buildStatItem("T?NG S?", viewModel.totalCount.toString(), colorMainBlack),
                 _buildStatDivider(),
-                _buildStatItem("QUẢN TRỊ", viewModel.adminCount.toString(), colorMainBlack),
+                _buildStatItem("QU?N TR?", viewModel.adminCount.toString(), colorMainBlack),
                 _buildStatDivider(),
-                _buildStatItem("BỊ KHÓA", viewModel.lockedCount.toString(), Colors.redAccent),
+                _buildStatItem("B? KH�A", viewModel.lockedCount.toString(), Colors.redAccent),
               ],
             ),
           ),
 
-          // --- 2. THANH TÌM KIẾM SẮC NÉT ---
+          // --- 2. THANH T�M KI?M S?C N�T ---
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: TextField(
@@ -86,7 +86,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
               cursorColor: colorMainBlack,
               style: const TextStyle(fontSize: 14, color: colorMainBlack),
               decoration: InputDecoration(
-                hintText: "Tìm kiếm tên hoặc email...",
+                hintText: "T�m ki?m t�n ho?c email...",
                 hintStyle: const TextStyle(color: colorSubGrey, fontSize: 14),
                 prefixIcon: const Icon(Icons.search, color: colorMainBlack, size: 20),
                 suffixIcon: _searchController.text.isNotEmpty
@@ -113,29 +113,29 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
             ),
           ),
 
-          // --- 3. BỘ LỌC PHÂN LOẠI TAB (FILTER CHIPS) ---
+          // --- 3. B? L?C PH�N LO?I TAB (FILTER CHIPS) ---
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: Row(
               children: [
-                _buildFilterChip("Tất cả", 'all', viewModel),
+                _buildFilterChip("T?t c?", 'all', viewModel),
                 const SizedBox(width: 8),
-                _buildFilterChip("Quản trị", 'admin', viewModel),
+                _buildFilterChip("Qu?n tr?", 'admin', viewModel),
                 const SizedBox(width: 8),
-                _buildFilterChip("Đang khóa", 'locked', viewModel),
+                _buildFilterChip("�ang kh�a", 'locked', viewModel),
               ],
             ),
           ),
           const SizedBox(height: 8),
 
-          // --- 4. DANH SÁCH NGƯỜI DÙNG ---
+          // --- 4. DANH S�CH NGU?I D�NG ---
           Expanded(
             child: viewModel.isLoading
                 ? const Center(child: CircularProgressIndicator(color: colorMainBlack))
                 : viewModel.users.isEmpty
                     ? const Center(
                         child: Text(
-                          "Không tìm thấy người dùng phù hợp.",
+                          "Kh�ng t�m th?y ngu?i d�ng ph� h?p.",
                           style: TextStyle(color: colorSubGrey, fontSize: 13),
                         ),
                       )
@@ -159,7 +159,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                               ),
                               child: Row(
                                 children: [
-                                  // Avatar phẳng tinh tế
+                                  // Avatar ph?ng tinh t?
                                   Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
@@ -174,7 +174,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                   ),
                                   const SizedBox(width: 16),
 
-                                  // Nội dung chữ phẳng và rõ nét
+                                  // N?i dung ch? ph?ng v� r� n�t
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +194,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                           style: const TextStyle(color: colorSubGrey, fontSize: 12),
                                         ),
                                         const SizedBox(height: 8),
-                                        // Các nhãn phân loại (Tags)
+                                        // C�c nh�n ph�n lo?i (Tags)
                                         Row(
                                           children: [
                                             _buildMinimalTag(
@@ -211,7 +211,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                     ),
                                   ),
 
-                                  // Menu thao tác nhanh
+                                  // Menu thao t�c nhanh
                                   PopupMenuButton<String>(
                                     icon: const Icon(Icons.more_horiz, color: colorSubGrey),
                                     color: colorContent,
@@ -232,7 +232,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                             const Icon(Icons.admin_panel_settings_outlined, color: colorMainBlack, size: 18),
                                             const SizedBox(width: 8),
                                             Text(
-                                              user.role == 'admin' ? 'Chuyển thành Khách hàng' : 'Cấp quyền Quản trị',
+                                              user.role == 'admin' ? 'Chuy?n th�nh Kh�ch h�ng' : 'C?p quy?n Qu?n tr?',
                                               style: const TextStyle(fontSize: 13, color: colorMainBlack),
                                             ),
                                           ],
@@ -249,7 +249,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
                                             ),
                                             const SizedBox(width: 8),
                                             Text(
-                                              user.isLocked ? 'Mở khóa tài khoản' : 'Khóa tài khoản',
+                                              user.isLocked ? 'M? kh�a t�i kho?n' : 'Kh�a t�i kho?n',
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 color: user.isLocked ? Colors.green : Colors.red,
@@ -272,7 +272,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
     );
   }
 
-  // ─────────────────────── COMPONENT UI TỐI GIẢN ───────────────────────
+  // ----------------------- COMPONENT UI T?I GI?N -----------------------
 
   Widget _buildStatItem(String label, String value, Color valueColor) {
     return Column(
@@ -351,7 +351,7 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Text(
-        'ĐÃ KHÓA',
+        '�� KH�A',
         style: TextStyle(
           fontSize: 9,
           fontWeight: FontWeight.bold,

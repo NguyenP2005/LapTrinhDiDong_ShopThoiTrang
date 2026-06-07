@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/payment_viewmodel.dart';
 import '../viewmodels/cart_viewmodel.dart';
@@ -50,7 +50,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         title: const Text(
-          'Thanh toán',
+          'Thanh to�n',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xff8E2DE2),
+        backgroundColor: const Color(0xFF4361EE),
         leading: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: Container(
@@ -114,21 +114,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Phương thức thanh toán',
+            'Phương thức thanh to�n',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           _buildPaymentOption(
             paymentVM: paymentVM,
             method: 'COD',
-            title: 'Thanh toán khi nhận hàng (COD)',
+            title: 'Thanh to�n khi nh?n h�ng (COD)',
             icon: Icons.money,
           ),
           const SizedBox(height: 12),
           _buildPaymentOption(
             paymentVM: paymentVM,
             method: 'BANK_TRANSFER',
-            title: 'Chuyển khoản ngân hàng',
+            title: 'Chuyển khoản ng�n h�ng',
             icon: Icons.account_balance,
           ),
         ],
@@ -149,11 +149,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xff8E2DE2).withValues(alpha: 0.1)
+              ? const Color(0xFF4361EE).withValues(alpha: 0.1)
               : Colors.grey[100],
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xff8E2DE2) : Colors.transparent,
+            color: isSelected ? const Color(0xFF4361EE) : Colors.transparent,
             width: 2,
           ),
         ),
@@ -161,7 +161,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xff8E2DE2) : Colors.grey,
+              color: isSelected ? const Color(0xFF4361EE) : Colors.black54,
               size: 28,
             ),
             const SizedBox(width: 12),
@@ -171,12 +171,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                  color: isSelected ? const Color(0xff8E2DE2) : Colors.black,
+                  color: isSelected ? const Color(0xFF4361EE) : Colors.black,
                 ),
               ),
             ),
             if (isSelected)
-              const Icon(Icons.check_circle, color: Color(0xff8E2DE2)),
+              const Icon(Icons.check_circle, color: Color(0xFF4361EE)),
           ],
         ),
       ),
@@ -198,16 +198,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Thông tin chuyển khoản',
+            'Th�ng tin chuy?n kho?n',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             decoration: InputDecoration(
-              labelText: 'Chọn ngân hàng',
+              labelText: 'Ch?n ng�n h�ng',
               prefixIcon: const Icon(
                 Icons.account_balance,
-                color: Color(0xff8E2DE2),
+                color: Color(0xFF4361EE),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -231,11 +231,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
             controller: _accountController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: 'Số tài khoản',
-              hintText: 'Nhập số tài khoản',
+              labelText: 'S? t�i kho?n',
+              hintText: 'Nh?p s? t�i kho?n',
               prefixIcon: const Icon(
                 Icons.credit_card,
-                color: Color(0xff8E2DE2),
+                color: Color(0xFF4361EE),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -247,22 +247,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xff8E2DE2).withValues(alpha: 0.1),
+              color: const Color(0xFF4361EE).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Số tiền cần chuyển:',
+                  'S? ti?n cần chuyển:',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  '${(widget.totalAmount + widget.shippingFee - widget.discount).toStringAsFixed(0)} đ',
+                  '${(widget.totalAmount + widget.shippingFee - widget.discount).toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xff8E2DE2),
+                    color: Color(0xFF4361EE),
                   ),
                 ),
               ],
@@ -288,19 +288,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Thông tin đơn hàng',
+            'Th�ng tindon h�ng',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-          _buildSummaryRow('Tổng tiền hàng', widget.totalAmount),
+          _buildSummaryRow('Tổng tiền h�ng', widget.totalAmount),
           const SizedBox(height: 8),
-          _buildSummaryRow('Phí vận chuyển', widget.shippingFee),
+          _buildSummaryRow('Ph� vận chuyển', widget.shippingFee),
           if (widget.discount > 0) ...[
             const SizedBox(height: 8),
-            _buildSummaryRow('Giảm giá', widget.discount, isDiscount: true),
+            _buildSummaryRow('Giảm giá�', widget.discount, isDiscount: true),
           ],
           const Divider(height: 24),
-          _buildSummaryRow('Tổng thanh toán', finalAmount, isTotal: true),
+          _buildSummaryRow('T?ng thanh to�n', finalAmount, isTotal: true),
         ],
       ),
     );
@@ -321,16 +321,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
           style: TextStyle(
             fontSize: isTotal ? 16 : 14,
             fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-            color: isTotal ? Colors.black : Colors.grey[600],
+            color: isTotal ? Colors.black : Colors.black54,
           ),
         ),
         Text(
-          '$prefix${amount.toStringAsFixed(0)} đ',
+          '$prefix${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VND',
           style: TextStyle(
             fontSize: isTotal ? 18 : 14,
             fontWeight: FontWeight.bold,
             color: isTotal
-                ? const Color(0xff8E2DE2)
+                ? const Color(0xFF4361EE)
                 : isDiscount
                 ? Colors.green
                 : Colors.black,
@@ -362,7 +362,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ? null
               : () => _handlePayment(paymentVM, finalAmount),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff8E2DE2),
+            backgroundColor: const Color(0xFF4361EE),
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -378,7 +378,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 )
               : const Text(
-                  'Xác nhận thanh toán',
+                  'X�c nh?n thanh to�n',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
         ),
@@ -393,7 +393,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     if (!paymentVM.validatePaymentData()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(paymentVM.errorMessage ?? 'Dữ liệu không hợp lệ'),
+          content: Text(paymentVM.errorMessage ?? 'D? li?u kh�ng h?p l?'),
           backgroundColor: Colors.red,
         ),
       );
@@ -417,8 +417,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       barrierDismissible: false,
       builder: (_) => _OtpDialog(
         otp: generatedOtp,
-        label: 'Xác nhận chuyển khoản',
-        description: 'Mã OTP xác nhận chuyển khoản ngân hàng',
+        label: 'X�c nh?n chuy?n kho?n',
+        description: 'M� OTP x�c nh?n chuy?n kho?n ng�n h�ng',
       ),
     );
 
@@ -465,7 +465,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Có lỗi khi tạo đơn hàng'),
+          content: Text('C� l?i khi t?odon h�ng'),
           backgroundColor: Colors.red,
         ),
       );
@@ -486,7 +486,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     await paymentVM.createPayment(newPayment);
     await cartVM.clearCart();
 
-    // Gỡ mã khuyến mãi đã dùng (tránh áp nhầm cho đơn sau)
+    // G? m� khuy?n m�id� d�ng (tr�nh �p nh?m chodon sau)
     if (mounted) {
       Provider.of<CouponViewModel>(context, listen: false).removeCoupon();
     }
@@ -502,9 +502,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// Widget OTP Dialog độc lập — Timer chỉ tạo MỘT LẦN trong initState
-// ═══════════════════════════════════════════════════════════════════════════════
+// -------------------------------------------------------------------------------
+// Widget OTP Dialogd?c l?p � Timer ch? t?o M?T L?N trong initState
+// -------------------------------------------------------------------------------
 class _OtpDialog extends StatefulWidget {
   final String otp;
   final String label;
@@ -573,18 +573,18 @@ class _OtpDialogState extends State<_OtpDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề
+            // Ti�ud?
             Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xff8E2DE2).withValues(alpha: 0.1),
+                    color: const Color(0xFF4361EE).withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.lock_open_outlined,
-                    color: Color(0xff8E2DE2),
+                    color: Color(0xFF4361EE),
                     size: 22,
                   ),
                 ),
@@ -602,7 +602,7 @@ class _OtpDialogState extends State<_OtpDialog> {
             ),
             const SizedBox(height: 16),
 
-            // Thông tin
+            // Th�ng tin
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -625,7 +625,7 @@ class _OtpDialogState extends State<_OtpDialog> {
             ),
             const SizedBox(height: 12),
 
-            // Ô hiển thị mã OTP (mô phỏng SMS) — ẩn/hiện
+            // � hi?n th? m� OTP (m� ph?ng SMS) � ?ẩn/hiện
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
@@ -646,7 +646,7 @@ class _OtpDialogState extends State<_OtpDialog> {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        '📱 Tin nhắn SMS (mô phỏng):',
+                        '?? Tin nhắn SMS (m� ph?ng):',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -661,8 +661,8 @@ class _OtpDialogState extends State<_OtpDialog> {
                       Expanded(
                         child: Text(
                           _otpVisible
-                              ? 'Mã OTP: ${widget.otp}'
-                              : 'Mã OTP: ••••••',
+                              ? 'M� OTP: ${widget.otp}'
+                              : 'M� OTP: ������',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -700,8 +700,8 @@ class _OtpDialogState extends State<_OtpDialog> {
                   const SizedBox(width: 6),
                   Text(
                     isExpired
-                        ? 'OTP đã hết hạn!'
-                        : 'Còn lại: $minutes:$seconds',
+                        ? 'OTPd� h?t h?n!'
+                        : 'C�n l?i: $minutes:$seconds',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -713,7 +713,7 @@ class _OtpDialogState extends State<_OtpDialog> {
             ),
             const SizedBox(height: 16),
 
-            // TextField nhập OTP
+            // TextField nh?p OTP
             TextField(
               controller: _otpController,
               keyboardType: TextInputType.number,
@@ -728,7 +728,7 @@ class _OtpDialogState extends State<_OtpDialog> {
               decoration: InputDecoration(
                 hintText: '------',
                 hintStyle: TextStyle(
-                  color: Colors.grey[400],
+                  color: Colors.black38,
                   fontSize: 22,
                   letterSpacing: 6,
                 ),
@@ -736,12 +736,12 @@ class _OtpDialogState extends State<_OtpDialog> {
                 errorText: _errorText,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xff8E2DE2)),
+                  borderSide: const BorderSide(color: Color(0xFF4361EE)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Color(0xff8E2DE2),
+                    color: Color(0xFF4361EE),
                     width: 2,
                   ),
                 ),
@@ -757,7 +757,7 @@ class _OtpDialogState extends State<_OtpDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'Mã OTP đã hết hạn. Vui lòng quay lại và thử lại.',
+                  'M� OTPd� h?t h?n. Vui l�ng quay l?i v� th? l?i.',
                   style: TextStyle(color: Colors.red[700], fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
@@ -765,14 +765,14 @@ class _OtpDialogState extends State<_OtpDialog> {
 
             const SizedBox(height: 20),
 
-            // Nút hành động
+            // N�t h�nhd?ng
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context, false),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.grey[600],
+                      foregroundColor: Colors.black54,
                       side: BorderSide(color: Colors.grey[300]!),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -790,11 +790,11 @@ class _OtpDialogState extends State<_OtpDialog> {
                         if (_otpController.text.trim() == widget.otp) {
                           Navigator.pop(context, true);
                         } else {
-                          setState(() => _errorText = 'Mã OTP không đúng!');
+                          setState(() => _errorText = 'M� OTP kh�ngd�ng!');
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff8E2DE2),
+                        backgroundColor: const Color(0xFF4361EE),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -802,7 +802,7 @@ class _OtpDialogState extends State<_OtpDialog> {
                         ),
                       ),
                       child: const Text(
-                        'Xác nhận',
+                        'X�c nh?n',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -816,3 +816,4 @@ class _OtpDialogState extends State<_OtpDialog> {
     );
   }
 }
+

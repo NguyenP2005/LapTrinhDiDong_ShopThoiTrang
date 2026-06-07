@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/user_model.dart';
@@ -7,7 +7,7 @@ class UserManagementViewModel extends ChangeNotifier {
   static const String baseUrl = "http://10.0.2.2:3000";
 
   List<UserModel> _allUsers = []; // Danh sách gốc từ Server
-  List<UserModel> users = [];     // Danh sách đã qua bộ lọc hiển thị lên UI
+  List<UserModel> users = [];     // Danh sáchđã qua bộ lọc hiển thị lên UI
   bool isLoading = false;
 
   // Các chỉ số thống kê (Stats)
@@ -32,7 +32,7 @@ class UserManagementViewModel extends ChangeNotifier {
         // Tính toán các chỉ số thống kê
         _calculateStats();
 
-        // Áp dụng bộ lọc đang chọn
+        // Áp dụng bộ lọcđang chọn
         _applyFilter();
       }
     } catch (e) {
@@ -62,7 +62,7 @@ class UserManagementViewModel extends ChangeNotifier {
     _applyFilter();
   }
 
-  // Logic cốt lõi để kết hợp cả Tìm kiếm và Bộ lọc Tab
+  // Logic cốt lõiđể kết hợp cả Tìm kiếm và Bộ lọc Tab
   void _applyFilter() {
     List<UserModel> tempFiltered = List.from(_allUsers);
 
@@ -94,7 +94,7 @@ class UserManagementViewModel extends ChangeNotifier {
         body: jsonEncode({'isLocked': !isCurrentlyLocked}),
       );
       if (res.statusCode == 200) {
-        await loadUsers(); // Tải lại để cập nhật toàn bộ số liệu và UI
+        await loadUsers(); // Tải lạiđể cập nhật toàn bộ số liệu và UI
       }
     } catch (e) {
       debugPrint("Lỗi khóa tài khoản: $e");

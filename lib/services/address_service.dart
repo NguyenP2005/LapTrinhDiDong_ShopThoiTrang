@@ -5,7 +5,7 @@ import '../models/address_model.dart';
 class AddressService {
   static const String baseUrl = "http://10.0.2.2:3000";
 
-  // Lấy tất cả địa chỉ của user
+  // Lấy tất cảđịa chỉ của user
   Future<List<AddressModel>> getAddressesByUserId(String userId) async {
     try {
       final response = await http.get(
@@ -13,7 +13,7 @@ class AddressService {
       );
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         return data.map((e) => AddressModel.fromJson(e)).toList();
       } else {
         throw Exception('Server trả về lỗi: ${response.statusCode}');
@@ -24,7 +24,7 @@ class AddressService {
     }
   }
 
-  // Lấy địa chỉ mặc định của user
+  // Lấyđịa chỉ mặcđịnh của user
   Future<AddressModel?> getDefaultAddress(String userId) async {
     try {
       final addresses = await getAddressesByUserId(userId);
@@ -32,14 +32,14 @@ class AddressService {
         (addr) => addr.isDefault,
         orElse: () => addresses.isNotEmpty
             ? addresses.first
-            : throw Exception('Không tìm thấy địa chỉ'),
+            : throw Exception('Không tìm thấyđịa chỉ'),
       );
     } catch (e) {
       return null;
     }
   }
 
-  // Thêm địa chỉ mới
+  // Thêmđịa chỉ mới
   Future<AddressModel> addAddress(AddressModel address) async {
     try {
       if (address.isDefault) {
@@ -53,16 +53,16 @@ class AddressService {
       );
 
       if (response.statusCode == 201) {
-        return AddressModel.fromJson(json.decode(response.body));
+        return AddressModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
-        throw Exception('Lỗi khi thêm địa chỉ: ${response.statusCode}');
+        throw Exception('Lỗi khi thêmđịa chỉ: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
-  // Cập nhật địa chỉ
+  // Cập nhậtđịa chỉ
   Future<AddressModel> updateAddress(String id, AddressModel address) async {
     try {
       if (address.isDefault) {
@@ -76,29 +76,29 @@ class AddressService {
       );
 
       if (response.statusCode == 200) {
-        return AddressModel.fromJson(json.decode(response.body));
+        return AddressModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
-        throw Exception('Lỗi khi cập nhật địa chỉ: ${response.statusCode}');
+        throw Exception('Lỗi khi cập nhậtđịa chỉ: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
-  // Xóa địa chỉ
+  // Xóađịa chỉ
   Future<void> deleteAddress(String id) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl/addresses/$id'));
 
       if (response.statusCode != 200) {
-        throw Exception('Lỗi khi xóa địa chỉ: ${response.statusCode}');
+        throw Exception('Lỗi khi xóađịa chỉ: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception(e.toString().replaceAll('Exception: ', ''));
     }
   }
 
-  // Helper: Bỏ default của các địa chỉ khác
+  // Helper: Bỏ default của cácđịa chỉ khác
   Future<void> _removeOtherDefaults(String userId, {String? exceptId}) async {
     try {
       final addresses = await getAddressesByUserId(userId);

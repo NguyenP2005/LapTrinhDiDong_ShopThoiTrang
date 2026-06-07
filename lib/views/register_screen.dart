@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import '../viewmodels/auth_viewmodel.dart';
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           validator: (val) {
                             if (val == null || val.isEmpty) return 'Vui lòng nhập họ tên';
                             if (val.length < 3) return 'Tên phải có ít nhất 3 ký tự';
-                            if (RegExp(r'[0-9]').hasMatch(val)) return 'Tên không được chứa chữ số';
+                            if (RegExp(r'[0-9]').hasMatch(val)) return 'Tên khôngđược chứa chữ số';
                             return null;
                           },
                         ),
@@ -102,8 +102,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         _buildInputField(
                           hint: 'Phone Number', icon: Icons.phone_outlined, controller: phoneCtrl, keyboardType: TextInputType.phone,
                           validator: (val) {
-                            if (val == null || val.isEmpty) return 'Vui lòng nhập số điện thoại';
-                            if (!RegExp(r'^(0)[0-9]{9}$').hasMatch(val)) return 'Số điện thoại không hợp lệ (10 số)';
+                            if (val == null || val.isEmpty) return 'Vui lòng nhập sốđiện thoại';
+                            if (!RegExp(r'^(0)[0-9]{9}$').hasMatch(val)) return 'Sốđiện thoại không hợp lệ (10 số)';
                             return null;
                           },
                         ),
@@ -170,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                               foregroundColor: Colors.white,
-                              disabledBackgroundColor: Colors.grey[800],
+                              disabledBackgroundColor: Colors.black87,
                               elevation: 0,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                             ),
@@ -237,9 +237,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: Icon(icon, color: Colors.grey[400]),
+        prefixIcon: Icon(icon, color: Colors.black38),
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+        hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),
         focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.redAccent, width: 1.5)),

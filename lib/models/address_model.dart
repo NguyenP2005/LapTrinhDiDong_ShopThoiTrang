@@ -1,4 +1,4 @@
-class AddressModel {
+﻿class AddressModel {
   final String id;
   final String userId;
   final String receiverName;
@@ -34,7 +34,7 @@ class AddressModel {
     'is_default': isDefault,
   };
 
-  // Copy with để update
+  // Copy withđể update
   AddressModel copyWith({
     String? id,
     String? userId,

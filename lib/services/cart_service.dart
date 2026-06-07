@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -71,7 +71,7 @@ class CartService {
     return maps.map((e) => CartItem.fromMap(e)).toList();
   }
 
-  // Thêm hoặc cập nhật số lượng nếu sản phẩm đã tồn tại trong giỏ của user
+  // Thêm hoặc cập nhật số lượng nếu sản phẩmđã tồn tại trong giỏ của user
   Future<void> addToCart(CartItem item) async {
     final db = await database;
     final userId = await _getUserId();
@@ -82,7 +82,7 @@ class CartService {
     );
 
     if (existing.isNotEmpty) {
-      // Tăng số lượng nếu sản phẩm đã có trong giỏ
+      // Tăng số lượng nếu sản phẩmđã có trong giỏ
       final currentQty = existing.first['quantity'] as int;
       await db.update(
         'cart',

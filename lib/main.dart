@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'views/main.screen.dart';
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
         ChangeNotifierProvider(create: (_) => WishlistViewModel()), // THÊM PROVIDER NÀY VÀO
       ],
-      // Dùng Consumer để lắng nghe thay đổi Dark Mode
+      // Dùng Consumerđể lắng nghe thayđổi Dark Mode
       child: Consumer<SettingsViewModel>(
         builder: (context, settingsVM, child) {
           return MaterialApp(
@@ -74,12 +74,12 @@ class MyApp extends StatelessWidget {
             themeMode: settingsVM.isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: ThemeData(
               brightness: Brightness.light,
-              primaryColor: const Color(0xFF2344D1),
+              primaryColor: const Color(0xFF4361EE),
               useMaterial3: true,
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
-              primaryColor: const Color(0xFF2344D1),
+              primaryColor: const Color(0xFF4361EE),
               useMaterial3: true,
             ),
             home: isLoggedIn

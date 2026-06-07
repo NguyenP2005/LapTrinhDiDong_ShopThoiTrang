@@ -1,4 +1,4 @@
-class UserModel {
+﻿class UserModel {
   final String id;
   final String name;
   final String email;
@@ -14,7 +14,7 @@ class UserModel {
     required this.password,
     required this.avatar,
     required this.role,
-    this.isLocked = false, // Mặc định là false
+    this.isLocked = false, // Mặcđịnh là false
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

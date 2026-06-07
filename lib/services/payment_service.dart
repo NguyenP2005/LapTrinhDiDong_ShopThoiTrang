@@ -15,7 +15,7 @@ class PaymentService {
       );
 
       if (response.statusCode == 201) {
-        return PaymentModel.fromJson(json.decode(response.body));
+        return PaymentModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception('Failed to create payment');
       }
@@ -24,7 +24,7 @@ class PaymentService {
     }
   }
 
-  // Lấy thông tin payment của 1 đơn hàng
+  // Lấy thông tin payment của 1đơn hàng
   Future<PaymentModel?> getPaymentByOrderId(String orderId) async {
     try {
       final response = await http.get(
@@ -32,7 +32,7 @@ class PaymentService {
       );
 
       if (response.statusCode == 200) {
-        final List data = json.decode(response.body);
+        final List data = json.decode(utf8.decode(response.bodyBytes));
         if (data.isNotEmpty) {
           return PaymentModel.fromJson(data.first);
         }
@@ -63,7 +63,7 @@ class PaymentService {
       );
 
       if (response.statusCode == 200) {
-        return PaymentModel.fromJson(json.decode(response.body));
+        return PaymentModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       } else {
         throw Exception('Failed to update payment');
       }
