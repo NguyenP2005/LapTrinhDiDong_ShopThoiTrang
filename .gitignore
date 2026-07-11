@@ -1,0 +1,6 @@
+.gradle/
+.dart_tool/
+.idea/
+build/
+*.apk
+*.aar
